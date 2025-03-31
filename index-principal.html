@@ -1,15 +1,18 @@
-<!DOCTYPE html>
+<!DOCTYPE html>    
+    
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DermaScan | Detección Avanzada de Dermatitis Atópica</title>
-    <link rel="stylesheet" href="Css/style.css">
-    <link rel="stylesheet" href="Css/animations.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="icon" href="images/logo.svg" type="image/svg+xml">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DermaScan | Detección Avanzada de Dermatitis Atópica</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="Css/style.css">
+        <link rel="stylesheet" href="JS/animations.js">
+        <link rel="stylesheet" href="Css/animations.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+        <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+    </head>
 <body>
     <!-- Preloader -->
     <div class="preloader">
@@ -22,57 +25,55 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="header">
+     <!-- Header con efecto glassmorphism -->
+     <header class="header">
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">
-                    <img src="images/logo.svg" alt="DermaScan Logo">
-                    <span>DermaScan</span>
+                    <img src="images/logo.svg" alt="DermaScan Logo" class="logo-spin">
+                    <span class="logo-text">DermaScan</span>
+                    
                 </a>
-                <ul class="nav-links">
-                    <li><a href="#about">Sobre la Enfermedad</a></li>
-                    <li><a href="#detection">Detección</a></li>
-                    <li><a href="#symptoms">Síntomas</a></li>
-                    <li><a href="#treatment">Tratamiento</a></li>
-                    <li><a href="#team">Nuestro Equipo</a></li>
-                    <li><a href="#contact">Contacto</a></li>
+                <ul class="nav-links" >
+                    <li><a href="#about" class="nav-link-hover">Sobre la Enfermedad</a></li>
+                    <li><a href="#detection" class="nav-link-hover">Detección</a></li>
+                    <li><a href="#symptoms" class="nav-link-hover">Síntomas</a></li>
+                    <li><a href="#treatment" class="nav-link-hover">Tratamiento</a></li>
+                    <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
+                    <li><a href="#contact" class="nav-link-hover">Contacto</a></li>
                 </ul>
                 <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
                 </div>
             </nav>
         </div>
     </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title animate-text">Detección Avanzada de <span>Dermatitis Atópica</span></h1>
-                <p class="hero-subtitle">Nuestra IA de vanguardia analiza imágenes de piel para identificar signos tempranos de dermatitis atópica con un 94% de precisión.</p>
-                <div class="hero-buttons">
-                    <a href="#detection" class="btn btn-primary pulse-animation">Probar Detector</a>
-                    <a href="#about" class="btn btn-secondary">Aprender Más</a>
-                </div>
+ <!-- Header con efecto glassmorphism -->
+ <header class="header">
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="images/logo.svg" alt="DermaScan Logo" class="logo-spin">
+                <span class="logo-text">DermaScan</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link-hover">Sobre la Enfermedad</a></li>
+                <li><a href="#detection" class="nav-link-hover">Detección</a></li>
+                <li><a href="#symptoms" class="nav-link-hover">Síntomas</a></li>
+                <li><a href="#treatment" class="nav-link-hover">Tratamiento</a></li>
+                <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
+                <li><a href="#contact" class="nav-link-hover">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
             </div>
-            <div class="hero-image">
-                <div class="image-container">
-                    <img src="images/skin-scan.png" alt="Análisis de piel" class="floating-animation">
-                    <div class="scan-animation"></div>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <div class="arrow"></div>
-        </div>
-    </section>
+        </nav>
+    </div>
+</header>
 
     <!-- About Section -->
     <section id="about" class="section about-section">
@@ -108,8 +109,8 @@
                 </div>
                 <div class="about-image">
                     <div class="image-frame">
-                        <img src="https://via.placeholder.com/500x400" alt="Dermatitis Atópica" class="zoom-animation-trigger">
-                        <div class="image-caption">Ejemplo de dermatitis atópica en diferentes etapas</div>
+                        <img src="images/dermatitis.jpg" alt="Dermatitis Atópica" class="zoom-animation-trigger">
+                        <div class="image-caption">Ejemplo de dermatitis atópica</div>
                     </div>
                 </div>
             </div>
@@ -357,10 +358,18 @@
                         <h3>Medicamentos Tópicos</h3>
                         <div class="accordion-icon">
                             <i class="fas fa-plus"></i>
+                            
                         </div>
+                        
                     </div>
                     <div class="accordion-content">
-                        <!-- Contenido de medicamentos tópicos -->
+                        <p>La dermatitis atópica puede manejarse con diversos medicamentos tópicos, pero <strong> siempre consulta con un médico antes de usarlos.</strong> Para brotes leves a moderados, los corticosteroides tópicos (como hidrocortisona o betametasona) ayudan a reducir inflamación y picazón, <strong>pero deben usarse por corto tiempo.</strong> En zonas sensibles (cara, cuello), los inhibidores de calcineurina (tacrolimus, pimecrolimus) son una alternativa segura sin riesgo de adelgazar la piel.
+
+                            La hidratación es clave: emolientes con ceramidas, urea o aceites naturales reparan la barrera cutánea y previenen brotes. Si hay infección, pueden necesitarse antimicrobianos como mupirocina.
+                            
+                            Tratamientos innovadores como crisaborol o ruxolitinib son opciones para casos resistentes, pero requieren supervisión médica.
+                            </p>
+                            <li><strong>Recuerda: Cada piel es única. Un dermatólogo debe evaluar tu condición para indicar el tratamiento adecuado. ¡No te automediques!</strong></li>
                     </div>
                 </div>
                 
@@ -372,7 +381,17 @@
                         </div>
                     </div>
                     <div class="accordion-content">
-                        <!-- Contenido de terapias avanzadas -->
+                        <p>Si los tratamientos convencionales no controlan tu dermatitis atópica, existen <strong>terapias avanzadas</strong> que pueden ayudar, pero <strong>siempre deben ser prescritas y supervisadas por un dermatólogo</strong>.
+
+                            La <strong>fototerapia con luz UVB de banda estrecha</strong> es una opción efectiva para casos moderados a graves, reduciendo inflamación y picazón con sesiones controladas. Para pacientes con dermatitis severa, los <strong>biológicos como el dupilumab (Dupixent)</strong> bloquean proteínas clave que causan inflamación, ofreciendo alivio prolongado.
+                            
+                            Otras alternativas incluyen <strong>inmunomoduladores orales</strong> (ciclosporina, metotrexato) y los nuevos <strong>inhibidores JAK tópicos</strong> (ruxolitinib), que actúan directamente sobre la respuesta inflamatoria.
+                            
+                            Estas terapias tienen indicaciones específicas y posibles efectos secundarios, por lo que <strong>requieren seguimiento médico estricto</strong>. Si tu dermatitis no mejora con tratamientos tradicionales, consulta a un especialista para evaluar estas opciones.
+                            
+                            (✔️ 130 palabras - Información clara y responsable)
+                            
+                            </p><p><strong>Nota importante:</strong> Este contenido es informativo y no reemplaza la consulta médica profesional.</p>
                     </div>
                 </div>
                 
@@ -384,7 +403,37 @@
                         </div>
                     </div>
                     <div class="accordion-content">
-                        <!-- Contenido de cambios en el estilo de vida -->
+<p>Además de los tratamientos médicos, ciertos cambios en tu rutina diaria pueden ayudar significativamente a controlar los síntomas:</p>
+
+<ul>
+  <li><strong>Baños inteligentes:</strong>
+    <ul>
+      <li>Usa agua <em>tibia</em> (nunca caliente)</li>
+      <li>Elige limpiadores <a href="#" title="Productos sin jabón">sin jabón</a> y sin fragancia</li>
+      <li>Seca con toques suaves, <u>sin frotar</u></li>
+    </ul>
+  </li>
+
+  <li><strong>Hidratación constante:</strong>
+    <ul>
+      <li>Aplica cremas (consultar con tu dermatologo) inmediatamente después del baño</li>
+    </ul>
+  </li>
+
+  <li><strong>Ropa adecuada:</strong>
+    <ul>
+      <li>Usa prendas de <small>algodón 100%</small></li>
+      <li>Lava toda la ropa nueva antes de usar</li>
+      <li>Elimina etiquetas irritantes</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>"La constancia en estos cuidados marca la diferencia en el control de los síntomas" - <cite>Asociación Española de Dermatología</cite></p>
+</blockquote>
+
+<p><strong>Nota importante:</strong> Estos consejos complementan pero no reemplazan el tratamiento médico. Consulta siempre con tu especialista>.</p>
                     </div>
                 </div>
             </div>
@@ -395,62 +444,61 @@
     <section id="team" class="section team-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Nuestro Equipo de Expertos</h2>
-                <p class="section-subtitle">Los profesionales detrás de DermaScan</p>
+                <h2 class="section-title">Nuestro Equipo</h2>
+                <p class="section-subtitle">Los creadores de DermaScan</p>
                 <div class="divider"></div>
             </div>
             
             <div class="team-grid">
                 <div class="team-card">
                     <div class="team-image">
-                        <img src="images/doctor-avatar.png" alt="Dra. Elena Martínez">
+                        <img src="images/front end development html_0.jpg" alt="Dra. Elena Martínez">
                         <div class="team-social">
                             <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/nicoesquinas_/"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fas fa-envelope"></i></a>
                         </div>
                     </div>
                     <div class="team-info">
-                        <h3>Dra. Elena Martínez</h3>
-                        <p>Dermatóloga Especialista</p>
+                        <h3>Nicolas Esquinas Epstien</h3>
+                        <p>Encargado del Front End.</p>
                         <div class="team-bio">
-                            <p>Con más de 15 años de experiencia en dermatología pediátrica y tratamiento de dermatitis atópica.</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="team-card">
                     <div class="team-image">
-                        <img src="images/doctor-avatar.png" alt="Dr. Carlos Fernández">
+                        <img src="images/101_UX_vs_UI_illustration_blog-1.png" alt="Dr. Carlos Fernández">
                         <div class="team-social">
                             <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/joaqn.ft/"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fas fa-envelope"></i></a>
                         </div>
                     </div>
                     <div class="team-info">
-                        <h3>Dr. Carlos Fernández</h3>
-                        <p>Especialista en Alergias</p>
+                        <h3>Joaquin Fernandez de la Torre</h3>
+                        <p>Encargado del UX/UI</p>
                         <div class="team-bio">
-                            <p>Experto en identificar y manejar desencadenantes alérgicos de condiciones dermatológicas.</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="team-card">
                     <div class="team-image">
-                        <img src="images/doctor-avatar.png" alt="Ing. Laura Gómez">
+                        <img src="images/Blog_How-much-of-training-data-you-need-for-an-AI-project.jpg" alt="Ing. Laura Gómez">
                         <div class="team-social">
                             <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/nacho.sfdlv/"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fas fa-envelope"></i></a>
                         </div>
                     </div>
                     <div class="team-info">
-                        <h3>Ing. Laura Gómez</h3>
+                        <h3>Ignacio Sanchez Fernandez de la Vega</h3>
                         <p>Desarrolladora de IA</p>
                         <div class="team-bio">
-                            <p>Líder del equipo que desarrolló los algoritmos de reconocimiento de patrones cutáneos.</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -475,7 +523,7 @@
                         </div>
                         <div class="info-content">
                             <h3>Ubicación</h3>
-                            <p>Calle de la Innovación 123, Barcelona, España</p>
+                            <p> Av. del Libertador 6796, C1429 Cdad. Autónoma de Buenos Aires</p>
                         </div>
                     </div>
                     
@@ -485,7 +533,7 @@
                         </div>
                         <div class="info-content">
                             <h3>Teléfono</h3>
-                            <p>+34 123 456 789</p>
+                            <p>+54 9 11 5143 2012</p>
                         </div>
                     </div>
                     
@@ -496,17 +544,6 @@
                         <div class="info-content">
                             <h3>Email</h3>
                             <p>info@dermascan.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3>Horario</h3>
-                            <p>Lunes a Viernes: 9:00 - 18:00</p>
-                            <p>Sábados: 10:00 - 14:00</p>
                         </div>
                     </div>
                 </div>
@@ -571,30 +608,6 @@
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section class="section newsletter-section">
-        <div class="container">
-            <div class="newsletter-container">
-                <div class="newsletter-text">
-                    <h2>Mantente Informado</h2>
-                    <p>Suscríbete a nuestro boletín para recibir las últimas noticias sobre dermatitis atópica, actualizaciones de la plataforma y consejos de cuidado de la piel.</p>
-                </div>
-                <div class="newsletter-form">
-                    <form id="newsletterForm">
-                        <div class="form-group">
-                            <input type="email" placeholder="Tu correo electrónico" required>
-                            <button type="submit" class="btn btn-primary">Suscribirse</button>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="privacyCheck" required>
-                            <label for="privacyCheck">Acepto la política de privacidad</label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -638,7 +651,7 @@
                 <div class="footer-col">
                     <h3>Contacto</h3>
                     <ul class="contact-info">
-                        <li><i class="fas fa-map-marker-alt"></i> Calle de la Innovación 123, Barcelona</li>
+                        <li><i class="fas fa-map-marker-alt"></i>  Av. del Libertador 6796, C1429 Cdad. Autónoma de Buenos Aires</li>
                         <li><i class="fas fa-phone-alt"></i> +34 123 456 789</li>
                         <li><i class="fas fa-envelope"></i> info@dermascan.com</li>
                     </ul>
@@ -662,6 +675,7 @@
     </button>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="JS/Main.js"></script>
     <script src="JS/detection.js"></script>
     <script src="JS/animations.js"></script>

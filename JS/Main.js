@@ -1,11 +1,9 @@
-// Preloader simplificado
+// Preloader
 window.addEventListener('load', function() {
     const preloader = document.querySelector('.preloader');
-    preloader.classList.add('hidden');
-    
-    // Opcional: Eliminar completamente después de la animación
+    preloader.style.opacity = '0';
     setTimeout(() => {
-        preloader.remove();
+        preloader.style.display = 'none';
     }, 500);
 });
 
@@ -16,6 +14,22 @@ const navLinks = document.querySelector('.nav-links');
 hamburger.addEventListener('click', function() {
     this.classList.toggle('active');
     navLinks.classList.toggle('active');
+    
+    // Toggle body overflow when menu is open
+    if (navLinks.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.style.overflow = '';
+    });
 });
 
 // Smooth scrolling for anchor links
@@ -32,10 +46,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 top: targetElement.offsetTop - 80,
                 behavior: 'smooth'
             });
-            
-            // Close mobile menu if open
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('active');
         }
     });
 });
@@ -54,11 +64,9 @@ window.addEventListener('scroll', function() {
 const backToTopBtn = document.querySelector('.back-to-top');
 window.addEventListener('scroll', function() {
     if (window.scrollY > 300) {
-        backToTopBtn.style.opacity = '1';
-        backToTopBtn.style.visibility = 'visible';
+        backToTopBtn.classList.add('visible');
     } else {
-        backToTopBtn.style.opacity = '0';
-        backToTopBtn.style.visibility = 'hidden';
+        backToTopBtn.classList.remove('visible');
     }
 });
 
@@ -68,3 +76,173 @@ backToTopBtn.addEventListener('click', function() {
         behavior: 'smooth'
     });
 });
+
+// Accordion functionality
+const accordionItems = document.querySelectorAll('.accordion-item');
+accordionItems.forEach(item => {
+    const header = item.querySelector('.accordion-header');
+    
+    header.addEventListener('click', () => {
+        const currentlyActive = document.querySelector('.accordion-item.active');
+        
+        // Close currently active item if it's not the one being clicked
+        if (currentlyActive && currentlyActive !== item) {
+            currentlyActive.classList.remove('active');
+        }
+        
+        // Toggle current item
+        item.classList.toggle('active');
+    });
+});
+
+// FAQ functionality
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+        const currentlyActive = document.querySelector('.faq-item.active');
+        
+        // Close currently active item if it's not the one being clicked
+        if (currentlyActive && currentlyActive !== item) {
+            currentlyActive.classList.remove('active');
+        }
+        
+        // Toggle current item
+        item.classList.toggle('active');
+    });
+});
+
+// Tab functionality
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const tabId = tab.getAttribute('data-tab');
+        
+        // Update active tab
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Show corresponding content
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+            if (content.getAttribute('data-tab') === tabId) {
+                content.classList.add('active');
+            }
+        });
+    });
+});
+
+// Animate stats numbers
+const animateStats = () => {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-count'));
+        const duration = 2000; // 2 seconds
+        const step = target / (duration / 16); // 60fps
+        
+        let current = 0;
+        const increment = () => {
+            current += step;
+            if (current < target) {
+                stat.textContent = Math.floor(current);
+                requestAnimationFrame(increment);
+            } else {
+                stat.textContent = target;
+            }
+        };
+        
+        increment();
+    });
+};
+
+// Intersection Observer for animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            
+            // Animate stats if it's the about section
+            if (entry.target.classList.contains('about-section')) {
+                animateStats();
+            }
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+// Observe sections
+document.querySelectorAll('.animate-on-scroll').forEach(section => {
+    observer.observe(section);
+});
+
+// Initialize particles.js if the element exists
+if (document.getElementById('particles-js')) {
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#6a5acd" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: "#6a5acd", opacity: 0.4, width: 1 },
+            move: { enable: true, speed: 3, direction: "none", random: true, straight: false, out_mode: "out" }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" }
+            }
+        }
+    });
+}
+
+// Form submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Simulate form submission
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        
+        setTimeout(() => {
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Enviado';
+            this.reset();
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = 'Enviar Mensaje';
+                submitBtn.disabled = false;
+            }, 2000);
+        }, 1500);
+    });
+}
+
+// Newsletter form
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Suscribiendo...';
+        
+        setTimeout(() => {
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Suscrito';
+            this.reset();
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = 'Suscribirse';
+                submitBtn.disabled = false;
+            }, 2000);
+        }, 1500);
+    });
+}
