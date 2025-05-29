@@ -180,7 +180,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(section => {
     observer.observe(section);
 });
 
-// Initialize particles.js if the element exists
+
 if (document.getElementById('particles-js')) {
     particlesJS('particles-js', {
         particles: {
@@ -202,13 +202,12 @@ if (document.getElementById('particles-js')) {
     });
 }
 
-// Form submission
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Simulate form submission
+       
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
@@ -225,7 +224,6 @@ if (contactForm) {
     });
 }
 
-// Newsletter form
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
     newsletterForm.addEventListener('submit', function(e) {
