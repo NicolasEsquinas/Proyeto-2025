@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Iniciar Sesión | DermaScan</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/auth.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+        <link rel="icon" href="images/LOGO-DERMA-SCAN.png" type="image/svg+xml">
+    </head>
+<body>
+   <!-- Header con efecto glassmorphism -->
+   <header class="header">
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="images/logo.svg" alt="DermaScan Logo" class="logo-spin">
+                <span class="logo-text">DermaScan</span>
+                
+            </a>
+            <ul class="nav-links" >
+                <li><a href="#about" class="nav-link-hover">Sobre la Enfermedad</a></li>
+                <li><a href="#detection" class="nav-link-hover">Detección</a></li>
+                <li><a href="#symptoms" class="nav-link-hover">Síntomas</a></li>
+                <li><a href="#treatment" class="nav-link-hover">Tratamiento</a></li>
+                <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
+                <li><a href="#contact" class="nav-link-hover">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- Menú de usuario -->
+                    <li class="user-menu-container">
+                        <div class="user-avatar" id="userMenuTrigger">
+                            <img src="../images/doctor-avatar.png" alt="Usuario">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+<!-- Header con efecto glassmorphism -->
+<header class="header">
+<div class="container">
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="images/logo.svg" alt="DermaScan Logo" class="logo-spin">
+            <span class="logo-text">DermaScan</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about" class="nav-link-hover">Sobre la Enfermedad</a></li>
+            <li><a href="#detection" class="nav-link-hover">Detección</a></li>
+            <li><a href="#symptoms" class="nav-link-hover">Síntomas</a></li>
+            <li><a href="#treatment" class="nav-link-hover">Tratamiento</a></li>
+            <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
+            <li><a href="#contact" class="nav-link-hover">Contacto</a></li>
+        </ul>
+        <div class="hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </div>
+    </nav>
+</div>
+</header>
+
+
+    <!-- Sección de Perfil -->
+    <section class="section profile-section">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="../images/doctor-avatar.png" alt="Usuario" id="profileAvatar">
+                    <button class="btn btn-secondary btn-sm" id="changeAvatar">Cambiar</button>
+                </div>
+                
+                <div class="profile-info">
+                    <h1 id="profileName">Nombre Usuario</h1>
+                    <p id="profileEmail">usuario@ejemplo.com</p>
+                    <div class="profile-badge">
+                        <i class="fas fa-shield-alt"></i> Cuenta verificada
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-card">
+                    <h3><i class="fas fa-user-edit"></i> Información Personal</h3><br>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Nombre Completo</label><br>
+                            <input type="text" id="profileFullName" value="Nombre Usuario">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="profileEmailInput" value="usuario@ejemplo.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" id="profilePhone" placeholder="+34 123 456 789">
+                        </div>
+                        
+                        
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+                <br><br>
+                <div class="profile-card">
+                    <h3><i class="fas fa-lock"></i> Seguridad</h3><br><br>
+                    <form id="securityForm">
+                        <div class="form-group">
+                            <label>Contraseña Actual</label>
+                            <input type="password" id="currentPassword" placeholder="••••••••">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nueva Contraseña</label>
+                            <input type="password" id="newPassword" placeholder="••••••••">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Confirmar Nueva Contraseña</label>
+                            <input type="password" id="confirmPassword" placeholder="••••••••">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

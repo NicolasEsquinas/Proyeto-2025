@@ -30,7 +30,7 @@
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">
-                    <img src="images/logo.svg" alt="DermaScan Logo" class="logo-spin">
+                    <img style="font-weight : 30px;" src="images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo" class="logo-spin">
                     <span class="logo-text">DermaScan</span>
                     
                 </a>
@@ -55,7 +55,7 @@
     <div class="container">
         <nav class="navbar">
             <a href="#" class="logo">
-                <img src="images/logo.svg" alt="DermaScan Logo" class="logo-spin">
+                <img src="images/LOGO-DERMA-SCAN2.png" alt="DermaScan Logo" class="logo-spin">
                 <span class="logo-text">DermaScan</span>
             </a>
             <ul class="nav-links">
@@ -66,12 +66,48 @@
                 <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
                 <li><a href="#contact" class="nav-link-hover">Contacto</a></li>
             </ul>
-            <div class="hamburger">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </div>
-        </nav>
+            <!-- Menú de usuario (aparece cuando está logueado) -->
+            <li class="user-menu-container" id="userMenuContainer" style="display: none;">
+                <div class="user-avatar" id="userMenuTrigger">
+                    <img src="images/doctor-avatar.png" alt="Usuario" id="headerAvatar">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                
+                <div class="user-menu-dropdown" id="userMenuDropdown">
+                    <div class="user-info">
+                        <img src="images/doctor-avatar.png" alt="Usuario" id="dropdownAvatar">
+                        <div>
+                            <h4 id="userName">Nombre Usuario</h4>
+                            <p id="userEmail">usuario@ejemplo.com</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="user-menu-links">
+                        <li><a href="auth/profile.html"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Ayuda</a></li>
+                        <li><a href="#" id="switchAccount"><i class="fas fa-exchange-alt"></i> Cambiar Cuenta</a></li>
+                        <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </li>
+            
+            <!-- Enlaces de autenticación (aparecen cuando NO está logueado) -->
+            <li class="auth-link" id="loginLink">
+                <a href="auth/login.html" class="btn btn-outline">Iniciar Sesión</a>
+            </li>
+            <li class="auth-link" id="registerLink">
+                <a href="auth/register.html" class="btn btn-primary">Registrarse</a>
+            </li>
+        </ul>
+        
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    
+        </na    v>
     </div>
 </header>
 
@@ -484,6 +520,24 @@
                         </div>
                     </div>
                 </div>
+                   
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="images/what-is-meant-by-backend-developer.jpg" alt="">
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/tomischuster_/"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Tomas Schusterman</h3>
+                        <p>Encargado del BackEnd</p>
+                        <div class="team-bio">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="team-card">
                     <div class="team-image">
@@ -496,7 +550,7 @@
                     </div>
                     <div class="team-info">
                         <h3>Ignacio Sanchez Fernandez de la Vega</h3>
-                        <p>Desarrolladora de IA</p>
+                        <p>Desarrollador de IA</p>
                         <div class="team-bio">
                             <p></p>
                         </div>
@@ -505,6 +559,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Contact Section -->
     <section id="contact" class="section contact-section">
@@ -570,43 +625,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="section faq-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Preguntas Frecuentes</h2>
-                <p class="section-subtitle">Encuentra respuestas a tus dudas</p>
-                <div class="divider"></div>
-            </div>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Qué tan precisa es la detección de DermaScan?</h3>
-                        <div class="faq-toggle">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Nuestro sistema tiene una precisión del 94% en la identificación de dermatitis atópica basado en estudios clínicos. Sin embargo, no reemplaza el diagnóstico de un profesional médico, sino que sirve como herramienta de detección temprana.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Es seguro subir mis imágenes a la plataforma?</h3>
-                        <div class="faq-toggle">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Absolutamente. Todas las imágenes se procesan de forma anónima y se cifran durante la transmisión. No almacenamos imágenes personales identificables sin tu consentimiento explícito.</p>
-                    </div>
-                </div>
-                
-                <!-- Más preguntas frecuentes -->
-            </div>
-        </div>
-    </section>
+   
 
     <!-- Footer -->
     <footer class="footer">

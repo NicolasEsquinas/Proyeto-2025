@@ -1544,3 +1544,231 @@ section {
         justify-content: center;
     }
 }
+/* Añadir al final del archivo style.css existente */
+
+/* Menú de usuario */
+.user-menu-container {
+    position: relative;
+    margin-left: 20px;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50px;
+    transition: var(--transition);
+}
+
+.user-avatar:hover {
+    background: rgba(106, 90, 205, 0.1);
+}
+
+.user-avatar img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-avatar i {
+    font-size: 0.8rem;
+    color: var(--gray-color);
+    transition: var(--transition);
+}
+
+.user-menu-container:hover .user-avatar i {
+    transform: rotate(180deg);
+}
+
+.user-menu-dropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 280px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow-hover);
+    padding: 15px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+}
+
+.user-menu-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.user-info h4 {
+    font-size: 1rem;
+    margin-bottom: 3px;
+}
+
+.user-info p {
+    font-size: 0.8rem;
+    color: var(--gray-color);
+}
+
+.user-menu-links {
+    list-style: none;
+}
+
+.user-menu-links li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+.user-menu-links li a:hover {
+    background: rgba(106, 90, 205, 0.1);
+    color: var(--primary-color);
+}
+
+.user-menu-links li a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Estilos para la página de perfil */
+.profile-section {
+    padding-top: 120px;
+}
+
+.profile-header {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.profile-avatar {
+    position: relative;
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+}
+
+.profile-avatar button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+.profile-info h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.profile-info p {
+    color: var(--gray-color);
+    margin-bottom: 10px;
+}
+
+.profile-badge {
+    display: inline-flex;
+    align   
+}
+/* Estilos para el botón de perfil en el header */
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.user-menu-container {
+    margin-left: 15px;
+    position: relative;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 5px 10px 5px 5px;
+    border-radius: 50px;
+    transition: var(--transition);
+    background: rgba(106, 90, 205, 0.1);
+}
+
+.user-avatar:hover {
+    background: rgba(106, 90, 205, 0.2);
+}
+
+.user-avatar img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-avatar i {
+    font-size: 0.8rem;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+.user-menu-container:hover .user-avatar i {
+    transform: rotate(180deg);
+}
+
+.user-menu-dropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 280px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+}
+
+.user-menu-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+

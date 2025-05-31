@@ -246,3 +246,134 @@ if (newsletterForm) {
         }, 1500);
     });
 }
+// main.js (actualizado)
+
+// ... (código existente previo)
+
+// Añadir al final del archivo existente:
+
+// Manejo del menú de usuario en la página principal
+if (document.getElementById('userMenuTrigger')) {
+    const userMenuTrigger = document.getElementById('userMenuTrigger');
+    const userMenuDropdown = document.getElementById('userMenuDropdown');
+    
+    userMenuTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        userMenuDropdown.classList.toggle('show');
+    });
+    
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function() {
+        userMenuDropdown.classList.remove('show');
+    });
+}
+
+// Verificar estado de autenticación
+function checkAuthState() {
+    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+    const authLinks = document.querySelectorAll('.auth-link');
+    const userMenu = document.querySelector('.user-menu-container');
+    
+    if (authToken) {
+        // Usuario autenticado
+        authLinks.forEach(link => link.style.display = 'none');
+        if (userMenu) userMenu.style.display = 'block';
+        
+        // Cargar datos del usuario
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (userData && document.getElementById('userName')) {
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userEmail').textContent = userData.email;
+        }
+    } else {
+        // Usuario no autenticado
+        authLinks.forEach(link => link.style.display = 'block');
+        if (userMenu) userMenu.style.display = 'none';
+    }
+}
+
+// Cerrar sesión
+if (document.getElementById('logoutBtn')) {
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Eliminar datos de sesión
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userEmail');
+        sessionStorage.removeItem('authToken');
+        
+        // Redirigir a login
+        window.location.href = 'auth/login.html';
+    });
+}
+
+// Ejecutar al cargar
+checkAuthState();
+function checkAuthState() {
+    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+    const userMenu = document.getElementById('userMenuContainer');
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    
+    if (authToken) {
+        // Usuario logueado - mostrar menú de usuario
+        if (userMenu) userMenu.style.display = 'block';
+        if (loginLink) loginLink.style.display = 'none';
+        if (registerLink) registerLink.style.display = 'none';
+        
+        // Cargar datos del usuario
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (userData) {
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userEmail').textContent = userData.email;
+            document.getElementById('headerAvatar').src = userData.avatar || 'images/doctor-avatar.png';
+            document.getElementById('dropdownAvatar').src = userData.avatar || 'images/doctor-avatar.png';
+        }
+    } else {
+        // Usuario no logueado - mostrar botones de login/register
+        if (userMenu) userMenu.style.display = 'none';
+        if (loginLink) loginLink.style.display = 'block';
+        if (registerLink) registerLink.style.display = 'block';
+    }
+}
+
+// Manejar el menú desplegable
+if (document.getElementById('userMenuTrigger')) {
+    const userMenuTrigger = document.getElementById('userMenuTrigger');
+    const userMenuDropdown = document.getElementById('userMenuDropdown');
+    
+    userMenuTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        userMenuDropdown.classList.toggle('show');
+    });
+    
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function() {
+        userMenuDropdown.classList.remove('show');
+    });
+}
+
+// Manejar logout
+if (document.getElementById('logoutBtn')) {
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Eliminar datos de sesión
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
+        sessionStorage.removeItem('authToken');
+        
+        // Redirigir a home y recargar
+        window.location.href = 'index.html';
+    });
+}
+
+// Verificar estado al cargar
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuthState();
+    
+    // Actualizar cada vez que cambia el almacenamiento (por si se hace login en otra pestaña)
+    window.addEventListener('storage', function() {
+        checkAuthState();
+    });
+});
