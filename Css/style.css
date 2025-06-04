@@ -271,6 +271,7 @@ section {
 
 .nav-links li {
     margin-left: 30px;
+    margin-top: 7px;
 }
 
 .nav-link-hover {
@@ -1549,7 +1550,7 @@ section {
 /* Menú de usuario */
 .user-menu-container {
     position: relative;
-    margin-left: 20px;
+    margin-left: 120px;
 }
 
 .user-menu-trigger {
@@ -1558,6 +1559,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .user-avatar {
@@ -1571,6 +1573,8 @@ section {
     padding: 8px;
     transition: var(--transition);
     border: 2px solid rgba(106, 90, 205, 0.3);
+    
+
 }
 
 .profile-icon {

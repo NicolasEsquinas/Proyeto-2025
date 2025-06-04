@@ -316,13 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Manejar clic en "Mi perfil"
-    if (profileOption) {
-        profileOption.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'profile.html';
-        });
-    }
+
     
     // Manejar clic en características premium
     if (premiumFeatures) {
@@ -344,65 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Botón de autenticación
-    if (authActionBtn) {
-        authActionBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const isAuthenticated = false;
-            
-            if (isAuthenticated) {
-                localStorage.removeItem('authToken');
-                sessionStorage.removeItem('authToken');
-                location.reload();
-            } else {
-                window.location.href = 'login.html';
-            }
-        });
-    }
     
-    // Función para verificar estado de autenticación
-    function checkAuthState() {
-        const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-        const authActionBtn = document.getElementById('authActionBtn');
-        const userMenuContainer = document.querySelector('.user-menu-container');
-        
-        if (authToken) {
-            if (authActionBtn) {
-                authActionBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Cerrar sesión';
-            }
-            
-            if (userMenuContainer) userMenuContainer.classList.add('user-logged-in');
-            
-            const userData = JSON.parse(localStorage.getItem('userData')) || {
-                name: 'Usuario',
-                email: 'usuario@ejemplo.com'
-            };
-            
-            if (document.getElementById('userName')) {
-                document.getElementById('userName').textContent = userData.name;
-            }
-            if (document.getElementById('userEmail')) {
-                document.getElementById('userEmail').textContent = userData.email;
-            }
-            
-            return true;
-        } else {
-            if (authActionBtn) {
-                authActionBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
-            }
-            
-            if (userMenuContainer) userMenuContainer.classList.remove('user-logged-in');
-            if (document.getElementById('userName')) {
-                document.getElementById('userName').textContent = 'Invitado';
-            }
-            if (document.getElementById('userEmail')) {
-                document.getElementById('userEmail').textContent = 'No has iniciado sesión';
-            }
-            
-            return false;
-        }
-    }
     
-    // Iniciar verificación de autenticación
-    checkAuthState();
+   
 });
