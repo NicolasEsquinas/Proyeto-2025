@@ -276,22 +276,31 @@ function checkAuth() {
 
 // Ejecutar al cargar
 checkAuth();
-// En la función simulateLogin (auth.js), actualiza el éxito para redirigir al index:
-
+// En simulateLogin y simulateRegister, asegúrate de guardar los datos del usuario:
 function simulateLogin(email, password, rememberMe) {
-    // ... (código existente)
     
+    // ...
     setTimeout(() => {
-        // Guardar datos del usuario (simulados)
         const userData = {
             name: email.split('@')[0], // Ejemplo: extrae el nombre del email
-            email: email,
-            avatar: 'images/doctor-avatar.png'
+            email: email
         };
         
         localStorage.setItem('userData', JSON.stringify(userData));
+        // ...
+    });
+    
+}
+
+function simulateRegister(name, email, password) {
+    // ...
+    setTimeout(() => {
+        const userData = {
+            name: name,
+            email: email
+        };
         
-        // Redirigir al INDEX en lugar de profile
-        window.location.href = '../index.html';
-    }, 1500);
+        localStorage.setItem('userData', JSON.stringify(userData));
+        // ...
+    });
 }

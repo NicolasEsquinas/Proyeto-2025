@@ -250,63 +250,79 @@ if (newsletterForm) {
 
 // Añadir al final del archivo existente:
 
-// Manejo del menú de usuario en la página principal
-if (document.getElementById('userMenuTrigger')) {
+// Manejo del menú de usuario (versión mejorada)
+document.addEventListener('DOMContentLoaded', function() {
     const userMenuTrigger = document.getElementById('userMenuTrigger');
     const userMenuDropdown = document.getElementById('userMenuDropdown');
     
-    userMenuTrigger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        userMenuDropdown.classList.toggle('show');
-    });
-    
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function() {
-        userMenuDropdown.classList.remove('show');
-    });
-}
-
-// Verificar estado de autenticación
-function checkAuthState() {
-    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-    const authLinks = document.querySelectorAll('.auth-link');
-    const userMenu = document.querySelector('.user-menu-container');
-    
-    if (authToken) {
-        // Usuario autenticado
-        authLinks.forEach(link => link.style.display = 'none');
-        if (userMenu) userMenu.style.display = 'block';
+    if (userMenuTrigger && userMenuDropdown) {
+        userMenuTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userMenuDropdown.classList.toggle('show');
+            
+            // Rotar la flecha
+            const chevron = this.querySelector('.fa-chevron-down');
+            chevron.style.transform = userMenuDropdown.classList.contains('show') 
+                ? 'rotate(180deg)' 
+                : 'rotate(0deg)';
+        });
         
-        // Cargar datos del usuario
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if (userData && document.getElementById('userName')) {
-            document.getElementById('userName').textContent = userData.name;
-            document.getElementById('userEmail').textContent = userData.email;
-        }
-    } else {
-        // Usuario no autenticado
-        authLinks.forEach(link => link.style.display = 'block');
-        if (userMenu) userMenu.style.display = 'none';
+        // Cerrar menú al hacer clic en cualquier parte del documento
+        document.addEventListener('click', function(e) {
+            if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                userMenuDropdown.classList.remove('show');
+                const chevron = userMenuTrigger.querySelector('.fa-chevron-down');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        });
     }
-}
-
-// Cerrar sesión
-if (document.getElementById('logoutBtn')) {
-    document.getElementById('logoutBtn').addEventListener('click', function(e) {
-        e.preventDefault();
+    
+    // Manejo del logout
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Eliminar datos de sesión
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            sessionStorage.removeItem('authToken');
+            
+            // Redirigir a home
+            window.location.href = 'index.html';
+        });
+    }
+    
+    // Verificar estado de autenticación
+    function checkAuthState() {
+        const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+        const userMenu = document.getElementById('userMenuContainer');
+        const loginLink = document.getElementById('loginLink');
+        const registerLink = document.getElementById('registerLink');
         
-        // Eliminar datos de sesión
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userEmail');
-        sessionStorage.removeItem('authToken');
-        
-        // Redirigir a login
-        window.location.href = 'auth/login.html';
-    });
-}
-
-// Ejecutar al cargar
-checkAuthState();
+        if (authToken) {
+            // Usuario logueado
+            if (userMenu) userMenu.style.display = 'block';
+            if (loginLink) loginLink.style.display = 'none';
+            if (registerLink) registerLink.style.display = 'none';
+            
+            // Cargar datos del usuario
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData && document.getElementById('userName')) {
+                document.getElementById('userName').textContent = userData.name || 'Usuario';
+                document.getElementById('userEmail').textContent = userData.email || 'usuario@ejemplo.com';
+            }
+        } else {
+            // Usuario no logueado
+            if (userMenu) userMenu.style.display = 'none';
+            if (loginLink) loginLink.style.display = 'block';
+            if (registerLink) registerLink.style.display = 'block';
+        }
+    }
+    
+    // Ejecutar al cargar
+    checkAuthState();
+});
 function checkAuthState() {
     const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
     const userMenu = document.getElementById('userMenuContainer');
@@ -375,3 +391,25 @@ document.addEventListener('DOMContentLoaded', function() {
         checkAuthState();
     });
 });
+// Código de depuración (añádelo al final de main.js)
+console.log("Script cargado");
+
+const userMenuTrigger = document.getElementById('userMenuTrigger');
+const userMenuDropdown = document.getElementById('userMenuDropdown');
+
+if (userMenuTrigger) {
+    console.log("Elemento userMenuTrigger encontrado");
+    userMenuTrigger.addEventListener('click', function() {
+        console.log("Clic en userMenuTrigger");
+        if (userMenuDropdown) {
+            console.log("Mostrando/ocultando menú");
+            userMenuDropdown.classList.toggle('show');
+        }
+    });
+} else {
+    console.error("Elemento userMenuTrigger NO encontrado");
+}
+
+if (!userMenuDropdown) {
+    console.error("Elemento userMenuDropdown NO encontrado");
+}

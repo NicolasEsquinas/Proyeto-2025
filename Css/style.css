@@ -1720,8 +1720,10 @@ section {
 
 .user-avatar {
     display: flex;
+    height: 36px;
+    width: 60px;
     align-items: center;
-    gap: 8px;
+    gap: 3px;
     cursor: pointer;
     padding: 5px 10px 5px 5px;
     border-radius: 50px;
@@ -1734,14 +1736,14 @@ section {
 }
 
 .user-avatar img {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .user-avatar i {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     color: var(--dark-color);
     transition: var(--transition);
 }
@@ -1771,4 +1773,46 @@ section {
     visibility: visible;
     transform: translateY(0);
 }
+.user-icon {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-right: 8px;
+}
 
+.user-icon-lg {
+    font-size: 50px;
+    color: var(--primary-color);
+    margin-right: 15px;
+}
+
+.profile-icon {
+    font-size: 120px;
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Eliminar estilos de imagen de perfil anterior */
+.user-avatar img,
+.user-info img,
+.profile-avatar img {
+    display: none;
+    height: auto;
+    width: 30vh;
+}
+
+/* Ajustar alineación */
+.user-info,
+.profile-header {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    gap: 15px;
+}
+
+.profile-header {
+    gap: 30px;
+    text-align: left;
+}
