@@ -1,33 +1,39 @@
 // Preloader
 window.addEventListener('load', function() {
     const preloader = document.querySelector('.preloader');
-    preloader.style.opacity = '0';
-    setTimeout(() => {
-        preloader.style.display = 'none';
-    }, 500);
+    if (preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            // Mostrar modal premium después del preloader
+            showWelcomePremiumModal();
+        }, 500);
+    }
 });
 
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 
-hamburger.addEventListener('click', function() {
-    this.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    
-    // Toggle body overflow when menu is open
-    if (navLinks.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
-});
+if (hamburger && navLinks) {
+    hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        
+        // Toggle body overflow when menu is open
+        if (navLinks.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
+}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
+        if (hamburger) hamburger.classList.remove('active');
+        if (navLinks) navLinks.classList.remove('active');
         document.body.style.overflow = '';
     });
 });
@@ -53,87 +59,95 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Header scroll effect
 window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
+    if (header) {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     }
 });
 
 // Back to top button
 const backToTopBtn = document.querySelector('.back-to-top');
-window.addEventListener('scroll', function() {
-    if (window.scrollY > 300) {
-        backToTopBtn.classList.add('visible');
-    } else {
-        backToTopBtn.classList.remove('visible');
-    }
-});
-
-backToTopBtn.addEventListener('click', function() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (backToTopBtn) {
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
     });
-});
+
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // Accordion functionality
 const accordionItems = document.querySelectorAll('.accordion-item');
 accordionItems.forEach(item => {
     const header = item.querySelector('.accordion-header');
-    
-    header.addEventListener('click', () => {
-        const currentlyActive = document.querySelector('.accordion-item.active');
-        
-        // Close currently active item if it's not the one being clicked
-        if (currentlyActive && currentlyActive !== item) {
-            currentlyActive.classList.remove('active');
-        }
-        
-        // Toggle current item
-        item.classList.toggle('active');
-    });
+    if (header) {
+        header.addEventListener('click', () => {
+            const currentlyActive = document.querySelector('.accordion-item.active');
+            
+            // Close currently active item if it's not the one being clicked
+            if (currentlyActive && currentlyActive !== item) {
+                currentlyActive.classList.remove('active');
+            }
+            
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    }
 });
 
 // FAQ functionality
 const faqItems = document.querySelectorAll('.faq-item');
 faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    
-    question.addEventListener('click', () => {
-        const currentlyActive = document.querySelector('.faq-item.active');
-        
-        // Close currently active item if it's not the one being clicked
-        if (currentlyActive && currentlyActive !== item) {
-            currentlyActive.classList.remove('active');
-        }
-        
-        // Toggle current item
-        item.classList.toggle('active');
-    });
+    if (question) {
+        question.addEventListener('click', () => {
+            const currentlyActive = document.querySelector('.faq-item.active');
+            
+            // Close currently active item if it's not the one being clicked
+            if (currentlyActive && currentlyActive !== item) {
+                currentlyActive.classList.remove('active');
+            }
+            
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    }
 });
 
 // Tab functionality
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const tabId = tab.getAttribute('data-tab');
-        
-        // Update active tab
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        
-        // Show corresponding content
-        tabContents.forEach(content => {
-            content.classList.remove('active');
-            if (content.getAttribute('data-tab') === tabId) {
-                content.classList.add('active');
-            }
+if (tabs && tabContents) {
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Show corresponding content
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.getAttribute('data-tab') === tabId) {
+                    content.classList.add('active');
+                }
+            });
         });
     });
-});
+}
 
 // Animate stats numbers
 const animateStats = () => {
@@ -180,7 +194,6 @@ document.querySelectorAll('.animate-on-scroll').forEach(section => {
     observer.observe(section);
 });
 
-
 if (document.getElementById('particles-js')) {
     particlesJS('particles-js', {
         particles: {
@@ -207,7 +220,6 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-       
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
@@ -244,172 +256,153 @@ if (newsletterForm) {
         }, 1500);
     });
 }
-// main.js (actualizado)
 
-// ... (código existente previo)
+// Funciones para el modal premium
+function showWelcomePremiumModal() {
+    const welcomeModal = document.getElementById('welcomePremiumModal');
+    if (welcomeModal) {
+        welcomeModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
 
-// Añadir al final del archivo existente:
+function closeWelcomePremiumModal() {
+    const welcomeModal = document.getElementById('welcomePremiumModal');
+    if (welcomeModal) {
+        welcomeModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
 
-// Manejo del menú de usuario (versión mejorada)
+// Inicialización cuando el DOM esté cargado
 document.addEventListener('DOMContentLoaded', function() {
+    // Configurar cierre del modal premium
+    const closeButton = document.getElementById('closeWelcomeModal');
+    const welcomeModal = document.getElementById('welcomePremiumModal');
+    
+    if (closeButton) {
+        closeButton.addEventListener('click', closeWelcomePremiumModal);
+    }
+    
+    if (welcomeModal) {
+        welcomeModal.addEventListener('click', function(e) {
+            if (e.target === welcomeModal) {
+                closeWelcomePremiumModal();
+            }
+        });
+    }
+    
+    // Elementos del menú de usuario
     const userMenuTrigger = document.getElementById('userMenuTrigger');
     const userMenuDropdown = document.getElementById('userMenuDropdown');
+    const authActionBtn = document.getElementById('authActionBtn');
+    const profileOption = document.getElementById('profileOption');
+    const premiumFeatures = document.querySelectorAll('.premium-feature');
     
-    if (userMenuTrigger && userMenuDropdown) {
+    // Alternar menú desplegable
+    if (userMenuTrigger) {
         userMenuTrigger.addEventListener('click', function(e) {
             e.stopPropagation();
             userMenuDropdown.classList.toggle('show');
-            
-            // Rotar la flecha
-            const chevron = this.querySelector('.fa-chevron-down');
-            chevron.style.transform = userMenuDropdown.classList.contains('show') 
-                ? 'rotate(180deg)' 
-                : 'rotate(0deg)';
-        });
-        
-        // Cerrar menú al hacer clic en cualquier parte del documento
-        document.addEventListener('click', function(e) {
-            if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
-                userMenuDropdown.classList.remove('show');
-                const chevron = userMenuTrigger.querySelector('.fa-chevron-down');
-                chevron.style.transform = 'rotate(0deg)';
-            }
         });
     }
-    
-    // Manejo del logout
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Eliminar datos de sesión
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userData');
-            sessionStorage.removeItem('authToken');
-            
-            // Redirigir a home
-            window.location.href = 'index.html';
-        });
-    }
-    
-    // Verificar estado de autenticación
-    function checkAuthState() {
-        const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-        const userMenu = document.getElementById('userMenuContainer');
-        const loginLink = document.getElementById('loginLink');
-        const registerLink = document.getElementById('registerLink');
-        
-        if (authToken) {
-            // Usuario logueado
-            if (userMenu) userMenu.style.display = 'block';
-            if (loginLink) loginLink.style.display = 'none';
-            if (registerLink) registerLink.style.display = 'none';
-            
-            // Cargar datos del usuario
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            if (userData && document.getElementById('userName')) {
-                document.getElementById('userName').textContent = userData.name || 'Usuario';
-                document.getElementById('userEmail').textContent = userData.email || 'usuario@ejemplo.com';
-            }
-        } else {
-            // Usuario no logueado
-            if (userMenu) userMenu.style.display = 'none';
-            if (loginLink) loginLink.style.display = 'block';
-            if (registerLink) registerLink.style.display = 'block';
-        }
-    }
-    
-    // Ejecutar al cargar
-    checkAuthState();
-});
-function checkAuthState() {
-    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-    const userMenu = document.getElementById('userMenuContainer');
-    const loginLink = document.getElementById('loginLink');
-    const registerLink = document.getElementById('registerLink');
-    
-    if (authToken) {
-        // Usuario logueado - mostrar menú de usuario
-        if (userMenu) userMenu.style.display = 'block';
-        if (loginLink) loginLink.style.display = 'none';
-        if (registerLink) registerLink.style.display = 'none';
-        
-        // Cargar datos del usuario
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if (userData) {
-            document.getElementById('userName').textContent = userData.name;
-            document.getElementById('userEmail').textContent = userData.email;
-            document.getElementById('headerAvatar').src = userData.avatar || 'images/doctor-avatar.png';
-            document.getElementById('dropdownAvatar').src = userData.avatar || 'images/doctor-avatar.png';
-        }
-    } else {
-        // Usuario no logueado - mostrar botones de login/register
-        if (userMenu) userMenu.style.display = 'none';
-        if (loginLink) loginLink.style.display = 'block';
-        if (registerLink) registerLink.style.display = 'block';
-    }
-}
-
-// Manejar el menú desplegable
-if (document.getElementById('userMenuTrigger')) {
-    const userMenuTrigger = document.getElementById('userMenuTrigger');
-    const userMenuDropdown = document.getElementById('userMenuDropdown');
-    
-    userMenuTrigger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        userMenuDropdown.classList.toggle('show');
-    });
     
     // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function() {
-        userMenuDropdown.classList.remove('show');
-    });
-}
-
-// Manejar logout
-if (document.getElementById('logoutBtn')) {
-    document.getElementById('logoutBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Eliminar datos de sesión
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userData');
-        sessionStorage.removeItem('authToken');
-        
-        // Redirigir a home y recargar
-        window.location.href = 'index.html';
-    });
-}
-
-// Verificar estado al cargar
-document.addEventListener('DOMContentLoaded', function() {
-    checkAuthState();
-    
-    // Actualizar cada vez que cambia el almacenamiento (por si se hace login en otra pestaña)
-    window.addEventListener('storage', function() {
-        checkAuthState();
-    });
-});
-// Código de depuración (añádelo al final de main.js)
-console.log("Script cargado");
-
-const userMenuTrigger = document.getElementById('userMenuTrigger');
-const userMenuDropdown = document.getElementById('userMenuDropdown');
-
-if (userMenuTrigger) {
-    console.log("Elemento userMenuTrigger encontrado");
-    userMenuTrigger.addEventListener('click', function() {
-        console.log("Clic en userMenuTrigger");
-        if (userMenuDropdown) {
-            console.log("Mostrando/ocultando menú");
-            userMenuDropdown.classList.toggle('show');
+    document.addEventListener('click', function(e) {
+        if (userMenuTrigger && userMenuDropdown) {
+            if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                userMenuDropdown.classList.remove('show');
+            }
         }
     });
-} else {
-    console.error("Elemento userMenuTrigger NO encontrado");
-}
-
-if (!userMenuDropdown) {
-    console.error("Elemento userMenuDropdown NO encontrado");
-}
+    
+    // Manejar clic en "Mi perfil"
+    if (profileOption) {
+        profileOption.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'profile.html';
+        });
+    }
+    
+    // Manejar clic en características premium
+    if (premiumFeatures) {
+        premiumFeatures.forEach(feature => {
+            feature.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isAuthenticated = false;
+                const isPremium = false;
+                
+                if (!isAuthenticated) {
+                    alert('Por favor inicia sesión para acceder a esta función');
+                } else if (!isPremium) {
+                    alert('Esta función requiere una suscripción premium');
+                } else {
+                    const featurePage = this.getAttribute('data-feature') + '.html';
+                    window.location.href = featurePage;
+                }
+            });
+        });
+    }
+    
+    // Botón de autenticación
+    if (authActionBtn) {
+        authActionBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const isAuthenticated = false;
+            
+            if (isAuthenticated) {
+                localStorage.removeItem('authToken');
+                sessionStorage.removeItem('authToken');
+                location.reload();
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+    }
+    
+    // Función para verificar estado de autenticación
+    function checkAuthState() {
+        const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+        const authActionBtn = document.getElementById('authActionBtn');
+        const userMenuContainer = document.querySelector('.user-menu-container');
+        
+        if (authToken) {
+            if (authActionBtn) {
+                authActionBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Cerrar sesión';
+            }
+            
+            if (userMenuContainer) userMenuContainer.classList.add('user-logged-in');
+            
+            const userData = JSON.parse(localStorage.getItem('userData')) || {
+                name: 'Usuario',
+                email: 'usuario@ejemplo.com'
+            };
+            
+            if (document.getElementById('userName')) {
+                document.getElementById('userName').textContent = userData.name;
+            }
+            if (document.getElementById('userEmail')) {
+                document.getElementById('userEmail').textContent = userData.email;
+            }
+            
+            return true;
+        } else {
+            if (authActionBtn) {
+                authActionBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
+            }
+            
+            if (userMenuContainer) userMenuContainer.classList.remove('user-logged-in');
+            if (document.getElementById('userName')) {
+                document.getElementById('userName').textContent = 'Invitado';
+            }
+            if (document.getElementById('userEmail')) {
+                document.getElementById('userEmail').textContent = 'No has iniciado sesión';
+            }
+            
+            return false;
+        }
+    }
+    
+    // Iniciar verificación de autenticación
+    checkAuthState();
+});
