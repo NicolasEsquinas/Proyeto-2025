@@ -248,6 +248,7 @@ function logoutUser() {
     sessionStorage.removeItem('authToken');
     
     // Redirigir a login
+    [_Z 
     window.location.href = 'login.html';
 }
 
