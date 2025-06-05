@@ -237,7 +237,7 @@ function simulateRegister(name, email, password) {
         alert('¡Cuenta creada con éxito! Redirigiendo...');
         
         // Redirigir a completar perfil
-        window.location.href = '/index/profile.html';
+        window.location.href = 'profile.html';
     }, 1500);
 }
 
@@ -248,13 +248,15 @@ function logoutUser() {
     sessionStorage.removeItem('authToken');
     
     // Redirigir a login
-    window.location.href = '/auth/login.html';
+    window.location.href = 'login.html';
 }
 
-
+// Verificar autenticación al cargar la página
+function checkAuth() {
+    const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
     
-    if (!authToken && window.location.pathname.includes('/index/profile.html')) {
-        window.location.href = '/auth/login.html';
+    if (!authToken && window.location.pathname.includes('profile.html')) {
+        window.location.href = 'login.html';
     }
     
     if (authToken) {

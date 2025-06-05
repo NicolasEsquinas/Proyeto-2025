@@ -1,11 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<!DOCTYPE html>    
+    
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DermaScan | Detección Avanzada de Dermatitis Atópica</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="/Css/animations.css">
+        <link rel="stylesheet" href="/Css/style.css">
+        <link rel="stylesheet" href="/JS/Main.js">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+        <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+    </head>
 <body>
     
+ <!-- Modal de bienvenida premium -->
+ <div class="welcome-premium-modal" id="welcomePremiumModal">
+    <div class="welcome-premium-content">
+        <span class="close-modal" id="closeWelcomeModal">&times;</span>
+        <div class="modal-header">
+            <i class="fas fa-crown"></i>
+            <h3>Actualiza a Premium</h3>
+        </div>
+        <div class="modal-body">
+            <p>¡Bienvenido a DermaScan! Descubre todas las ventajas de nuestra versión Premium:</p>
+            <ul class="premium-features-list">
+                <li><i class="fas fa-check"></i> Historial ilimitado de escaneos</li>
+                <li><i class="fas fa-check"></i> Consultas con dermatólogos certificados</li>
+                <li><i class="fas fa-check"></i> Análisis avanzados con IA</li>
+                <li><i class="fas fa-check"></i> Sin anuncios</li>
+                <li><i class="fas fa-check"></i> Resultados prioritarios</li>
+            </ul>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <h4>Mensual</h4>
+                    <p class="price">$9.99<span>/mes</span></p>
+                    <button class="btn btn-secondary">Seleccionar</button>
+                </div>
+                <div class="pricing-option popular">
+                    <div class="popular-badge">MÁS POPULAR</div>
+                    <h4>Anual</h4>
+                    <p class="price">$99.99<span>/año</span></p>
+                    <p class="savings">¡Ahorra $20!</p>
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+ <!-- Header con efecto glassmorphism -->
+ <header class="header">
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo" style="margin-left: -220px;">
+                <img src="/images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo" class="logo-spin">
+                <span class="logo-text">DermaScan</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link-hover">La Enfermedad</a></li>
+                <li><a href="#detection" class="nav-link-hover">Detección</a></li>
+                <li><a href="#symptoms" class="nav-link-hover">Síntomas</a></li>
+                <li><a href="#treatment" class="nav-link-hover">Tratamiento</a></li>
+                <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
+                <li><a href="#contact" class="nav-link-hover">Contacto</a></li></ul>
+
+                <div class="user-menu-container" style="margin-right: -329px;">
+    <div class="user-menu-trigger" id="userMenuTrigger">
+        <div class="user-avatar">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+            </svg>
+        </div>
+    </div>
+    <div class="user-menu-dropdown" id="userMenuDropdown">
+        <div class="user-info" id="userInfoSection">
+            <div class="dropdown-avatar">
+                <svg class="profile-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                </svg>
+            </div>
+            <div>
+                <h4 id="userName">Invitado</h4>
+                <p id="userEmail">No has iniciado sesión</p>
+            </div>
+        </div>
+        <ul class="user-menu-options">
+            <li><a href="index/profile.html" class="menu-option" id="profileOption"><i class="fas fa-user"></i> Mi perfil</a></li>
+            <li><a href="#" class="menu-option"><i class="fas fa-question-circle"></i> Ayuda</a></li>
+            <li><a href="/index/historial.html" class="menu-option premium-feature" data-feature="scans"><i class="fas fa-history"></i> Historial de Escaneos <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
+            <li><a href="#" class="menu-option premium-feature" data-feature="pro-help"><i class="fas fa-user-md"></i> Ayuda de profesionales <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
+            <li><a href="/auth/login.html   " id="authActionBt" class="menu-option"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a></li>
+        </ul>
+    </div>
+</div>
+            
+            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+        </svg>
+    </div>
+</div>
+<!-- Botón de perfil -->
+
+
+<div class="hamburger">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+</div>
+</nav>
+</div>
+</header>
+<br>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="JS/Main.js"></script>
+    <script src="JS/detection.js"></script>
+    <script src="JS/animations.js"></script>
 </body>
 </html>

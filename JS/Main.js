@@ -327,11 +327,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const isPremium = false;
                 
                 if (!isAuthenticated) {
-                    alert('Por favor inicia sesión para acceder a esta función');
-                } else if (!isPremium) {
-                    alert('Esta función requiere una suscripción premium');
-                } else {
-                    const featurePage = this.getAttribute('data-feature') + '.html';
+                    
+                    const featurePage = 'index/historial.html';
                     window.location.href = featurePage;
                 }
             });
