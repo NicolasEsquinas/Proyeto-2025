@@ -673,15 +673,15 @@
 
         .search-button {
             position: absolute;
-            right: 10px;
-            top: 50%;
+           right: 120px;
+            top: 30px;
             transform: translateY(-50%);
             background: var(--gradient);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 60%;
+            height: 60px;
+            border-radius: 20px;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -1111,9 +1111,10 @@
                 <h1 class="animate">Centro de Ayuda</h1>
                 <p class="animate delay-1">Estamos aquí para ayudarte en cada paso de tu experiencia con DermaScan. Encuentra respuestas a tus preguntas o contacta con nuestro equipo de expertos.</p>
                 <div class="search-container animate delay-2">
-                    <input type="text" class="search-box" placeholder="Buscar en la ayuda...">
-                    <button class="search-button"><i class="fas fa-search"></i></button>
-                </div>
+                    
+                    <button class="search-button" id="Pro-Contact-button"><a href="/test.html"> <p style="color:#eee; margin-bottom: -2px; font-size:19 px; font-family: 'Poppins', sans-serif;">Contactar con un profesional</p></a></button>
+                </div> 
+                
             </div>
         </section>
 
@@ -1434,81 +1435,6 @@
     </button>
     </main>
     
-   
-
-    <script>
-        // Document ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Alternar menú desplegable de usuario
-            const userMenuTrigger = document.getElementById('userMenuTrigger');
-            const userMenuDropdown = document.getElementById('userMenuDropdown');
-            
-            if (userMenuTrigger) {
-                userMenuTrigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    userMenuDropdown.classList.toggle('show');
-                });
-            }
-            
-            // Cerrar menú al hacer clic fuera
-            document.addEventListener('click', function(e) {
-                if (userMenuTrigger && userMenuDropdown) {
-                    if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
-                        userMenuDropdown.classList.remove('show');
-                    }
-                }
-            });
-            
-            // Alternar acordeón de preguntas frecuentes
-            const faqItems = document.querySelectorAll('.faq-item');
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                question.addEventListener('click', () => {
-                    item.classList.toggle('active');
-                });
-            });
-            
-            // Scroll para header
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('.header');
-                if (header) {
-                    if (window.scrollY > 50) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
-                    }
-                }
-            });
-            
-            // Animaciones al hacer scroll
-            function animateOnScroll() {
-                const elements = document.querySelectorAll('.animate');
-                elements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight * 0.8;
-                    
-                    if (elementPosition < screenPosition) {
-                        element.style.animationPlayState = 'running';
-                    }
-                });
-            }
-            
-            // Inicializar animaciones
-            window.addEventListener('scroll', animateOnScroll);
-            animateOnScroll();
-            
-            // Menú hamburguesa
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (hamburger) {
-                hamburger.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                });
-            }
-        });
-    </script>
      <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
      <script src="/JS/Main.js"></script>
      <script src="/JS/animations.js"></script>
