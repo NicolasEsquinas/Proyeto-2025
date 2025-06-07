@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaScan - Contactar con Profesionales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="/Css/animations.css">
+        <link rel="stylesheet" href="/Css/style.css">
+        <link rel="stylesheet" href="/JS/Main.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Mantenemos todos tus estilos anteriores */
+        /* Solo añadimos estilos específicos para esta nueva página */
+        
+        /* Hero Section para profesionales */
+        .pro-hero {
+            padding: 100px 0 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.15), rgba(0, 212, 255, 0.15));
+            border-radius: 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pro-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?q=80&w=2070') center/cover no-repeat;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .pro-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pro-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark-color);
+        }
+        
+        /* Opciones de contacto */
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 40px 25px;
+            position: relative;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .contact-card p {
+            color: #666;
+            margin-bottom: 25px;
+            min-height: 80px;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ffd700, #ffb700);
+            color: #7a5800;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Profesionales disponibles */
+        .professionals-section {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.03), rgba(0, 212, 255, 0.03));
+            border-radius: 20px;
+            padding: 60px;
+            margin: 40px 0;
+        }
+        
+        .professionals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .professional-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .professional-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .professional-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .professional-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            margin-right: 15px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .professional-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .professional-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .professional-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .professional-body {
+            padding: 20px;
+        }
+        
+        .professional-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .specialties {
+            margin: 15px 0;
+        }
+        
+        .specialties-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+        }
+        
+        .specialties-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .specialty {
+            background: rgba(106, 90, 205, 0.1);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .availability {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            color: #28a745;
+            font-weight: 500;
+        }
+        
+        .availability i {
+            margin-right: 8px;
+        }
+        
+        .professional-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .rating i {
+            color: gold;
+            margin-right: 5px;
+        }
+        
+        .rating span {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        /* Calendario de citas */
+        .appointment-section {
+            margin: 60px 0;
+        }
+        
+        .calendar-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-navigation {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding: 10px 0;
+        }
+        
+        .calendar-day {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-day:hover {
+            background: rgba(106, 90, 205, 0.1);
+        }
+        
+        .calendar-day.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .calendar-day.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .time-slot {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .time-slot:hover {
+            background: rgba(106, 90, 205, 0.1);
+        }
+        
+        .time-slot.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .time-slot.booked {
+            background: #ffebee;
+            color: #f44336;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        
+        /* Modal de confirmación */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .confirmation-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .confirmation-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .confirmation-header i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .confirmation-body {
+            margin-bottom: 25px;
+        }
+        
+        .confirmation-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-row {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .confirmation-label {
+            width: 120px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .confirmation-value {
+            flex: 1;
+        }
+        
+        .confirmation-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Chat de soporte */
+        .chat-support {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(106, 90, 205, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(106, 90, 205, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(106, 90, 205, 0); }
+        }
+        
+        .chat-container {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            height: 450px;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-status {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4caf50;
+            margin-right: 8px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .message.received {
+            background: #f0f4ff;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.sent {
+            background: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .chat-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        /* Estilos responsive */
+        @media (max-width: 992px) {
+            .professionals-section {
+                padding: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .pro-hero {
+                padding: 80px 0 40px;
+            }
+            
+            .pro-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .professionals-section {
+                padding: 30px 20px;
+            }
+            
+            .calendar-container {
+                padding: 20px;
+            }
+            
+            .chat-container {
+                width: 300px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal de bienvenida premium -->
+    <div class="welcome-premium-modal" id="welcomePremiumModal">
+        <div class="welcome-premium-content">
+            <span class="close-modal" id="closeWelcomeModal">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-crown"></i>
+                <h3>Actualiza a Premium</h3>
+            </div>
+            <div class="modal-body">
+                <p>¡Bienvenido a DermaScan! Descubre todas las ventajas de nuestra versión Premium:</p>
+                <ul class="premium-features-list">
+                    <li><i class="fas fa-check"></i> Historial ilimitado de escaneos</li>
+                    <li><i class="fas fa-check"></i> Consultas con dermatólogos certificados</li>
+                    <li><i class="fas fa-check"></i> Análisis avanzados con IA</li>
+                    <li><i class="fas fa-check"></i> Sin anuncios</li>
+                    <li><i class="fas fa-check"></i> Resultados prioritarios</li>
+                </ul>
+                <div class="pricing-options">
+                    <div class="pricing-option">
+                        <h4>Mensual</h4>
+                        <p class="price">$9.99<span>/mes</span></p>
+                        <button class="btn btn-secondary">Seleccionar</button>
+                    </div>
+                    <div class="pricing-option popular">
+                        <div class="popular-badge">MÁS POPULAR</div>
+                        <h4>Anual</h4>
+                        <p class="price">$99.99<span>/año</span></p>
+                        <p class="savings">¡Ahorra $20!</p>
+                        <button class="btn btn-primary">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header con efecto glassmorphism -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" style="margin-left: -220px;">
+                    <img src="/images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo" class="logo-spin">
+                    <span class="logo-text">DermaScan</span>
+                </a>
+
+                <div class="user-menu-container" style="margin-right: -230px;>
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar">
+                            <svg class="profile-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="user-menu-dropdown" id="userMenuDropdown">
+                        <div class="user-info" id="userInfoSection">
+                            <div class="dropdown-avatar">
+                                <svg class="profile-icon" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 id="userName">Invitado</h4>
+                                <p id="userEmail">No has iniciado sesión</p>
+                            </div>
+                        </div>
+                        <ul class="user-menu-options">
+                            <li><a href="/index-principal.html" class="menu-option" id="profileOption"><i class="fas fa-user"></i> Mi perfil</a></li>
+                            <li><a href="/index-principal.html" class="menu-option"><i class="fas fa-info-circle"></i>Inicio</a></li>
+                            <li><a href="/index/historial.html" class="menu-option premium-feature" data-feature="scans"><i class="fas fa-history"></i> Historial de Escaneos <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
+                            <li><a href="#" class="menu-option premium-feature" data-feature="pro-help"><i class="fas fa-user-md"></i> Ayuda de profesionales <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
+                            <li><a href="/auth/login.html" id="authActionBt" class="menu-option"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal - Contactar con Profesionales -->
+    <main style="padding-top: 100px;">
+        <!-- Hero Section -->
+        <section class="pro-hero">
+            <div class="container">
+                <h1 class="animate">Consulta con Dermatólogos Expertos</h1>
+                <p class="animate delay-1">Conéctate con especialistas certificados para diagnóstico, tratamiento y seguimiento personalizado de tu condición dermatológica.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Opciones de contacto -->
+            <section class="contact-options">
+                <div class="contact-card animate">
+                    <div class="contact-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Consulta por Videollamada</h3>
+                    <p>Habla en tiempo real con un dermatólogo certificado desde la comodidad de tu hogar.</p>
+                    <button class="btn btn-primary">Agendar Videoconsulta</button>
+                </div>
+                
+                <div class="contact-card animate delay-1">
+                    <div class="contact-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Chat con Especialista</h3>
+                    <p>Resuelve tus dudas mediante nuestro chat seguro con respuesta en menos de 15 minutos.</p>
+                    <button class="btn btn-primary" id="openChatBtn">Iniciar Chat</button>
+                </div>
+                
+                <div class="contact-card animate delay-2">
+                    <div class="contact-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Cita Presencial</h3>
+                    <p>Encuentra dermatólogos cerca de ti y reserva tu cita en una clínica asociada.</p>
+                    <button class="btn btn-primary">Buscar Clínicas</button>
+                </div>
+                
+                <div class="contact-card animate delay-3">
+                    <div class="contact-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3>Segunda Opinión</h3>
+                    <p>Envía tus resultados y recibe un análisis detallado de nuestro equipo médico.</p>
+                    <span class="premium-badge">PREMIUM</span>
+                    <button class="btn btn-secondary">Solicitar Opinión</button>
+                </div>
+            </section>
+
+            <!-- Profesionales disponibles -->
+            <section class="professionals-section">
+                <div class="section-header">
+                    <h2 class="section-title">Nuestros Dermatólogos</h2>
+                    <p class="section-subtitle">Especialistas certificados disponibles ahora</p>
+                    <div class="divider"></div>
+                </div>
+                
+                <div class="professionals-grid">
+                    <div class="professional-card animate">
+                        <div class="professional-header">
+                            <div class="professional-avatar">
+                                <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070" alt="Dra. Laura Martínez">
+                            </div>
+                            <div class="professional-info">
+                                <h3>Dra. Laura Martínez</h3>
+                                <p>Dermatóloga Pediátrica</p>
+                            </div>
+                        </div>
+                        <div class="professional-body">
+                            <div class="professional-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">15+</div>
+                                    <div class="stat-label">Años Exp.</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">97%</div>
+                                    <div class="stat-label">Satisfacción</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">4.9</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                            
+                            <div class="specialties">
+                                <div class="specialties-title">Especialidades:</div>
+                                <div class="specialties-list">
+                                    <span class="specialty">Dermatitis Atópica</span>
+                                    <span class="specialty">Psoriasis</span>
+                                    <span class="specialty">Pediatría</span>
+                                </div>
+                            </div>
+                            
+                            <div class="availability">
+                                <i class="fas fa-circle"></i> Disponible ahora
+                            </div>
+                        </div>
+                        <div class="professional-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9</span>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Consultar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card animate delay-1">
+                        <div class="professional-header">
+                            <div class="professional-avatar">
+                                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070" alt="Dr. Carlos Rodríguez">
+                            </div>
+                            <div class="professional-info">
+                                <h3>Dr. Carlos Rodríguez</h3>
+                                <p>Dermatólogo Clínico</p>
+                            </div>
+                        </div>
+                        <div class="professional-body">
+                            <div class="professional-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">12+</div>
+                                    <div class="stat-label">Años Exp.</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">95%</div>
+                                    <div class="stat-label">Satisfacción</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">4.8</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                            
+                            <div class="specialties">
+                                <div class="specialties-title">Especialidades:</div>
+                                <div class="specialties-list">
+                                    <span class="specialty">Eccema</span>
+                                    <span class="specialty">Alergias</span>
+                                    <span class="specialty">Tratamientos</span>
+                                </div>
+                            </div>
+                            
+                            <div class="availability">
+                                <i class="fas fa-circle"></i> Disponible en 30 min
+                            </div>
+                        </div>
+                        <div class="professional-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Consultar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="professional-card animate delay-2">
+                        <div class="professional-header">
+                            <div class="professional-avatar">
+                                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1964" alt="Dra. Sofía Vargas">
+                            </div>
+                            <div class="professional-info">
+                                <h3>Dra. Sofía Vargas</h3>
+                                <p>Dermatóloga Estética</p>
+                            </div>
+                        </div>
+                        <div class="professional-body">
+                            <div class="professional-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">8+</div>
+                                    <div class="stat-label">Años Exp.</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">98%</div>
+                                    <div class="stat-label">Satisfacción</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">4.9</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                            
+                            <div class="specialties">
+                                <div class="specialties-title">Especialidades:</div>
+                                <div class="specialties-list">
+                                    <span class="specialty">Dermatitis</span>
+                                    <span class="specialty">Cuidado Piel</span>
+                                    <span class="specialty">Estética</span>
+                                </div>
+                            </div>
+                            
+                            <div class="availability">
+                                <i class="fas fa-circle"></i> Disponible mañana
+                            </div>
+                        </div>
+                        <div class="professional-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9</span>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Consultar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calendario de citas -->
+            <section class="appointment-section">
+                <div class="section-header">
+                    <h2 class="section-title">Agenda tu Cita</h2>
+                    <p class="section-subtitle">Selecciona fecha y hora para tu consulta</p>
+                    <div class="divider"></div>
+                </div>
+                
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h3>Junio 2025</h3>
+                        <div class="calendar-navigation">
+                            <button class="btn btn-sm btn-secondary"><i class="fas fa-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-secondary">Hoy</button>
+                            <button class="btn btn-sm btn-secondary"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Lun</div>
+                        <div class="calendar-day-header">Mar</div>
+                        <div class="calendar-day-header">Mié</div>
+                        <div class="calendar-day-header">Jue</div>
+                        <div class="calendar-day-header">Vie</div>
+                        <div class="calendar-day-header">Sáb</div>
+                        <div class="calendar-day-header">Dom</div>
+                        
+                        <!-- Días del mes -->
+                        <div class="calendar-day disabled">26</div>
+                        <div class="calendar-day disabled">27</div>
+                        <div class="calendar-day disabled">28</div>
+                        <div class="calendar-day disabled">29</div>
+                        <div class="calendar-day disabled">30</div>
+                        <div class="calendar-day disabled">31</div>
+                        <div class="calendar-day">1</div>
+                        
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day selected">14</div>
+                        <div class="calendar-day">15</div>
+                        
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day">29</div>
+                        
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day disabled">1</div>
+                        <div class="calendar-day disabled">2</div>
+                        <div class="calendar-day disabled">3</div>
+                        <div class="calendar-day disabled">4</div>
+                        <div class="calendar-day disabled">5</div>
+                        <div class="calendar-day disabled">6</div>
+                    </div>
+                    
+                    <h4>Horarios Disponibles:</h4>
+                    <div class="time-slots">
+                        <div class="time-slot">09:00 AM</div>
+                        <div class="time-slot">10:00 AM</div>
+                        <div class="time-slot">11:00 AM</div>
+                        <div class="time-slot">12:00 PM</div>
+                        <div class="time-slot booked">02:00 PM</div>
+                        <div class="time-slot">03:00 PM</div>
+                        <div class="time-slot selected">04:00 PM</div>
+                        <div class="time-slot">05:00 PM</div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button class="btn btn-primary" id="confirmAppointment">Confirmar Cita</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Chat de soporte -->
+    <div class="chat-support">
+        <div class="chat-button" id="chatButton">
+            <i class="fas fa-comment-medical"></i>
+        </div>
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div>
+                    <h4>Soporte DermaScan</h4>
+                    <div class="chat-status">
+                        <span class="status-indicator"></span>
+                        <span>En línea</span>
+                    </div>
+                </div>
+                <i class="fas fa-times" id="closeChat"></i>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message received">
+                    ¡Hola! Soy Laura, asistente de DermaScan. ¿En qué puedo ayudarte hoy?
+                </div>
+                <div class="message sent">
+                    Hola, quería consultar sobre mi diagnóstico reciente de dermatitis.
+                </div>
+                <div class="message received">
+                    Claro, puedo ayudarte con eso. ¿Te gustaría programar una cita con uno de nuestros dermatólogos o prefieres que responda tus preguntas generales?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Escribe tu mensaje...">
+                <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de confirmación -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="confirmation-content">
+            <div class="confirmation-header">
+                <i class="fas fa-calendar-check"></i>
+                <h3>¡Cita Confirmada!</h3>
+            </div>
+            <div class="confirmation-body">
+                <p>Tu consulta con nuestro especialista ha sido programada correctamente.</p>
+                
+                <div class="confirmation-details">
+                    <div class="confirmation-row">
+                        <div class="confirmation-label">Profesional:</div>
+                        <div class="confirmation-value">Dra. Laura Martínez</div>
+                    </div>
+                    <div class="confirmation-row">
+                        <div class="confirmation-label">Fecha:</div>
+                        <div class="confirmation-value">14 de Junio, 2025</div>
+                    </div>
+                    <div class="confirmation-row">
+                        <div class="confirmation-label">Hora:</div>
+                        <div class="confirmation-value">04:00 PM</div>
+                    </div>
+                    <div class="confirmation-row">
+                        <div class="confirmation-label">Modalidad:</div>
+                        <div class="confirmation-value">Videollamada</div>
+                    </div>
+                </div>
+                
+                <p>Recibirás un recordatorio por correo electrónico y SMS 24 horas antes de tu cita.</p>
+            </div>
+            <div class="confirmation-buttons">
+                <button class="btn btn-secondary" id="closeConfirmation">Cerrar</button>
+                <button class="btn btn-primary">Añadir a Calendario</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <img src="/images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo">
+                        <span>DermaScan</span>
+                    </div>
+                    <p>Tecnología avanzada para la detección temprana de dermatitis atópica y otras condiciones de la piel.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="/index-principal.html">Inicio</a></li>
+                        <li><a href="/index-principal.html">Nuevo Escaneo</a></li>
+                        <li><a href="/index/profile.html">Mi perfíl</a></li>
+                        <li><a href="/index/historial.html">Historial de Escaneos</a></li>
+                        <li><a href="#">Habla con un especialista</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contacto</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i>  Av. del Libertador 6796, C1429 Cdad. Autónoma de Buenos Aires</li>
+                        <li><i class="fas fa-phone-alt"></i> +54 9 11 5143 2012</li>
+                        <li><i class="fas fa-envelope"></i> info@dermascan.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2025 DermaScan. Todos los derechos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Funcionalidades específicas para esta página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Abrir/cerrar chat
+            const chatButton = document.getElementById('chatButton');
+            const chatContainer = document.getElementById('chatContainer');
+            const closeChat = document.getElementById('closeChat');
+            
+            chatButton.addEventListener('click', function() {
+                chatContainer.style.display = 'flex';
+            });
+            
+            closeChat.addEventListener('click', function() {
+                chatContainer.style.display = 'none';
+            });
+            
+            // Simular chat
+            const chatInput = document.getElementById('chatInput');
+            const sendMessage = document.getElementById('sendMessage');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            function addMessage(text, isReceived) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isReceived ? 'received' : 'sent');
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            sendMessage.addEventListener('click', function() {
+                if (chatInput.value.trim() !== '') {
+                    addMessage(chatInput.value, false);
+                    chatInput.value = '';
+                    
+                    // Simular respuesta automática
+                    setTimeout(function() {
+                        addMessage('Gracias por tu mensaje. Un especialista se pondrá en contacto contigo en breve para ayudarte con tu consulta.', true);
+                    }, 1000);
+                }
+            });
+            
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage.click();
+                }
+            });
+            
+            // Selección de día/hora
+            const days = document.querySelectorAll('.calendar-day:not(.disabled)');
+            const timeSlots = document.querySelectorAll('.time-slot:not(.booked)');
+            
+            days.forEach(day => {
+                day.addEventListener('click', function() {
+                    document.querySelector('.calendar-day.selected')?.classList.remove('selected');
+                    this.classList.add('selected');
+                });
+            });
+            
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    document.querySelector('.time-slot.selected')?.classList.remove('selected');
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Confirmación de cita
+            const confirmBtn = document.getElementById('confirmAppointment');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const closeConfirmation = document.getElementById('closeConfirmation');
+            
+            confirmBtn.addEventListener('click', function() {
+                const selectedDay = document.querySelector('.calendar-day.selected');
+                const selectedTime = document.querySelector('.time-slot.selected');
+                
+                if (selectedDay && selectedTime) {
+                    confirmationModal.style.display = 'flex';
+                } else {
+                    alert('Por favor selecciona una fecha y hora para tu cita');
+                }
+            });
+            
+            closeConfirmation.addEventListener('click', function() {
+                confirmationModal.style.display = 'none';
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', function(e) {
+                if (e.target === confirmationModal) {
+                    confirmationModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/JS/Main.js"></script>
+<script src="/JS/animations.js"></script>
+<script src="/JS/auth.js"></script>
+</body>
+</html>
