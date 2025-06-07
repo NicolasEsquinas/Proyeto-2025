@@ -1,56 +1,1146 @@
-<!DOCTYPE html>    
-    
+<!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DermaScan | Detección Avanzada de Dermatitis Atópica</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-        <link rel="stylesheet" href="/Css/animations.css">
-        <link rel="stylesheet" href="/Css/style.css">
-        <link rel="stylesheet" href="/JS/Main.js">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-        <link rel="icon" href="images/logo.svg" type="image/svg+xml">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaScan - Historial de Escaneos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+       /* Variables y estilos base */
+:root {
+    --primary-color: #6a5acd;
+    --primary-dark: #483d8b;
+    --secondary-color: #ff7e5f;
+    --secondary-dark: #e66a4d;
+    --accent-color: #00d4ff;
+    --dark-color: #2c3e50;
+    --light-color: #f8f9fa;
+    --gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    --glass-color: rgba(255, 255, 255, 0.15);
+    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-color);
+    line-height: 1.6;
+    background-color: var(--light-color);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            z-index: 1;
+        }
+
+        .btn-3d {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+                        0 10px 30px rgba(0, 0, 0, 0.1),
+                        inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+                        0 15px 45px rgba(0, 0, 0, 0.15),
+                        inset 0 -5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            background-size: 200% 200%;
+            animation: gradientFlow 5s ease infinite;
+            color: white;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .hover-effect:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .hover-effect:hover:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--glass-color);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+
+        .logo-spin:hover {
+            animation: spin 1s ease;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-link-hover {
+            position: relative;
+            padding: 5px 0;
+            font-weight: 500;
+        }
+
+        .nav-link-hover:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-hover:hover:after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--dark-color);
+            transition: var(--transition);
+        }
+
+        /* User menu styles */
+        .user-menu-container {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .user-menu-trigger {
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(106, 90, 205, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            transition: var(--transition);
+            border: 2px solid rgba(106, 90, 205, 0.3);
+        }
+
+        .profile-icon {
+            width: 100%;
+            height: 100%;
+            color: var(--primary-color);
+        }
+
+        .user-menu-trigger:hover .user-avatar {
+            transform: scale(1.05);
+            background-color: rgba(106, 90, 205, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .user-menu-trigger:hover .profile-icon {
+            color: var(--accent-color);
+        }
+
+        .user-logged-in .user-avatar,
+        .user-logged-in .dropdown-avatar {
+            background-color: var(--primary-color);
+        }
+
+        .user-logged-in .profile-icon {
+            color: white;
+        }
+
+        .user-menu-dropdown {
+            position: absolute;
+            right: 0;
+            top: 60px;
+            width: 280px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            padding: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1001;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .user-menu-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(106, 90, 205, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            padding: 10px;
+            border: 2px solid rgba(106, 90, 205, 0.3);
+        }
+
+        .user-info h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .user-menu-options {
+            list-style: none;
+        }
+
+        .menu-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+
+        .menu-option i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .menu-option:hover {
+            background: rgba(106, 90, 205, 0.1);
+            transform: translateX(5px);
+        }
+
+        .premium-badge {
+            margin-left: auto;
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+        }
+
+        /* Welcome premium modal styles */
+        .welcome-premium-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .welcome-premium-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            position: relative;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #777;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: var(--dark-color);
+            background: #f5f5f5;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header i {
+            font-size: 3.5rem;
+            color: gold;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header h3 {
+            font-size: 2.2rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            padding: 10px 0;
+        }
+
+        .modal-body p {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .premium-features-list {
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .premium-features-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #444;
+            font-size: 1.05rem;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .premium-features-list i {
+            color: var(--primary-color);
+            margin-right: 15px;
+            font-size: 1.3rem;
+            width: 30px;
+            height: 30px;
+            background: rgba(106, 90, 205, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pricing-options {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-option {
+            flex: 1;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .pricing-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .pricing-option.popular {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .pricing-option.popular:hover {
+            transform: scale(1.08);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .pricing-option h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #777;
+            font-weight: normal;
+        }
+
+        .savings {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .footer-note i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        /* Sección de Historial de Escaneos */
+        .history-section {
+            padding: 60px 0;
+        }
+
+        .history-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+        }
+
+        .scan-history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .scan-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .scan-card-header {
+            padding: 20px 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .scan-date {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .scan-severity {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .severity-low {
+            background-color: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+        }
+
+        .severity-moderate {
+            background-color: rgba(255, 152, 0, 0.15);
+            color: #FF9800;
+        }
+
+        .severity-high {
+            background-color: rgba(244, 67, 54, 0.15);
+            color: #F44336;
+        }
+
+        .scan-image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 15px;
+        }
+
+        .scan-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .scan-card:hover .scan-image {
+            transform: scale(1.05);
+        }
+
+        .scan-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scan-card:hover .scan-overlay {
+            opacity: 1;
+        }
+
+        .scan-card-body {
+            padding: 15px 20px;
+        }
+
+        .scan-result-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .scan-probability {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .probability-bar {
+            flex-grow: 1;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .probability-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .probability-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .scan-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-details {
+            background: rgba(106, 90, 205, 0.1);
+            color: var(--primary-color);
+        }
+
+        .action-details:hover {
+            background: rgba(106, 90, 205, 0.2);
+        }
+
+        .action-share {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .action-share:hover {
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        .no-scans {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .no-scans i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .no-scans h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .premium-locked {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-locked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1;
+        }
+
+        .premium-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Detalles del escaneo */
+        .scan-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .scan-detail-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            padding: 30px;
+            position: relative;
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .detail-image-container {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-notes {
+            grid-column: 1 / -1;
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .notes-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .notes-content {
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                height: calc(100vh - 80px);
+                transition: 0.5s;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding-top: 30px;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: block;
+                z-index: 100;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .user-menu-container {
+                margin-left: 15px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .history-filters {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .detail-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .scan-history-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
-    
- <!-- Modal de bienvenida premium -->
- <div class="welcome-premium-modal" id="welcomePremiumModal">
-    <div class="welcome-premium-content">
-        <span class="close-modal" id="closeWelcomeModal">&times;</span>
-        <div class="modal-header">
-            <i class="fas fa-crown"></i>
-            <h3>Actualiza a Premium</h3>
-        </div>
-        <div class="modal-body">
-            <p>¡Bienvenido a DermaScan! Descubre todas las ventajas de nuestra versión Premium:</p>
-            <ul class="premium-features-list">
-                <li><i class="fas fa-check"></i> Historial ilimitado de escaneos</li>
-                <li><i class="fas fa-check"></i> Consultas con dermatólogos certificados</li>
-                <li><i class="fas fa-check"></i> Análisis avanzados con IA</li>
-                <li><i class="fas fa-check"></i> Sin anuncios</li>
-                <li><i class="fas fa-check"></i> Resultados prioritarios</li>
-            </ul>
-            <div class="pricing-options">
-                <div class="pricing-option">
-                    <h4>Mensual</h4>
-                    <p class="price">$9.99<span>/mes</span></p>
-                    <button class="btn btn-secondary">Seleccionar</button>
-                </div>
-                <div class="pricing-option popular">
-                    <div class="popular-badge">MÁS POPULAR</div>
-                    <h4>Anual</h4>
-                    <p class="price">$99.99<span>/año</span></p>
-                    <p class="savings">¡Ahorra $20!</p>
-                    <button class="btn btn-primary">Seleccionar</button>
+    <!-- Modal de bienvenida premium -->
+    <div class="welcome-premium-modal" id="welcomePremiumModal">
+        <div class="welcome-premium-content">
+            <span class="close-modal" id="closeWelcomeModal">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-crown"></i>
+                <h3>Actualiza a Premium</h3>
+            </div>
+            <div class="modal-body">
+                <p>¡Bienvenido a DermaScan! Descubre todas las ventajas de nuestra versión Premium:</p>
+                <ul class="premium-features-list">
+                    <li><i class="fas fa-check"></i> Historial ilimitado de escaneos</li>
+                    <li><i class="fas fa-check"></i> Consultas con dermatólogos certificados</li>
+                    <li><i class="fas fa-check"></i> Análisis avanzados con IA</li>
+                    <li><i class="fas fa-check"></i> Sin anuncios</li>
+                    <li><i class="fas fa-check"></i> Resultados prioritarios</li>
+                </ul>
+                <div class="pricing-options">
+                    <div class="pricing-option">
+                        <h4>Mensual</h4>
+                        <p class="price">$9.99<span>/mes</span></p>
+                        <button class="btn btn-secondary">Seleccionar</button>
+                    </div>
+                    <div class="pricing-option popular">
+                        <div class="popular-badge">MÁS POPULAR</div>
+                        <h4>Anual</h4>
+                        <p class="price">$99.99<span>/año</span></p>
+                        <p class="savings">¡Ahorra $20!</p>
+                        <button class="btn btn-primary">Seleccionar</button>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
-</div>
- <!-- Header con efecto glassmorphism -->
+
+    <!-- Detalles del escaneo -->
+    <div class="scan-detail-modal" id="scanDetailModal">
+        <div class="scan-detail-content">
+            <div class="detail-header">
+                <h3>Detalles del Escaneo</h3>
+                <span class="close-modal" id="closeDetailModal">&times;</span>
+            </div>
+            <div class="detail-body">
+                <div class="detail-image-container">
+                    <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1000" alt="Detalle de la dermatitis" class="detail-image" id="detailScanImage">
+                </div>
+                <div class="detail-info">
+                    <div class="info-item">
+                        <span class="info-label">Fecha:</span>
+                        <span class="info-value" id="detailDate">15 Nov 2023</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Zona del cuerpo:</span>
+                        <span class="info-value" id="detailBodyPart">Brazo izquierdo</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Probabilidad:</span>
+                        <span class="info-value" id="detailProbability">87%</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Severidad:</span>
+                        <span class="info-value" id="detailSeverity">Moderada</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Estado:</span>
+                        <span class="info-value" id="detailStatus">Mejorando</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Recomendaciones:</span>
+                        <span class="info-value" id="detailRecommendations">3</span>
+                    </div>
+                </div>
+                <div class="detail-notes">
+                    <h4 class="notes-title">Notas del dermatólogo</h4>
+                    <p class="notes-content" id="detailNotes">La dermatitis muestra signos de mejora en comparación con el último escaneo. Se recomienda continuar con la hidratación diaria y aplicar la crema recetada dos veces al día. Evitar rascarse la zona afectada para prevenir infecciones. Volver a escanear en 7 días.</p>
+                </div>
+            </div>
+            <div class="detail-actions">
+                <button class="btn btn-primary">Ver recomendaciones</button>
+                <button class="btn btn-secondary">Compartir resultados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header con efecto glassmorphism -->
  <header class="header">
     <div class="container">
         <nav class="navbar">
@@ -58,15 +1148,8 @@
                 <img src="/images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo" class="logo-spin">
                 <span class="logo-text">DermaScan</span>
             </a>
-            <ul class="nav-links">
-                <li><a href="#about" class="nav-link-hover">La Enfermedad</a></li>
-                <li><a href="#detection" class="nav-link-hover">Detección</a></li>
-                <li><a href="#symptoms" class="nav-link-hover">Síntomas</a></li>
-                <li><a href="#treatment" class="nav-link-hover">Tratamiento</a></li>
-                <li><a href="#team" class="nav-link-hover">Nuestro Equipo</a></li>
-                <li><a href="#contact" class="nav-link-hover">Contacto</a></li></ul>
 
-                <div class="user-menu-container" style="margin-right: -329px;">
+                <div class="user-menu-container" style="margin-right: -1583px;">
     <div class="user-menu-trigger" id="userMenuTrigger">
         <div class="user-avatar">
             <svg class="profile-icon" viewBox="0 0 24 24">
@@ -87,7 +1170,7 @@
             </div>
         </div>
         <ul class="user-menu-options">
-            <li><a href="index/profile.html" class="menu-option" id="profileOption"><i class="fas fa-user"></i> Mi perfil</a></li>
+            <li><a href="/index-principal.html" class="menu-option" id="profileOption"><i class="fas fa-user"></i> Mi perfil</a></li>
             <li><a href="#" class="menu-option"><i class="fas fa-question-circle"></i> Ayuda</a></li>
             <li><a href="/index/historial.html" class="menu-option premium-feature" data-feature="scans"><i class="fas fa-history"></i> Historial de Escaneos <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
             <li><a href="#" class="menu-option premium-feature" data-feature="pro-help"><i class="fas fa-user-md"></i> Ayuda de profesionales <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
@@ -111,13 +1194,392 @@
 </nav>
 </div>
 </header>
-<br>
+<br><br><br>
+    <!-- Contenido principal - Historial de Escaneos -->
+    <main>
+        <section id="history" class="history-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Historial de Escaneos</h2>
+                    <p class="section-subtitle">Revisa tus análisis anteriores de dermatitis atópica</p>
+                    <div class="divider"></div>
+                </div>
+                
+                <!-- Filtros -->
+                <div class="history-filters">
+                    <div class="filter-group">
+                        <span class="filter-label">Ordenar por:</span>
+                        <select class="filter-select" id="sortSelect">
+                            <option value="recent">Más recientes</option>
+                            <option value="oldest">Más antiguos</option>
+                            <option value="severity">Severidad</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <span class="filter-label">Filtrar por:</span>
+                        <select class="filter-select" id="filterSelect">
+                            <option value="all">Todos</option>
+                            <option value="low">Leve</option>
+                            <option value="moderate">Moderada</option>
+                            <option value="high">Severa</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="newScanBtn">
+                        <i class="fas fa-camera"></i> Nuevo Escaneo
+                    </button>
+                </div>
+                
+                <!-- Grid de escaneos -->
+                <div class="scan-history-grid" id="scanHistoryGrid">
+                    <!-- Las tarjetas de escaneos se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
 
+    <script>
+        // Función para mostrar el modal de bienvenida premium
+        function showWelcomePremiumModal() {
+            const welcomeModal = document.getElementById('welcomePremiumModal');
+            if (welcomeModal) {
+                // Mostrar el modal con una pequeña animación después de un breve retraso
+                setTimeout(() => {
+                    welcomeModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Deshabilitar scroll
+                }, 1000);
+            }
+        }
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="JS/Main.js"></script>
-    <script src="JS/detection.js"></script>
-    <script src="JS/animations.js"></script>
+        // Cerrar el modal de bienvenida
+        function closeWelcomePremiumModal() {
+            const welcomeModal = document.getElementById('welcomePremiumModal');
+            if (welcomeModal) {
+                welcomeModal.style.display = 'none';
+                document.body.style.overflow = ''; // Habilitar scroll
+            }
+        }
+
+        // Datos de ejemplo para el historial de escaneos
+        const scanHistory = [
+            {
+                id: 1,
+                date: "15 Nov 2024",
+                image: "/images/dermatitis1.jpg",
+                bodyPart: "Cara",
+                probability: 96,
+                severity: "moderate",
+                status: "Mejorando",
+                recommendations: 4,
+                notes: "La dermatitis muestra signos de mejora en comparación con el último escaneo. Se recomienda continuar con la hidratación diaria y aplicar la crema recetada dos veces al día. Evitar rascarse la zona afectada para prevenir infecciones."
+            },
+            {
+                id: 2,
+                date: "8 Mar 2024",
+                image: "/images/dermatitis.jpg",
+                bodyPart: "Cuello",
+                probability: 92,
+                severity: "high",
+                status: "Estable",
+                recommendations: 4,
+                notes: "La zona afectada muestra signos de inflamación moderada. Se recomienda aplicar la crema con corticosteroides según indicaciones y mantener la piel bien hidratada. Evitar el contacto con tejidos ásperos."
+            },
+            {
+                id: 3,
+                date: "1 Nov 2023",
+                image: "/images/dermatitis1.jpg",
+                bodyPart: "Brazo izquierdo",
+                probability: 78,
+                severity: "moderate",
+                status: "Mejorando",
+                recommendations: 3,
+                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
+            },
+            {
+                id: 4,
+                date: "1 Nov 2023",
+                image: "/images/dermatitis1.jpg",
+                bodyPart: "Brazo izquierdo",
+                probability: 78,
+                severity: "moderate",
+                status: "Mejorando",
+                recommendations: 3,
+                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
+            },
+            {
+                id: 5,
+                date: "1 Nov 2023",
+                image: "/images/dermatitis1.jpg",
+                bodyPart: "Brazo izquierdo",
+                probability: 78,
+                severity: "moderate",
+                status: "Mejorando",
+                recommendations: 3,
+                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
+            },
+            {
+                id: 6,
+                date: "1 Nov 2023",
+                image: "/images/dermatitis1.jpg",
+                bodyPart: "Brazo izquierdo",
+                probability: 78,
+                severity: "moderate",
+                status: "Mejorando",
+                recommendations: 3,
+                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
+            },
+            
+
+          
+        ];
+
+        // Función para generar tarjetas de escaneo
+        function generateScanCards(scans) {
+            const grid = document.getElementById('scanHistoryGrid');
+            grid.innerHTML = '';
+            
+            if (scans.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-scans">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>No hay escaneos registrados</h3>
+                        <p>Aún no has realizado ningún escaneo. Comienza ahora para llevar un registro de tu piel.</p>
+                        <button class="btn btn-primary" style="margin-top: 20px;">
+                            <i class="fas fa-camera"></i> Realizar primer escaneo
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            scans.forEach((scan, index) => {
+                // Determinar clase de severidad
+                let severityClass = '';
+                let severityText = '';
+                switch(scan.severity) {
+                    case 'low':
+                        severityClass = 'severity-low';
+                        severityText = 'Leve';
+                        break;
+                    case 'moderate':
+                        severityClass = 'severity-moderate';
+                        severityText = 'Moderada';
+                        break;
+                    case 'high':
+                        severityClass = 'severity-high';
+                        severityText = 'Severa';
+                        break;
+                }
+                
+                // Crear elemento de tarjeta
+                const card = document.createElement('div');
+               
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="scan-card-header">
+                        <span class="scan-date">${scan.date}</span>
+                        <span class="scan-severity ${severityClass}">${severityText}</span>
+                    </div>
+                    <div class="scan-image-container">
+                        <img src="${scan.image}" alt="Escaneo de dermatitis" class="scan-image">
+                        <div class="scan-overlay">${scan.bodyPart}</div>
+                    </div>
+                    <div class="scan-card-body">
+                        <h4 class="scan-result-title">Resultado del análisis</h4>
+                        <div class="scan-probability">
+                            <div class="probability-bar">
+                                <div class="probability-fill" style="width: ${scan.probability}%; background-color: ${scan.severity === 'low' ? '#4CAF50' : scan.severity === 'moderate' ? '#FF9800' : '#F44336'};"></div>
+                            </div>
+                            <span class="probability-text">${scan.probability}%</span>
+                        </div>
+                        <div class="scan-actions">
+                            <button class="action-btn action-details view-detail" data-id="${scan.id}">
+                                <i class="fas fa-info-circle"></i> Detalles
+                            </button>
+                            <button class="action-btn action-share">
+                                <i class="fas fa-share-alt"></i> Compartir
+                            </button>
+                        </div>
+                    </div>
+                    ${index > 2 ? `
+                  
+                    ` : ''}
+                `;
+                
+                grid.appendChild(card);
+            });
+            
+            // Añadir event listeners para ver detalles
+            document.querySelectorAll('.view-detail').forEach(button => {
+                button.addEventListener('click', function() {
+                    const scanId = parseInt(this.getAttribute('data-id'));
+                    showScanDetail(scanId);
+                });
+            });
+        }
+
+        // Función para mostrar detalles del escaneo
+        function showScanDetail(scanId) {
+            const scan = scanHistory.find(s => s.id === scanId);
+            if (!scan) return;
+            
+            // Determinar texto de severidad
+            let severityText = '';
+            switch(scan.severity) {
+                case 'low':
+                    severityText = 'Leve';
+                    break;
+                case 'moderate':
+                    severityText = 'Moderada';
+                    break;
+                case 'high':
+                    severityText = 'Severa';
+                    break;
+            }
+            
+            // Actualizar contenido del modal
+            document.getElementById('detailScanImage').src = scan.image;
+            document.getElementById('detailDate').textContent = scan.date;
+            document.getElementById('detailBodyPart').textContent = scan.bodyPart;
+            document.getElementById('detailProbability').textContent = scan.probability + '%';
+            document.getElementById('detailSeverity').textContent = severityText;
+            document.getElementById('detailStatus').textContent = scan.status;
+            document.getElementById('detailRecommendations').textContent = scan.recommendations;
+            document.getElementById('detailNotes').textContent = scan.notes;
+            
+            // Mostrar modal
+            document.getElementById('scanDetailModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Document ready
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Configurar cierre del modal
+            const closeButton = document.getElementById('closeWelcomeModal');
+            const welcomeModal = document.getElementById('welcomePremiumModal');
+            
+            if (closeButton) {
+                closeButton.addEventListener('click', closeWelcomePremiumModal);
+            }
+            
+            if (welcomeModal) {
+                welcomeModal.addEventListener('click', function(e) {
+                    // Cerrar si se hace clic fuera del contenido
+                    if (e.target === welcomeModal) {
+                        closeWelcomePremiumModal();
+                    }
+                });
+            }
+                   
+            // Configurar cierre del modal de detalles
+            document.getElementById('closeDetailModal').addEventListener('click', function() {
+                document.getElementById('scanDetailModal').style.display = 'none';
+                document.body.style.overflow = '';
+            });
+            
+            document.getElementById('scanDetailModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Elementos del menú de usuario
+            const userMenuTrigger = document.getElementById('userMenuTrigger');
+            const userMenuDropdown = document.getElementById('userMenuDropdown');
+            const authActionBtn = document.getElementById('authActionBtn');
+            const profileOption = document.getElementById('profileOption');
+            const premiumFeatures = document.querySelectorAll('.premium-feature');
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // Alternar menú desplegable
+            if (userMenuTrigger) {
+                userMenuTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userMenuDropdown.classList.toggle('show');
+                });
+            }
+            
+            // Cerrar menú al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (userMenuTrigger && userMenuDropdown) {
+                    if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                        userMenuDropdown.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Manejar clic en "Mi perfil"
+
+            
+            // Botón de autenticación
+            if (authActionBtn) {
+                authActionBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Cerrando sesión...');
+                });
+            }
+            
+            // Menú hamburguesa
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+            
+            // Scroll para header
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if (header) {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }
+            });
+            
+            // Generar tarjetas de escaneos
+            generateScanCards(scanHistory);
+            
+            // Botón para nuevo escaneo
+            document.getElementById('newScanBtn').addEventListener('click', function() {
+                window.location.href="index-principal.html"
+            });
+            
+            // Filtros
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                let sortedScans = [...scanHistory];
+                
+                switch(this.value) {
+                    case 'recent':
+                        sortedScans.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        break;
+                    case 'oldest':
+                        sortedScans.sort((a, b) => new Date(a.date) - new Date(b.date));
+                        break;
+                    case 'severity':
+                        const severityOrder = {high: 3, moderate: 2, low: 1};
+                        sortedScans.sort((a, b) => severityOrder[b.severity] - severityOrder[a.severity]);
+                        break;
+                }
+                
+                generateScanCards(sortedScans);
+            });
+            
+            document.getElementById('filterSelect').addEventListener('change', function() {
+                if (this.value === 'all') {
+                    generateScanCards(scanHistory);
+                } else {
+                    const filteredScans = scanHistory.filter(scan => scan.severity === this.value);
+                    generateScanCards(filteredScans);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
