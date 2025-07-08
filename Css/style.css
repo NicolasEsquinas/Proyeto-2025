@@ -257,26 +257,27 @@ section {
 
 .logo img {
     height: 40px;
-    margin-right: 10px;
+    margin-left: 160px;
     transition: var(--transition);
 }
 
 
 
 .nav-links {
+    margin-left: -100px;
     display: flex;
-    gap: 60px;
+    gap: 90px;
 }
 
 .nav-links li {
-    margin-left: 30px;
+    margin-left: -40px;
     margin-top: 7px;
     
 }
 
 .nav-link-hover {
     position: relative;
-    padding: 5px 0;
+   
     font-weight: 500;
 }
 
@@ -1547,7 +1548,8 @@ section {
 /* Menú de usuario */
 .user-menu-container {
     position: relative;
-    margin-left: 120px;
+    margin-left:-170px;
+    padding: 0px;
 }
 
 .user-menu-trigger {
@@ -1751,7 +1753,7 @@ section {
 }
 
 .modal-header i {
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: gold;
     margin-bottom: 15px;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
