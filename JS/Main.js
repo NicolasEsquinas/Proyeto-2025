@@ -256,41 +256,6 @@ if (newsletterForm) {
         }, 1500);
     });
 }
-
-// Funciones para el modal premium
-function showWelcomePremiumModal() {
-    const welcomeModal = document.getElementById('welcomePremiumModal');
-    if (welcomeModal) {
-        welcomeModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeWelcomePremiumModal() {
-    const welcomeModal = document.getElementById('welcomePremiumModal');
-    if (welcomeModal) {
-        welcomeModal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-}
-
-// Inicialización cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Configurar cierre del modal premium
-    const closeButton = document.getElementById('closeWelcomeModal');
-    const welcomeModal = document.getElementById('welcomePremiumModal');
-    
-    if (closeButton) {
-        closeButton.addEventListener('click', closeWelcomePremiumModal);
-    }
-    
-    if (welcomeModal) {
-        welcomeModal.addEventListener('click', function(e) {
-            if (e.target === welcomeModal) {
-                closeWelcomePremiumModal();
-            }
-        });
-    }
     
     // Elementos del menú de usuario
     const userMenuTrigger = document.getElementById('userMenuTrigger');
@@ -314,28 +279,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 userMenuDropdown.classList.remove('show');
             }
         }
-    });
-    
 
-    
-    // Manejar clic en características premium
-    if (premiumFeatures) {
-        premiumFeatures.forEach(feature => {
-            feature.addEventListener('click', function(e) {
-                e.preventDefault();
-                const isAuthenticated = false;
-                const isPremium = false;
-                
-                if (!isAuthenticated) {
-                    
-                    const featurePage = 'index/historial.html';
-                    window.location.href = featurePage;
-                }
-            });
-        });
-    }
-    
-    
-    
-   
 });

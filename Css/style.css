@@ -30,7 +30,8 @@ body {
     color: var(--dark-color);
     line-height: 1.6;
     background-color: var(--light-color);
-    overflow-x: hidden;
+    overflow-x: hidden; 
+    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -256,6 +257,7 @@ section {
 }
 
 .logo img {
+    display: flex;
     height: 40px;
     margin-left: 160px;
     transition: var(--transition);
@@ -270,6 +272,7 @@ section {
 }
 
 .nav-links li {
+    display:flex ;
     margin-left: -40px;
     margin-top: 7px;
     
