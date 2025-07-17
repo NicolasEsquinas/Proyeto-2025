@@ -281,24 +281,175 @@ if (newsletterForm) {
         }
 
 });
-const uploadArea = document.getElementById("uploadArea");
-const fileInput = document.getElementById("fileInput");
+// CONFIGURACIÓN DE CLOUDINARY
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tu_cloud_name/image/upload';
+const CLOUDINARY_PRESET = 'preset_de_cloudinary';
 
-uploadArea.addEventListener("dragover", (e) => {
-  e.preventDefault(); // Necesario para permitir el drop
-  uploadArea.classList.add("dragover");
+// ELEMENTOS
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const imagePreview = document.getElementById('imagePreview');
+const previewImage = document.getElementById('previewImage');
+const retakeBtn = document.getElementById('retakeBtn');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const analysisProgress = document.getElementById('analysisProgress');
+const analysisResults = document.getElementById('analysisResults');
+const confidenceFill = document.querySelector('.confidence-fill');
+const confidenceValue = document.querySelector('.confidence-value');
+
+const stepElements = document.querySelectorAll('.detection-steps .step');
+
+// CONTROL DE PASOS
+function setStep(step) {
+    stepElements.forEach(el => {
+        el.classList.remove('active');
+        if (parseInt(el.dataset.step) === step) {
+            el.classList.add('active');
+        }
+    });
+}
+
+// EVENTO DE DRAG & DROP
+uploadArea.addEventListener('click', () => fileInput.click());
+uploadArea.addEventListener('dragover', e => {
+    e.preventDefault();
+    uploadArea.classList.add('drag-over');
+});
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('drag-over');
+});
+uploadArea.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadArea.classList.remove('drag-over');
+    handleFile(e.dataTransfer.files[0]);
 });
 
-uploadArea.addEventListener("dragleave", () => {
-  uploadArea.classList.remove("dragover");
+fileInput.addEventListener('change', e => {
+    handleFile(e.target.files[0]);
 });
 
-uploadArea.addEventListener("drop", (e) => {
-  e.preventDefault();
-  uploadArea.classList.remove("dragover");
+retakeBtn.addEventListener('click', resetUpload);
 
-  const files = e.dataTransfer.files;
-  if (files.length > 0) {
-    handleFile(files[0]);
-  }
-});
+analyzeBtn.addEventListener('click', startAnalysis);
+
+document.getElementById('newAnalysisBtn').addEventListener('click', resetUpload);
+
+function handleFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        previewImage.src = e.target.result;
+        imagePreview.style.display = 'block';
+        uploadArea.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+
+    uploadToCloudinary(file);
+}
+
+async function uploadToCloudinary(file) {
+    setStep(2);  // Paso 2 - Análisis IA (visual)
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_PRESET);
+
+    try {
+        const res = await fetch(CLOUDINARY_URL, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        console.log('Imagen subida a Cloudinary:', data.secure_url);
+        previewImage.dataset.imageUrl = data.secure_url;  // Guardar URL para análisis IA
+    } catch (error) {
+        alert('Error al subir la imagen.');
+    }
+}
+
+function resetUpload() {
+    imagePreview.style.display = 'none';
+    analysisProgress.style.display = 'none';
+    analysisResults.style.display = 'none';
+    uploadArea.style.display = 'flex';
+    setStep(1);
+}
+
+// Simulación del análisis
+async function startAnalysis() {
+    setStep(2);
+    analysisProgress.style.display = 'flex';
+    imagePreview.style.display = 'none';
+
+    await animateProgress();
+
+    await analyzeWithIA(previewImage.dataset.imageUrl);
+}
+
+// Animación de progreso IA (simulada)
+function animateProgress() {
+    return new Promise(resolve => {
+        const circle = document.querySelector('.progress-ring-circle');
+        const percentText = document.querySelector('.progress-percent');
+        let progress = 0;
+        circle.style.stroke = '#00c4ff';
+        circle.style.strokeDasharray = '327';  // 2 * π * r
+        circle.style.strokeDashoffset = '327';
+
+        const interval = setInterval(() => {
+            progress += 2;
+            if (progress > 100) {
+                clearInterval(interval);
+                resolve();
+                return;
+            }
+            const offset = 327 - (327 * progress) / 100;
+            circle.style.strokeDashoffset = offset;
+            percentText.textContent = progress + '%';
+        }, 40);
+    });
+}
+
+// Llamada real a la IA
+async function analyzeWithIA(imageUrl) {
+    try {
+        const res = await fetch('/api/analisis-ia', {
+            method: 'POST',
+            body: JSON.stringify({ imageUrl }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+
+        renderResults(data);
+    } catch (error) {
+        alert('Error al analizar la imagen.');
+    }
+}
+
+function renderResults(data) {
+    setStep(3);
+
+    analysisProgress.style.display = 'none';
+    analysisResults.style.display = 'block';
+
+    confidenceFill.style.width = data.probabilidad + '%';
+    confidenceValue.textContent = data.probabilidad + '%';
+
+    const resultTitle = analysisResults.querySelector('.result-card.primary h4');
+    const resultDescription = analysisResults.querySelector('.result-card.primary p');
+    const severityBar = analysisResults.querySelectorAll('.stat-fill')[0];
+    const inflammationBar = analysisResults.querySelectorAll('.stat-fill')[1];
+
+    resultTitle.textContent = data.diagnostico || 'Diagnóstico';
+    resultDescription.textContent = 'Probabilidad alta basada en las características visuales';
+
+    severityBar.style.width = data.severidadPorcentaje + '%';
+    inflammationBar.style.width = data.inflamacionPorcentaje + '%';
+
+    const recommendationsList = analysisResults.querySelector('.result-card:nth-child(2) ul');
+    recommendationsList.innerHTML = '';
+    data.recomendaciones.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        recommendationsList.appendChild(li);
+    });
+}
