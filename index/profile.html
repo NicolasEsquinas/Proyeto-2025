@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DermaScan | Detección Avanzada de Dermatitis Atópica</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-        <link rel="stylesheet" href="/Css/animations.css">
-        <link rel="stylesheet" href="/Css/style.css">
-        <link rel="stylesheet" href="/JS/Main.js">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-        <link rel="icon" href="images/logo.svg" type="image/svg+xml">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaScan | Perfil de Usuario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/Css/animations.css">
+    <link rel="stylesheet" href="/Css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+</head>
 <body>
     <!-- Preloader -->
     <div class="preloader">
@@ -25,69 +23,58 @@
         </div>
     </div>
 
-</div>
- <!-- Header con efecto glassmorphism -->
- <header class="header">
-    <div class="container">
-        <nav class="navbar">
-            <a href="#" class="logo" style="margin-left: -220px;">
-                <img src="/images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo" class="logo-spin">
-                <span class="logo-text">DermaScan</span>
-            </a>
+    <!-- Header con efecto glassmorphism -->
+    <header class="header">
+        <div class="container">
+            <nav style="margin-left: -200px;" class="navbar">
+                <a href="#" class="logo">
+                    <img src="/images/LOGO-DERMA-SCAN2.PNG" alt="DermaScan Logo" class="logo-spin">
+                    <span class="logo-text">DermaScan</span>
+                </a>
 
-                <div class="user-menu-container" style="margin-right: -1483px;">
-    <div class="user-menu-trigger" id="userMenuTrigger">
-        <div class="user-avatar">
-            <svg class="profile-icon" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-            </svg>
+                <div class="user-menu-container" >
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar">
+                            <svg class="profile-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="user-menu-dropdown" id="userMenuDropdown">
+                        <div class="user-info" id="userInfoSection">
+                            <div class="dropdown-avatar">
+                                <svg class="profile-icon" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 id="userName">Invitado</h4>
+                                <p id="userEmail">No has iniciado sesión</p>
+                            </div>
+                        </div>
+                        <ul class="user-menu-options">
+                            <li><a href="/index.html" class="menu-option" id="profileOption"><i class="fas fa-sign-in-alt"></i>Inicio</a></li>
+                            <li><a href="/index/ayuda.html" class="menu-option"><i class="fas fa-question-circle"></i> Ayuda</a></li>
+                            <li><a href="/index/historial.html" class="menu-option premium-feature" data-feature="scans"><i class="fas fa-history"></i> Historial de Escaneos <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
+                            <li><a href="/index/Profesionales.html" class="menu-option premium-feature" data-feature="pro-help"><i class="fas fa-user-md"></i> Ayuda de profesionales <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
+                            <li><a href="/auth/login.html" id="authActionBt" class="menu-option"><i class="fas fa-sign-in-alt"></i>Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="hamburger">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+            </nav>
         </div>
-    </div>
-    <div class="user-menu-dropdown" id="userMenuDropdown">
-        <div class="user-info" id="userInfoSection">
-            <div class="dropdown-avatar">
-                <svg class="profile-icon" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                </svg>
-            </div>
-            <div>
-                <h4 id="userName">Invitado</h4>
-                <p id="userEmail">No has iniciado sesión</p>
-            </div>
-        </div>
-        <ul class="user-menu-options">
-            <li><a href="index/profile.html" class="menu-option" id="profileOption"><i class="fas fa-user"></i> Mi perfil</a></li>
-            <li><a href="#" class="menu-option"><i class="fas fa-question-circle"></i> Ayuda</a></li>
-            <li><a href="/index/historial.html" class="menu-option premium-feature" data-feature="scans"><i class="fas fa-history"></i> Historial de Escaneos <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
-            <li><a href="#" class="menu-option premium-feature" data-feature="pro-help"><i class="fas fa-user-md"></i> Ayuda de profesionales <span class="premium-badge"><i class="fas fa-star"></i></span></a></li>
-            <li><a href="/auth/login.html   " id="authActionBt" class="menu-option"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a></li>
-        </ul>
-    </div>
-</div>
-            
-            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-        </svg>
-    </div>
-</div>
-<!-- Botón de perfil -->
-
-
-<div class="hamburger">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</div>
-</nav>
-</div>
-</header>
-
+    </header>
 
     <!-- Sección de Perfil -->
     <section class="section profile-section">
         <div class="container">
             <div class="profile-header">
-              
-                
                 <div class="profile-info">
                     <h1 id="profileName">Nombre Usuario</h1>
                     <p id="profileEmail">usuario@ejemplo.com</p>
@@ -112,7 +99,6 @@
                             <label>Teléfono</label>
                             <input type="tel" id="profilePhone" placeholder="+34 123 456 789">
                         </div>
-                        
                         
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </form>
@@ -142,7 +128,7 @@
             </div>
         </div>
     </section>
-
+    
     <script src="../js/auth.js"></script>
     <script src="../js/main.js"></script>
 </body>

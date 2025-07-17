@@ -281,3 +281,24 @@ if (newsletterForm) {
         }
 
 });
+const uploadArea = document.getElementById("uploadArea");
+const fileInput = document.getElementById("fileInput");
+
+uploadArea.addEventListener("dragover", (e) => {
+  e.preventDefault(); // Necesario para permitir el drop
+  uploadArea.classList.add("dragover");
+});
+
+uploadArea.addEventListener("dragleave", () => {
+  uploadArea.classList.remove("dragover");
+});
+
+uploadArea.addEventListener("drop", (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove("dragover");
+
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    handleFile(files[0]);
+  }
+});
