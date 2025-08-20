@@ -1,15 +1,4 @@
-// Preloader
-window.addEventListener('load', function() {
-    const preloader = document.querySelector('.preloader');
-    if (preloader) {
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-            preloader.style.display = 'none';
-            // Mostrar modal premium después del preloader
-            showWelcomePremiumModal();
-        }, 500);
-    }
-});
+
 
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
