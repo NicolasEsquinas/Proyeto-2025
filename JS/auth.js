@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Function to update UI based on login state
   const updateUI = () => {
+    
     const userNameElements = document.querySelectorAll("#userName");
     const userEmailElements = document.querySelectorAll("#userEmail");
     const authActionBt = document.getElementById("authActionBt");

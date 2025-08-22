@@ -1186,10 +1186,10 @@ h1, h2, h3, h4, h5, h6 {
                             <option value="high">Severa</option>
                         </select>
                     </div>
-                    
+                    <a href="/index.html">
                     <button class="btn btn-primary" id="newScanBtn">
                         <i class="fas fa-camera"></i> Nuevo Escaneo
-                    </button>
+                    </button></a>
                 </div>
                 
                 <!-- Grid de escaneos -->
@@ -1508,9 +1508,7 @@ h1, h2, h3, h4, h5, h6 {
             generateScanCards(scanHistory);
             
             // Botón para nuevo escaneo
-            document.getElementById('newScanBtn').addEventListener('click', function() {
-                window.location.href="index.html"
-            });
+         
             
             // Filtros
             document.getElementById('sortSelect').addEventListener('change', function() {
