@@ -51,6 +51,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Call updateUI on page load
   updateUI();
+  // Inside DOMContentLoaded, after updateUI()
+const perfil_id = localStorage.getItem("perfil_id");
+if (perfil_id) {
+  fetch(`https://derma-scan-backend.vercel.app/api/perfil/${perfil_id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.nombre_completo && data.correo_electronico) {
+        localStorage.setItem("nombre_completo", data.nombre_completo);
+        localStorage.setItem("correo_electronico", data.correo_electronico);
+        if (data.telefono) localStorage.setItem("telefono", data.telefono);
+        updateUI();
+      }
+    })
+    .catch((err) => console.error("Error al obtener perfil:", err));
+}
 
   // Handle password toggle
   const togglePasswordIcons = document.querySelectorAll(".toggle-password");
