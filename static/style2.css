@@ -172,6 +172,11 @@ p {
     margin: 1rem 0;
 }
 
+#analysisResults #lesions {
+    font-weight: bold;
+    color: #2c5282;
+}
+
 #severityIndicators progress {
     width: 100%;
     height: 1rem;

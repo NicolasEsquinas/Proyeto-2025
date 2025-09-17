@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DermaScan</title>
-    <!-- Asumiendo que usas Tailwind CSS o similar -->
-    <link rel="stylesheet" href="\Css\style.css"> <!-- Asegúrate de que este archivo exista si usas estilos -->
+    <link rel="stylesheet" href="/static/style2.css">
 </head>
 <body>
     <header>
@@ -111,6 +110,7 @@
                     <div>
                         <h4 id="diagnosis"></h4>
                         <p id="diagnosisDetails"></p>
+                        <p><strong>Lesiones detectadas:</strong> <span id="lesions"></span></p>
                         <ul id="severityIndicators">
                             <li>Severidad: <span id="severity"></span></li>
                             <li>Inflamación: <span id="inflammation"></span></li>
@@ -150,7 +150,7 @@
                     <h3>En Niños</h3>
                     <ul>
                         <li><h4>Erupciones rojas con costras</h4><p>La piel aparece áspera, con erupciones rojas con costras</p></li>
-                        <li><h4>Picazón Persistente</h4><p>Comezón que puede ser peor por la noche, llevando a un ciclo de rascado如同</p></li>
+                        <li><h4>Picazón Persistente</h4><p>Comezón que puede ser peor por la noche, llevando a un ciclo de rascado e inflamación.</p></li>
                         <li><h4>Piel seca y rugosa</h4><p>Áreas inflamadas que aparecen con tendencia a agrietarse.</p></li>
                         <li><h4>Infecciones cutáneas frecuentes</h4><p>Protuberancias pequeñas que pueden supurar líquido por rascado (impétigo).</p></li>
                     </ul>
@@ -330,7 +330,6 @@
             formData.append('imagen', file);
 
             // Mostrar progreso
-            document.getElementById('analysisProgress').style.display = 'block';
             document.getElementById('analysisResults').style.display = 'none';
 
             fetch('/procesar', {
@@ -339,7 +338,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('analysisProgress').style.display = 'none';
                 document.getElementById('analysisResults').style.display = 'block';
 
                 if (data.error) {
@@ -348,29 +346,21 @@
                 }
 
                 // Mostrar resultados
-                document.getElementById('confidence').textContent = `${(data.confidence * 100).toFixed(0)}%`;
-                document.getElementById('processedImageContainer').innerHTML = `<img src="${data.processed_image}" alt="Imagen procesada" style="max-width: 100%; height: auto;">`;
-                document.getElementById('diagnosis').textContent = data.diagnosis;
-                document.getElementById('diagnosisDetails').textContent = data.diagnosis_details;
-                document.getElementById('severity').innerHTML = `<progress value="${data.severity}" max="100"></progress> ${data.severity}%`;
-                document.getElementById('inflammation').innerHTML = `<progress value="${data.inflammation}" max="100"></progress> ${data.inflammation}%`;
+                document.getElementById('lesions').textContent = data.lesions;
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('analysisProgress').style.display = 'none';
                 alert('Error al procesar la imagen.');
             });
         });
 
         function resetForm() {
             document.getElementById('uploadForm').reset();
-            document.getElementById('analysisProgress').style.display = 'none';
             document.getElementById('analysisResults').style.display = 'none';
         }
 
         function saveResults() {
             alert('Funcionalidad de guardar resultados aún no implementada.');
-            // Aquí podrías implementar lógica para guardar resultados (ej. en localStorage o backend)
         }
     </script>
 </body>
