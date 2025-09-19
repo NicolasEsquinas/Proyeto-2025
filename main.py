@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from ultralytics import YOLO
 import cv2
 import numpy as np
@@ -6,7 +6,13 @@ import os
 from werkzeug.utils import secure_filename
 import time
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, 'static'),
+    template_folder=os.path.join(BASE_DIR, 'templates')
+)
 
 # Configuración
 UPLOAD_FOLDER = 'static/uploads'
@@ -17,8 +23,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 
 # Cargar modelos YOLO
 try:
-    modelo_piel = YOLO('Chito-cosas/last.pt')  # Modelo para segmentar piel
-    modelo_lesiones = YOLO('Chito-cosas/lesions.pt')  # Modelo para detectar lesiones
+    modelo_piel = YOLO('last.pt')  # Modelo para segmentar piel
+    modelo_lesiones = YOLO('lesions.pt')  # Modelo para detectar lesiones
 except Exception as e:
     print(f"Error al cargar los modelos YOLO: {e}")
     exit(1)
@@ -29,7 +35,7 @@ def allowed_file(filename):
 @app.route('/')
 def index():
     try:
-        return send_from_directory('../templates', 'index.html')
+        return send_from_directory('templates', 'index.html')
     except Exception as e:
         return jsonify({'error': f'No se pudo encontrar index.html: {str(e)}'}), 404
 
