@@ -5,6 +5,14 @@ import numpy as np
 import os
 from werkzeug.utils import secure_filename
 import time
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config(
+    cloud_name="dyfdso8kb",
+    api_key="377875972382137",
+    api_secret="veQJjh6odaFlNVHJfpPD8PWFW3g"
+)
 
 # Directorio base del proyecto
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
