@@ -5,8 +5,12 @@ import numpy as np
 import os
 from werkzeug.utils import secure_filename
 import time
+
 import cloudinary
 import cloudinary.uploader
+import requests
+from datetime import datetime
+
 
 cloudinary.config(
     cloud_name="dyfdso8kb",
@@ -61,8 +65,6 @@ def image_files(filename):
 @app.route('/JS/<path:filename>')
 def js_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'JS'), filename)
-
-# Endpoint para procesar imágenes
 @app.route('/procesar', methods=['POST'])
 def procesar_imagen():
     if 'imagen' not in request.files:
@@ -73,63 +75,68 @@ def procesar_imagen():
         return jsonify({'error': 'No se seleccionó ninguna imagen'}), 400
 
     if file and allowed_file(file.filename):
-        # Generar nombre único para evitar colisiones
+        # Generar nombre único
         timestamp = int(time.time())
         filename = secure_filename(f"{timestamp}_{file.filename}")
         img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(img_path)
 
-        # Leer imagen con OpenCV
+        # Leer imagen
         img = cv2.imread(img_path)
         if img is None:
             os.remove(img_path)
             return jsonify({'error': 'No se pudo leer la imagen'}), 400
 
-        # Paso 1: Segmentar piel con el primer modelo
+        # Paso 1: Segmentar piel
         resultados_piel = modelo_piel(img)[0]
         mascara = np.zeros(img.shape[:2], dtype=np.uint8)
         for box in resultados_piel.boxes:
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             mascara[y1:y2, x1:x2] = 255
 
-        # Recortar piel
         solo_piel = cv2.bitwise_and(img, img, mask=mascara)
 
-        # Guardar imagen recortada
+        # Guardar imagen recortada temporalmente
         cropped_filename = f"cropped_{filename}"
         cropped_path = os.path.join(app.config['UPLOAD_FOLDER'], cropped_filename)
         cv2.imwrite(cropped_path, solo_piel)
 
-        # Paso 2: Detectar lesiones con el segundo modelo
+        # Paso 2: Detectar lesiones
         resultados_lesiones = modelo_lesiones(solo_piel)[0]
         lesiones = []
         for box in resultados_lesiones.boxes:
-            lesion_name = resultados_lesiones.names[int(box.cls)]  # Nombre de la clase
+            lesion_name = resultados_lesiones.names[int(box.cls)]
             lesiones.append(lesion_name)
 
-        # Generar texto de resultado
         lesiones_texto = ", ".join(lesiones) if lesiones else "No se detectaron lesiones específicas"
 
-        # Eliminar archivo original
-        os.remove(img_path)
+        # Paso 3: Subir imagen a Cloudinary
+        upload_result = cloudinary.uploader.upload(cropped_path, folder="dermascan")
+        image_url = upload_result["secure_url"]
 
-        # Respuesta JSON
+        # Paso 4: Mandar a tu backend (historial)
+        try:
+            payload = {
+                "perfil_id": 1,  # ⚠️ cambiar cuando tengas ID real del usuario
+                "imagen": image_url,
+                "lesiones": lesiones_texto,
+                "fecha": datetime.now().isoformat(),
+            }
+            requests.post("https://derma-scan-backend.vercel.app/api/historial", json=payload)
+        except Exception as e:
+            print("Error al enviar al backend:", e)
+
+        # Limpiar archivos locales
+        os.remove(img_path)
+        os.remove(cropped_path)
+
+        # Respuesta al front
         return jsonify({
             'lesions': lesiones_texto,
-            'processed_image': f'/uploads/{cropped_filename}'
+            'processed_image': image_url
         })
 
     return jsonify({'error': 'Tipo de archivo no permitido'}), 400
-
-
-# Ruta para servir imágenes procesadas desde /uploads/
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    try:
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-    except Exception as e:
-        return jsonify({'error': f'No se pudo encontrar el archivo: {str(e)}'}), 404
-
-
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+   
