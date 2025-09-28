@@ -1,0 +1,338 @@
+/* Reset básico para consistencia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Header y Navegación */
+header {
+    background-color: #1a3c6d;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+header ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+header ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Secciones principales */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+section {
+    margin-bottom: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #1a3c6d;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #2c5282;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Sección Enfermedad */
+#enfermedad > div {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+#enfermedad img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+#enfermedad > div > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+#enfermedad > div > div > div {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección Detección */
+#deteccion > div:first-child {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+#deteccion > div:first-child > div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#deteccion > div:first-child > div > p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a3c6d;
+}
+
+#deteccion form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#deteccion form input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+#deteccion form button {
+    background-color: #2c5282;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 0.5rem;
+}
+
+#deteccion form button:hover {
+    background-color: #1a3c6d;
+}
+
+#analysisProgress, #analysisResults {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#analysisProgress ul {
+    list-style: disc;
+    margin-left: 2rem;
+}
+
+#analysisResults img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+#analysisResults #lesions {
+    font-weight: bold;
+    color: #2c5282;
+}
+
+#severityIndicators progress {
+    width: 100%;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* Sección Síntomas */
+#sintomas > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+#sintomas ul {
+    list-style: none;
+}
+
+#sintomas ul li {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+/* Sección Tratamiento */
+#tratamiento > div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+#tratamiento img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+#tratamiento ul {
+    list-style: disc;
+    margin-left: 2rem;
+}
+
+/* Sección Equipo */
+#equipo > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+#equipo img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Sección Contacto */
+#contacto > div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+#contacto form {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#contacto input, #contacto textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#contacto button {
+    background-color: #2c5282;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#contacto button:hover {
+    background-color: #1a3c6d;
+}
+
+/* Footer */
+footer {
+    background-color: #1a3c6d;
+    color: white;
+    padding: 2rem;
+}
+
+footer > div {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer img {
+    width: 24px;
+    height: 24px;
+    margin: 0 0.5rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #enfermedad > div {
+        grid-template-columns: 1fr;
+    }
+
+    #deteccion > div:first-child {
+        grid-template-columns: 1fr;
+    }
+
+    #sintomas > div {
+        grid-template-columns: 1fr;
+    }
+
+    #tratamiento > div {
+        grid-template-columns: 1fr;
+    }
+
+    #equipo > div {
+        grid-template-columns: 1fr;
+    }
+
+    #contacto > div {
+        grid-template-columns: 1fr;
+    }
+
+    footer > div {
+        grid-template-columns: 1fr;
+    }
+}
