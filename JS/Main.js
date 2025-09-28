@@ -401,10 +401,12 @@ function animateProgress() {
 // Llamada real a la IA
 async function analyzeWithIA(imageUrl) {
     try {
-        const res = await fetch('/api/analisis-ia', {
+        const formData = new FormData();
+        formData.append('imagen', fileInput.files[0]);  // archivo original
+
+        const res = await fetch('/procesar', {
             method: 'POST',
-            body: JSON.stringify({ imageUrl }),
-            headers: { 'Content-Type': 'application/json' }
+            body: formData
         });
         const data = await res.json();
 
@@ -414,34 +416,21 @@ async function analyzeWithIA(imageUrl) {
     }
 }
 
+
 function renderResults(data) {
     setStep(3);
 
     analysisProgress.style.display = 'none';
     analysisResults.style.display = 'block';
 
-    confidenceFill.style.width = data.probabilidad + '%';
-    confidenceValue.textContent = data.probabilidad + '%';
-
-    const resultTitle = analysisResults.querySelector('.result-card.primary h4');
-    const resultDescription = analysisResults.querySelector('.result-card.primary p');
-    const severityBar = analysisResults.querySelectorAll('.stat-fill')[0];
-    const inflammationBar = analysisResults.querySelectorAll('.stat-fill')[1];
-
-    resultTitle.textContent = data.diagnostico || 'Diagnóstico';
-    resultDescription.textContent = 'Probabilidad alta basada en las características visuales';
-
-    severityBar.style.width = data.severidadPorcentaje + '%';
-    inflammationBar.style.width = data.inflamacionPorcentaje + '%';
-
-    const recommendationsList = analysisResults.querySelector('.result-card:nth-child(2) ul');
-    recommendationsList.innerHTML = '';
-    data.recomendaciones.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        recommendationsList.appendChild(li);
-    });
+    analysisResults.innerHTML = `
+        <div class="result-card primary">
+            <h4>Resultado del análisis</h4>
+            <p>${data.lesions}</p>
+        </div>
+    `;
 }
+
 // Update user profile
 app.put('/api/perfil/:perfil_id', async (req, res) => {
     const { perfil_id } = req.params;
