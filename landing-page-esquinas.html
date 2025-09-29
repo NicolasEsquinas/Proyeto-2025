@@ -17,7 +17,6 @@
             --light-color: #f8f9fa;
             --gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
         }
 
         /* Reset y estilos base */
@@ -49,7 +48,6 @@
         a {
             text-decoration: none;
             color: inherit;
-            transition: var(--transition);
         }
 
         ul {
@@ -97,12 +95,6 @@
             background: var(--gradient);
             margin: 0 auto;
             border-radius: 2px;
-            transform: scaleX(0);
-            animation: dividerAnimation 1s ease forwards;
-        }
-
-        @keyframes dividerAnimation {
-            to { transform: scaleX(1); }
         }
 
         .bg-light {
@@ -123,7 +115,6 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            transition: var(--transition);
         }
 
         .btn-3d {
@@ -135,21 +126,10 @@
             color: white;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
         .btn-secondary {
             background: white;
             color: var(--primary-color);
             border: 2px solid var(--primary-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
         }
 
         .btn-xl {
@@ -167,12 +147,6 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transform: translateY(-100%);
-            animation: slideDown 0.5s ease forwards;
-        }
-
-        @keyframes slideDown {
-            to { transform: translateY(0); }
         }
 
         .navbar {
@@ -210,21 +184,6 @@
             font-weight: 500;
         }
 
-        .nav-link-hover::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link-hover:hover::after {
-            width: 100%;
-        }
-
         .hamburger {
             display: none;
             cursor: pointer;
@@ -236,19 +195,6 @@
             height: 3px;
             margin: 5px auto;
             background-color: var(--dark-color);
-            transition: var(--transition);
-        }
-
-        .hamburger.active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active .hamburger-line:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
         }
 
         /* Hero Video */
@@ -268,14 +214,8 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            animation: fadeIn 1.5s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .video-background {
             width: 100%;
             height: 100%;
@@ -290,12 +230,6 @@
             margin: 0 auto;
             padding: 0 20px;
             z-index: 2;
-            animation: slideUp 1s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
         
         .hero-video-title {
@@ -337,13 +271,6 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            transform: translateY(20px);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(20px); }
-            50% { transform: translateY(0); }
         }
         
         .minimalist-stats {
@@ -354,14 +281,6 @@
         
         .minimalist-stat {
             text-align: center;
-            opacity: 0;
-            animation: fadeInUp 0.5s ease forwards;
-            animation-delay: calc(var(--i) * 0.2s);
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .minimalist-stat-number {
@@ -389,11 +308,6 @@
             position: relative;
             cursor: pointer;
             aspect-ratio: 1/1;
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover {
-            transform: scale(1.05);
         }
         
         .gallery-image {
@@ -413,22 +327,11 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
         }
         
         .zoom-icon {
             color: white;
             font-size: 2rem;
-            transform: scale(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover .zoom-icon {
-            transform: scale(1);
         }
 
         /* Team Section */
@@ -444,19 +347,12 @@
             overflow: hidden;
             box-shadow: var(--box-shadow);
             text-align: center;
-            transform: translateY(20px);
-            animation: float 3s ease-in-out infinite;
         }
         
         .member-image {
             width: 100%;
             height: 300px;
             object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .team-member:hover .member-image {
-            transform: scale(1.1);
         }
         
         .member-info {
@@ -487,13 +383,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-        
-        .social-link:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-3px);
         }
 
         /* Contact Form */
@@ -502,13 +391,10 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: var(--box-shadow);
-            transform: translateY(20px);
-            animation: slideUp 0.8s ease forwards;
         }
         
         .form-group {
             margin-bottom: 20px;
-            position: relative;
         }
         
         .form-control {
@@ -518,13 +404,6 @@
             border-radius: 10px;
             font-family: 'Arial', sans-serif;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 8px rgba(106, 90, 205, 0.3);
         }
         
         textarea.form-control {
@@ -546,7 +425,6 @@
             z-index: 2000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
         }
         
         .lightbox.active {
@@ -557,12 +435,6 @@
         .lightbox-content {
             max-width: 90%;
             max-height: 90%;
-            transform: scale(0.8);
-            animation: scaleIn 0.3s ease forwards;
-        }
-
-        @keyframes scaleIn {
-            to { transform: scale(1); }
         }
         
         .lightbox-image {
@@ -578,11 +450,6 @@
             color: white;
             font-size: 2.5rem;
             cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        
-        .close-lightbox:hover {
-            transform: rotate(90deg);
         }
 
         /* Minimalist Footer */
@@ -597,12 +464,6 @@
             font-weight: 700;
             margin-bottom: 20px;
             color: var(--primary-color);
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
         
         .minimalist-footer-links {
@@ -610,14 +471,6 @@
             justify-content: center;
             gap: 30px;
             margin-bottom: 30px;
-        }
-        
-        .minimalist-footer-links a {
-            transition: color 0.3s ease;
-        }
-        
-        .minimalist-footer-links a:hover {
-            color: var(--primary-color);
         }
         
         .minimalist-copyright {
@@ -637,7 +490,6 @@
                 height: calc(100vh - 80px);
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
                 padding-top: 30px;
-                transition: left 0.3s ease;
             }
 
             .nav-links.active {
@@ -679,10 +531,6 @@
                 flex-direction: column;
                 gap: 30px;
             }
-            
-            .contact-form {
-                padding: 20px;
-            }
         }
     </style>
 </head>
@@ -692,7 +540,7 @@
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">
-                    <img src="images/Component 10.png" alt="DermaScan Logo">
+                    <img src="images/LOGO-DERMA-SCAN2.PNG" alt="">
                     <span>DermaScan</span>
                 </a>
                 <ul class="nav-links">
@@ -715,7 +563,7 @@
         <div class="video-container">
             <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80" 
                  alt="Análisis de piel" 
-                 class="video-background">
+                 style="width: 100%; height: 100%; object-fit: cover; opacity: 0.2;">
         </div>
         <div class="container">
             <div class="hero-video-content">
@@ -739,22 +587,22 @@
                     <p>Nuestra IA ha sido entrenada con más de 100,000 imágenes dermatológicas verificadas por especialistas, permitiendo una detección precisa de melanoma en etapas tempranas.</p>
                     <p>El sistema utiliza redes neuronales convolucionales que analizan patrones visuales imperceptibles para el ojo humano, identificando características clave que diferencian lesiones benignas de malignas.</p>
                     <div class="minimalist-stats">
-                        <div class="minimalist-stat" style="--i: 1;">
+                        <div class="minimalist-stat">
                             <div class="minimalist-stat-number">97.3%</div>
                             <div class="minimalist-stat-label">Precisión diagnóstica</div>
                         </div>
-                        <div class="minimalist-stat" style="--i: 2;">
+                        <div class="minimalist-stat">
                             <div class="minimalist-stat-number">30 seg</div>
                             <div class="minimalist-stat-label">Tiempo de análisis</div>
                         </div>
-                        <div class="minimalist-stat" style="--i: 3;">
+                        <div class="minimalist-stat">
                             <div class="minimalist-stat-number">24/7</div>
                             <div class="minimalist-stat-label">Disponibilidad</div>
                         </div>
                     </div>
                 </div>
-                <div class="minimalist-image">
-                    <img src="images/image 29.png" alt="Análisis de IA">
+                <div class="" style="">
+                    <img style=" border-radius: 10px;" src="images/image 29.png" alt="Análisis de IA">
                 </div>
             </div>
         </div>
@@ -768,7 +616,7 @@
                 <p class="section-subtitle">Informes detallados</p>
                 <div class="divider"></div>
             </div>
-            <div class="minimalist-content" style="margin-left: 0;">
+            <div class="minimalist-content" style=" margin-left: 450px;">
                 <div>
                     <h3>Informes comprensibles</h3>
                     <p>Recibe un informe completo que incluye:</p>
@@ -810,7 +658,7 @@
                 <div class="gallery-item">
                     <img src="images/dermatitis2.jpg" alt="Resultados DermaScan" class="gallery-image">
                     <div class="gallery-overlay">
-                        <i class="fas fa-search-plus zoom-icon"></i>
+                        <i class="fas fa envelope"></i>
                     </div>
                 </div>
             </div>
@@ -827,46 +675,46 @@
             </div>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="images/what-is-meant-by-backend-developer.jpg" alt="Tomas Schusterman" class="member-image">
+                    <img src="images/what-is-meant-by-backend-developer.jpg" alt="Dra. Laura Martínez" class="member-image">
                     <div class="member-info">
                         <h3 class="member-name">Tomas Schusterman</h3>
                         <p class="member-role">Backend</p>
                         <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="team-member">
-                    <img src="images/front end development html_0.jpg" alt="Nicolas Esquinas" class="member-image">
+                    <img src="images/front end development html_0.jpg" alt="Dr. Carlos Fernández" class="member-image">
                     <div class="member-info">
                         <h3 class="member-name">Nicolas Esquinas</h3>
                         <p class="member-role">Front End</p>
                         <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="team-member">
-                    <img src="images/Blog_How-much-of-training-data-you-need-for-an-AI-project.jpg" alt="Ignacio Sanchez" class="member-image">
+                    <img src="images/Blog_How-much-of-training-data-you-need-for-an-AI-project.jpg" alt="Dr. Javier Ruiz" class="member-image">
                     <div class="member-info">
                         <h3 class="member-name">Ignacio Sanchez</h3>
                         <p class="member-role">Especialista en IA</p>
                         <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="team-member">
-                    <img src="images/101_UX_vs_UI_illustration_blog-1.png" alt="Joaquin Fernandez" class="member-image">
+                    <img src="images/101_UX_vs_UI_illustration_blog-1.png" alt="Dr. Javier Ruiz" class="member-image">
                     <div class="member-info">
                         <h3 class="member-name">Joaquin Fernandez</h3>
                         <p class="member-role">UX/UI</p>
                         <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
+                            <a href="#" class="social-link"><i class=""></i></a>
                         </div>
                     </div>
                 </div>
@@ -895,105 +743,8 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Asunto">
                     </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="Tu mensaje" required></textarea>
-                    </div>
-                    <div style="text-align: center;">
+                    <div style="margin-left: 210PX;">
                         <button type="submit" class="btn btn-primary btn-3d">Enviar Mensaje</button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div class="lightbox">
-        <div class="lightbox-content">
-            <img src="" alt="Lightbox Image" class="lightbox-image">
-        </div>
-        <i class="fas fa-times close-lightbox"></i>
-    </div>
-
-    <!-- Footer -->
-    <footer class="minimalist-footer">
-        <div class="container">
-            <div class="minimalist-footer-logo">DermaScan</div>
-            <div class="minimalist-footer-links">
-                <a href="#detection-ia">Detección IA</a>
-                <a href="#results">Resultados</a>
-                <a href="#team2">Equipo</a>
-                <a href="#contact2">Contacto</a>
-            </div>
-            <div class="minimalist-copyright">
-                &copy; 2025 DermaScan. Todos los derechos reservados.
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Hamburger Menu
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Lightbox Functionality
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        const lightbox = document.querySelector('.lightbox');
-        const lightboxImage = document.querySelector('.lightbox-image');
-        const closeLightbox = document.querySelector('.close-lightbox');
-
-        galleryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const imgSrc = item.querySelector('.gallery-image').src;
-                lightboxImage.src = imgSrc;
-                lightbox.classList.add('active');
-            });
-        });
-
-        closeLightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
-            }
-        });
-
-        // Smooth Scroll for Nav Links
-        document.querySelectorAll('.nav-link-hover').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                window.scrollTo({
-                    top: targetSection.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-                if (navLinks.classList.contains('active')) {
-                    hamburger.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
-
-        // Scroll Animation Trigger
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.minimalist-section, .team-member, .contact-form');
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                if (elementTop < windowHeight * 0.8) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
-
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll();
-    </script>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Tu mensaje" required style="

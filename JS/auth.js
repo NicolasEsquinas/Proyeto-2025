@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("nombre_completo", data.nombre_completo);
                 localStorage.setItem("correo_electronico", data.correo_electronico);
 
-                window.location.href = "/index.html"; // redirige al home o dashboard
+                window.location.href = "/"; // redirige al home o dashboard
             } catch (error) {
                 console.error("Error en login:", error.message);
             }
