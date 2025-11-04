@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joaquín | UX/UI Product Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=PP+Mori:wght@300;400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8F0;
+            --brown: #5D4037;
+            --orange: #FF6B35;
+            --text: #3E2723;
+            --light: #FFF3E0;
+            --border: #FFE0B2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PP Mori', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* HERO EDITORIAL */
+        .hero {
+            padding: 10rem 8% 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(255,107,53,0.05), transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -4px;
+            line-height: 0.9;
+            background: linear-gradient(90deg, var(--brown), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 700px;
+            background: url('https://via.placeholder.com/1800x1000/FF6B35/FFF8F0?text=FEATURED+CASE+STUDY') center/cover;
+            margin-bottom: 8rem;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(93, 64, 55, 0.15);
+        }
+
+    
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,248,240,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--brown);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 6rem 8%;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 5rem;
+            font-weight: 600;
+            color: var(--brown);
+        }
+
+        /* CASE STUDIES */
+        .cases {
+            background: var(--light);
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(93, 64, 55, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(93, 64, 55, 0.15);
+        }
+
+        .case-image {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .case-card:hover .case-image img {
+            transform: scale(1.1);
+        }
+
+        .case-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--orange);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 50px;
+        }
+
+        .case-content {
+            padding: 3rem;
+        }
+
+        .case-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--brown);
+            font-weight: 600;
+        }
+
+        .case-desc {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .case-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255,107,53,0.1);
+            color: var(--orange);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* PROCESS */
+        .process {
+            background: white;
+        }
+
+        .process-steps {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .step {
+            position: relative;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 100%;
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .step:last-child::before {
+            display: none;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--brown);
+        }
+
+        .step-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* ABOUT */
+        .about {
+            background: var(--cream);
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--brown);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .about-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(93, 64, 55, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CONTACT */
+        .contact {
+            background: var(--light);
+            text-align: center;
+        }
+
+        .contact-card {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(93, 64, 55, 0.1);
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--brown);
+        }
+
+        .contact-text {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--orange);
+            text-decoration: none;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            transform: scale(1.05);
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 4rem 8%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 5rem; }
+            .cases-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: 1fr; }
+            .step::before { display: none; }
+            .about-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-logo">Joaquín</a>
+        <div class="nav-links">
+            <a href="#cases">Proyectos</a>
+            <a href="#process">Proceso</a>
+            <a href="#about">Sobre mí</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Joaquín</h1>
+        <p>Diseñador de producto UX/UI especializado en crear experiencias humanas, accesibles y emocionalmente resonantes. Transformo investigación en interfaces que las personas aman usar.</p>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="cases" id="cases">
+        <h2 class="section-title">Case Studies</h2>
+        <div class="cases-grid">
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="https://via.placeholder.com/800x500/FF6B35/FFF8F0?text=HEALTH+APP" alt="App Salud">
+                    <div class="case-badge">HEALTH</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">DermaScan</h3>
+                    <p>Pagina web para el analisis y deteccion de la dermatitis atopica</p>
+                    <div class="case-tags">
+                        <span class="tag">UX Research</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">Microinteractions</span>
+                        <span class="tag">A11y</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="https://via.placeholder.com/800x500/5D4037/FFF8F0?text=FINTECH+DASHBOARD" alt="Fintech">
+                    <div class="case-badge">FINTECH</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">iPlates</h3>
+                    <p>Pagina web centrada en el escaneo de patentes</p>
+                    <div class="case-tags">
+                        <span class="tag">Design System</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">Idea Development</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" id="process">
+        <h2 class="section-title">Mi Proceso</h2>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Descubrimiento</h3>
+                <p class="step-desc">Entrevistas, encuestas, análisis competitivo y definición de objetivos claros.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Ideación</h3>
+                <p class="step-desc">Sketching, user flows, wireframes y prototipos de baja fidelidad.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Diseño</h3>
+                <p class="step-desc">UI de alta fidelidad, design system y componentes reutilizables.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Validación</h3>
+                <p class="step-desc">User testing, A/B tests, métricas y entrega a desarrollo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Sobre mí</h3>
+                <p>Diseñador con 5 años de experiencia en productos digitales. He trabajado con startups y empresas Fortune 500 para crear experiencias que combinan empatía, accesibilidad y belleza.</p>
+                <p>Creo que el buen diseño no se trata de estética, sino de resolver problemas humanos con soluciones elegantes.</p>
+                <p><strong>Herramientas:</strong> Figma, Sketch, Principle, Framer, Adobe Suite, Notion</p>
+                <p><strong>Habilidades:</strong> UX Research, Interaction Design, Design Systems, Accessibility, Prototyping</p>
+            </div>
+            <div class="about-image">
+                <img src="https://via.placeholder.com/600x700/FF6B35/FFF8F0?text=Joaquín" alt="Joaquín">
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-card">
+            <h2 class="contact-title">¿Trabajamos juntos?</h2>
+            <p class="contact-text">Estoy disponible para proyectos de diseño de producto, consultoría UX o mentorías. Me encanta colaborar en ideas que impactan vidas.</p>
+            <a href="mailto:joaquin@example.com" class="contact-email">joaquin@example.com</a>
+            <p class="contact-text">Respondo en menos de 24 horas. También en <strong>LinkedIn</strong> y <strong>Dribbble</strong>.</p>
+        </div>
+    </section>
+
+
+</body>
+</html>
