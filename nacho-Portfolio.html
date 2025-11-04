@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nacho | Creative Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Monument+Extended:wght@400;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #000;
+            --white: #fff;
+            --neon: #FF0066;
+            --neon-glow: 0 0 30px rgba(255, 0, 102, 0.6);
+            --gray: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* HERO SPLIT */
+        .hero {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+
+        .hero-left {
+            background: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-left::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231A1A1A"/><path d="M0,50 Q25,30 50,50 T100,50" stroke="%23FF0066" stroke-width="2" fill="none"/></svg>');
+            opacity: 0.05;
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.05; }
+            50% { opacity: 0.1; }
+        }
+
+        .hero-content {
+            max-width: 500px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Monument Extended', sans-serif;
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title span {
+            display: block;
+            color: var(--neon);
+            text-shadow: var(--neon-glow);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .hero-cta {
+            background: var(--neon);
+            color: var(--black);
+            padding: 1rem 2rem;
+            border: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .hero-cta:hover {
+            transform: scale(1.05);
+            box-shadow: var(--neon-glow);
+        }
+
+        .hero-right {
+            background: url('https://via.placeholder.com/800x600/FF0066/000000?text=NACHO') center/cover no-repeat;
+            position: relative;
+        }
+
+        .hero-right::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,0,102,0.3) 100%);
+        }
+
+        /* MARQUEE */
+        .marquee {
+            background: var(--neon);
+            color: var(--black);
+            padding: 1rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            font-family: 'Monument Extended', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* WORKS */
+        .works {
+            padding: 5rem;
+            background: var(--black);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .work-item {
+            aspect-ratio: 1;
+            background: var(--gray);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .work-item:hover {
+            transform: scale(0.95);
+        }
+
+        .work-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .work-item:hover img {
+            transform: scale(1.2);
+        }
+
+        .work-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, var(--black));
+            transform: translateY(50%);
+            transition: transform 0.4s ease;
+        }
+
+        .work-item:hover .work-overlay {
+            transform: translateY(0);
+        }
+
+        .work-title {
+            font-family: 'Monument Extended', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 3rem 5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,0,102,0.2);
+        }
+
+        .footer-links a {
+            color: var(--white);
+            margin-left: 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-title { font-size: 4rem; }
+            .works-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="hero-left">
+            <div class="hero-content">
+                <h1 class="hero-title">Nacho<br><span>Creative</span><br>Developer</h1>
+                <p class="hero-subtitle">Experimentos visuales, código creativo y experiencias que rompen moldes.</p>
+                <button class="hero-cta">Explorar Trabajos</button>
+            </div>
+        </div>
+        <div class="hero-right"></div>
+    </div>
+
+    <div class="marquee">
+        <div class="marquee-text">
+            WEBGL • THREE.JS • SHADERS • CREATIVE CODING • WEBGL • THREE.JS • SHADERS • CREATIVE CODING •
+        </div>
+    </div>
+
+    <section class="works">
+        <div class="works-grid">
+            <div class="work-item">
+                <img src="https://via.placeholder.com/500/FF0066/000000?text=GLSL+EXPERIMENT" alt="GLSL">
+                <div class="work-overlay">
+                    <h3 class="work-title">GLSL Shaders</h3>
+                    <p class="work-desc">Experimentos con fragment shaders en tiempo real</p>
+                </div>
+            </div>
+            <div class="work-item">
+                <img src="https://via.placeholder.com/500/000000/FF0066?text=3D+SCENE" alt="3D">
+                <div class="work-overlay">
+                    <h3 class="work-title">3D Interactive</h3>
+                    <p class="work-desc">Escena 3D con Three.js y controles orbitales</p>
+                </div>
+            </div>
+            <div class="work-item">
+                <img src="https://via.placeholder.com/500/FF0066/000000?text=PARTICLES" alt="Particles">
+                <div class="work-overlay">
+                    <h3 class="work-title">Particle System</h3>
+                    <p class="work-desc">100k partículas GPU con WebGL</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>nacho@example.com</p>
+        <div class="footer-links">
+            <a href="#">GitHub</a>
+            <a href="#">CodePen</a>
+            <a href="#">Twitter</a>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas Schusterman | Backend Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A2540;      /* Azul marino profundo */
+            --accent: #0055FF;       /* Azul eléctrico */
+            --accent-light: #3366FF;
+            --bg: #0B1426;
+            --card-bg: rgba(15, 25, 50, 0.7);
+            --text: #E6F0FF;
+            --text-light: #94A3C7;
+            --gradient: linear-gradient(135deg, #0A2540 0%, #1A3B6B 100%);
+            --glow: 0 0 20px rgba(0, 85, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 85, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 85, 255, 0.08) 0%, transparent 50%);
+        }
+
+        /* CURSOR PERSONALIZADO */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        /* HEADER */
+        header {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--gradient);
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header-title {
+            font-size: 5.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #E6F0FF, #3366FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 1.6rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* NAV */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.4s ease;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+        }
+
+        .nav-menu a:hover::before {
+            width: 100%;
+        }
+
+        /* CASE STUDIES */
+        .case-studies {
+            padding: 120px 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #3366FF, #00D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .case-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 85, 255, 0.2);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .case-card:hover {
+            transform: translateY(-20px);
+            box-shadow: var(--glow);
+            border-color: var(--accent);
+        }
+
+        .case-image {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .case-card:hover .case-image img {
+            transform: scale(1.15);
+        }
+
+        .case-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .case-content {
+            padding: 2rem;
+        }
+
+        .case-title {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .case-desc {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .case-tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(0, 85, 255, 0.2);
+            color: var(--accent-light);
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* PROCESS TIMELINE */
+        .process {
+            padding: 100px 5%;
+            background: rgba(10, 37, 64, 0.5);
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 85, 255, 0.2);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -60px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -60px;
+        }
+
+        .timeline-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent-light);
+        }
+
+        .timeline-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* CONTACT */
+        .contact {
+            padding: 120px 5%;
+            text-align: center;
+        }
+
+        .contact-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 85, 255, 0.3);
+            backdrop-filter: blur(12px);
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #3366FF, #00D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-text {
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            transform: scale(1.05);
+            text-shadow: var(--glow);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(0, 85, 255, 0.2);
+        }
+
+        .footer-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .cases-grid { grid-template-columns: 1fr; }
+            .timeline::before { left: 30px; }
+            .timeline-item { flex-direction: column; }
+            .timeline-item:nth-child(even) { flex-direction: column; }
+            .timeline-content { width: 80%; margin-left: 60px; }
+            .timeline-content::before { left: -45px; }
+            .timeline-item:nth-child(even) .timeline-content::before { left: -45px; }
+        }
+
+        @media (max-width: 768px) {
+            .header-title { font-size: 3.5rem; }
+            .stats { gap: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CURSOR -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- NAV -->
+    <div class="nav-container">
+        <a href="#" class="nav-logo">TS.</a>
+        <div class="nav-menu">
+            <a href="#cases">Proyectos</a>
+            <a href="#process">Proceso</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1 class="header-title">Thomas<br>Schusterman</h1>
+            <p class="header-subtitle">Backend Developer especializado en bases de datos complejas</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Años ORT</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Proyectos clave</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CASE STUDIES -->
+    <section class="case-studies" id="cases">
+        <div class="section-header">
+            <h2 class="section-title">Proyectos</h2>
+            <p class="section-subtitle">Proyectos seleccionados que muestran mi proceso completo de diseño: desde la investigación hasta la implementación.</p>
+        </div>
+
+        <div class="cases-grid">
+            <!-- DERMA SCAN -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="https://via.placeholder.com/800x500/0A2540/3366FF?text=DERMASCAN" alt="Dermascan">
+                    <div class="case-badge">FEATURED</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">Dermascan App</h3>
+                    <p class="case-desc">Pagina web para detección temprana de anomalías en la piel mediante IA.</p>
+                    <div class="case-tags">
+                        <span class="tag">Backend</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Neon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EJEMPLO 1 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="https://via.placeholder.com/800x500/1A3B6B/00D4FF?text=HEALTH+PLATFORM" alt="Health Platform">
+                    <div class="case-badge">HEALTH</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">Health Dashboard</h3>
+                    <p class="case-desc">Plataforma web para médicos con visualización de datos en tiempo real. Diseño de sistema completo, componentes reutilizables y accesibilidad WCAG 2.1.</p>
+                    <div class="case-tags">
+                        <span class="tag">Design System</span>
+                        <span class="tag">Data Viz</span>
+                        <span class="tag">Accesibilidad</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EJEMPLO 2 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="https://via.placeholder.com/800x500/0B1426/0055FF?text=FINTECH+APP" alt="Fintech App">
+                    <div class="case-badge">FINTECH</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title"></h3>
+                    <p class="case-desc">App de finanzas personales con gamificación. Onboarding intuitivo, microinteracciones y dark mode nativo. +30% retención de usuarios.</p>
+                    <div class="case-tags">
+                        <span class="tag">Gamification</span>
+                        <span class="tag">Microinteractions</span>
+                        <span class="tag">Dark Mode</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" id="process">
+        <div class="section-header">
+            <h2 class="section-title">Mi Proceso</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3 class="timeline-title">01. Investigación</h3>
+                    <p class="timeline-desc">Entrevistas, encuestas, análisis competitivo y definición de personas para entender profundamente al usuario.</p>
+                </div>
+                <div></div>
+            </div>
+            <div class="timeline-item">
+                <div></div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">02. Ideación</h3>
+                    <p class="timeline-desc">Sketching, crazy 8s, mapas de empatía y definición de flujos de usuario óptimos.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3 class="timeline-title">03. Prototipado</h3>
+                    <p class="timeline-desc">Wireframes low-fi, prototipos interactivos en Figma y validación con usuarios reales.</p>
+                </div>
+                <div></div>
+            </div>
+            <div class="timeline-item">
+                <div></div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">04. Implementación</h3>
+                    <p class="timeline-desc">Hand-off a developers, design system y seguimiento post-lanzamiento con métricas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-card">
+            <h2 class="contact-title">¿Listo para crear algo increíble?</h2>
+            <p class="contact-text">Hablemos sobre tu próximo proyecto. Me encanta colaborar en productos que impactan vidas.</p>
+            <a href="mailto:thomas@example.com" class="contact-email">thomas@example.com</a>
+            <p class="contact-text">Belgrano, Buenos Aires | ORT TIC</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="footer-text">© 2025 Thomas Schusterman. Diseñado con precisión y pasión.</p>
+    </footer>
+
+    <script>
+       
+        
+        
+
+        // EFECTO HOVER EN LINKS
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // SCROLL REVEAL
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.case-card, .timeline-content').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
