@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['19', 'liquenificacion 1', 'liquenificacion 2', 'liquenificacion 3']
+
+roboflow:
+  workspace: proyec-bsyrh
+  project: liquenificacion-ku6j4
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/proyec-bsyrh/liquenificacion-ku6j4/dataset/1
