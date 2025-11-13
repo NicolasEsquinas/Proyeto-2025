@@ -66,6 +66,10 @@ def image_files(filename):
 def auth_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'auth'), filename)
 
+@app.route('/index/<path:filename>')
+def index_files(filename):
+    return send_from_directory(os.path.join(BASE_DIR, 'index'), filename)
+
 @app.route('/JS/<path:filename>')
 def js_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'JS'), filename)
