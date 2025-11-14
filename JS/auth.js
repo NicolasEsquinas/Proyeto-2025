@@ -1,6 +1,62 @@
+// ==========================
+// Restaurar sesión al cargar página
+// ==========================
 document.addEventListener("DOMContentLoaded", () => {
-    // LOGIN
+    const perfil_id = localStorage.getItem("perfil_id");
+    const nombre_completo = localStorage.getItem("nombre_completo");
+    const correo_electronico = localStorage.getItem("correo_electronico");
+
+    const logged = perfil_id && nombre_completo && correo_electronico;
+
+    // Elementos en el header / menú superior
+    const userName = document.getElementById("userName");
+    const userEmail = document.getElementById("userEmail");
+    const authActionBtn = document.getElementById("authActionBtn");
+
+    if (logged) {
+        if (userName) userName.textContent = nombre_completo;
+        if (userEmail) userEmail.textContent = correo_electronico;
+
+        if (authActionBtn) {
+            authActionBtn.textContent = "Cerrar sesión";
+            authActionBtn.href = "#";
+            authActionBtn.onclick = logout;
+        }
+    } else {
+        if (userName) userName.textContent = "Invitado";
+        if (userEmail) userEmail.textContent = "No has iniciado sesión";
+    }
+
+    // ==========================
+    // Cargar datos en el perfil
+    // ==========================
+    const profileName = document.getElementById("profileName");
+    const profileFullName = document.getElementById("profileFullName");
+    const profileEmailInput = document.getElementById("profileEmailInput");
+
+    if (logged) {
+        if (profileName) profileName.textContent = nombre_completo;
+        if (profileFullName) profileFullName.value = nombre_completo;
+        if (profileEmailInput) profileEmailInput.value = correo_electronico;
+    }
+});
+
+// ==========================
+// Función cerrar sesión
+// ==========================
+function logout() {
+    localStorage.removeItem("perfil_id");
+    localStorage.removeItem("nombre_completo");
+    localStorage.removeItem("correo_electronico");
+    window.location.href = "/auth/login.html";
+}
+
+// ==========================
+// LOGIN
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
+
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -18,23 +74,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.error("Error en login:", data.error || "Error al iniciar sesión");
+                    console.error("Error en login:", data.error);
                     return;
                 }
 
+                // Guardar sesión correcta
                 localStorage.setItem("perfil_id", data.perfil_id);
                 localStorage.setItem("nombre_completo", data.nombre_completo);
                 localStorage.setItem("correo_electronico", data.correo_electronico);
 
-                window.location.href = "/"; // redirige al home o dashboard
+                window.location.href = "/index.html";
             } catch (error) {
-                console.error("Error en login:", error.message);
+                console.error("Error en login:", error);
             }
         });
     }
 
+    // ==========================
     // REGISTRO
+    // ==========================
     const registerForm = document.getElementById("registerForm");
+
     if (registerForm) {
         registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -53,17 +113,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.error("Error en registro:", data.error || "Error al registrarse");
+                    console.error("Error en registro:", data.error);
                     return;
                 }
 
+                // Guardar sesión
                 localStorage.setItem("perfil_id", data.perfil_id);
                 localStorage.setItem("nombre_completo", nombre_completo);
                 localStorage.setItem("correo_electronico", correo_electronico);
 
-                window.location.href = "/auth/login.html"; // redirige al login
+                window.location.href = "/auth/login.html";
             } catch (error) {
-                console.error("Error en registro:", error.message);
+                console.error("Error en registro:", error);
             }
         });
     }

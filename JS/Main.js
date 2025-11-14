@@ -431,24 +431,26 @@ function renderResults(data) {
     `;
 }
 
-// Update user profile
-app.put('/api/perfil/:perfil_id', async (req, res) => {
-    const { perfil_id } = req.params;
-    const { nombre_completo, correo_electronico, telefono } = req.body;
-  
-    try {
-      const result = await pool.query(
-        'UPDATE perfiles SET nombre_completo = $1, correo_electronico = $2, telefono = $3 WHERE id = $4 RETURNING *',
-        [nombre_completo, correo_electronico, telefono || null, perfil_id]
-      );
-  
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'Perfil no encontrado' });
-      }
-  
-      res.json({ mensaje: 'Perfil actualizado', perfil: result.rows[0] });
-    } catch (err) {
-      console.error('Error al actualizar perfil:', err);
-      res.status(500).json({ error: 'Error al actualizar perfil' });
+document.addEventListener("DOMContentLoaded", () => {
+    const userName = document.getElementById("userName");
+    const userEmail = document.getElementById("userEmail");
+    const authActionBtn = document.getElementById("authActionBtn");
+
+    const perfil_id = localStorage.getItem("perfil_id");
+    const nombre = localStorage.getItem("nombre_completo");
+    const correo = localStorage.getItem("correo_electronico");
+
+    if (perfil_id && nombre && correo) {
+        // Usuario logueado
+        userName.textContent = nombre;
+        userEmail.textContent = correo;
+
+        authActionBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Cerrar sesión`;
+        authActionBtn.href = "#";
+
+        authActionBtn.addEventListener("click", () => {
+            localStorage.clear();
+            location.reload();
+        });
     }
-  });
+});
