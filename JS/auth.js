@@ -2,16 +2,17 @@
 // Restaurar sesión al cargar página
 // ==========================
 document.addEventListener("DOMContentLoaded", () => {
+
     const perfil_id = localStorage.getItem("perfil_id");
     const nombre_completo = localStorage.getItem("nombre_completo");
     const correo_electronico = localStorage.getItem("correo_electronico");
 
     const logged = perfil_id && nombre_completo && correo_electronico;
 
-    // Elementos en el header / menú superior
+    // ACEPTA TODOS LOS POSIBLES IDS DE TUS PÁGINAS
     const userName = document.getElementById("userName");
-    const userEmail = document.getElementById("userEmail");
-    const authActionBtn = document.getElementById("authActionBtn");
+    const userEmail = document.getElementById("userEmail") || document.getElementById("userEmailElements");
+    const authActionBtn = document.getElementById("authActionBtn") || document.getElementById("authActionBt");
 
     if (logged) {
         if (userName) userName.textContent = nombre_completo;
@@ -41,8 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
 // ==========================
-// Función cerrar sesión
+// Cerrar sesión
 // ==========================
 function logout() {
     localStorage.removeItem("perfil_id");
@@ -50,6 +52,7 @@ function logout() {
     localStorage.removeItem("correo_electronico");
     window.location.href = "/auth/login.html";
 }
+
 
 // ==========================
 // LOGIN
@@ -78,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // Guardar sesión correcta
                 localStorage.setItem("perfil_id", data.perfil_id);
                 localStorage.setItem("nombre_completo", data.nombre_completo);
                 localStorage.setItem("correo_electronico", data.correo_electronico);
@@ -89,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
 
     // ==========================
     // REGISTRO
@@ -117,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // Guardar sesión
                 localStorage.setItem("perfil_id", data.perfil_id);
                 localStorage.setItem("nombre_completo", nombre_completo);
                 localStorage.setItem("correo_electronico", correo_electronico);
