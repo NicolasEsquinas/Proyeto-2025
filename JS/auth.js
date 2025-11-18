@@ -81,52 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+                // Guardar sesión
                 localStorage.setItem("perfil_id", data.perfil_id);
                 localStorage.setItem("nombre_completo", data.nombre_completo);
-                localStorage.setItem("correo_electronico", data.correo_electronico);
 
-                window.location.href = "/index.html";
-            } catch (error) {
-                console.error("Error en login:", error);
-            }
-        });
-    }
-
-
-    // ==========================
-    // REGISTRO
-    // ==========================
-    const registerForm = document.getElementById("registerForm");
-
-    if (registerForm) {
-        registerForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const nombre_completo = document.getElementById("registerName").value.trim();
-            const correo_electronico = document.getElementById("registerEmail").value.trim();
-            const contrasena = document.getElementById("registerPassword").value.trim();
-
-            try {
-                const response = await fetch("https://derma-scan-backend.vercel.app/api/registro", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nombre_completo, correo_electronico, contrasena }),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    console.error("Error en registro:", data.error);
-                    return;
-                }
-
-                localStorage.setItem("perfil_id", data.perfil_id);
-                localStorage.setItem("nombre_completo", nombre_completo);
                 localStorage.setItem("correo_electronico", correo_electronico);
 
-                window.location.href = "/auth/login.html";
+                window.location.href = "/index.html";
+
             } catch (error) {
-                console.error("Error en registro:", error);
+                console.error("Error en login:", error);
             }
         });
     }
