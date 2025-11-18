@@ -222,6 +222,8 @@ section {
 }
 
 /* Header */
+/* HEADER */
+/* HEADER */
 .header {
     position: fixed;
     top: 0;
@@ -235,10 +237,12 @@ section {
     transition: var(--transition);
 }
 
-.header.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+.header .container {
+    max-width: 1500px;   /* Ajustable si querés */
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .navbar {
@@ -248,71 +252,83 @@ section {
     padding: 20px 0;
 }
 
+/* LOGO */
 .logo {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
     color: var(--dark-color);
+    font-weight: 700;
+    font-size: 1.5rem;       /* ← MISMO TAMAÑO QUE TENÍAS */
+    margin: 0;               /* ← Esto elimina el -220px */
+    gap: 5px;
 }
 
 .logo img {
-    display: flex;
-    height: 40px;
-    margin-left: 160px;
-    transition: var(--transition);
+    height: 40px;            /* ← MISMO tamaño que tenías */
+    width: auto;
+    margin: 0;               /* ← Sin márgenes raros */
 }
 
-
-
+/* NAV LINKS */
 .nav-links {
-    margin-left: -100px;
     display: flex;
-    gap: 90px;
+    gap: 40px;               /* ← respeta tu separación original */
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .nav-links li {
-    display:flex ;
-    margin-left: -40px;
-    margin-top: 7px;
-    
+    margin: 0;               /* ← sin márgenes negativos */
 }
 
+.nav-links a {
+    font-weight: 500;
+    font-size: inherit;      /* ← MISMA LETRA Y TAMAÑO QUE YA TENÍAS */
+    color: var(--dark-color);
+    white-space: nowrap;
+}
+
+/* HOVER */
 .nav-link-hover {
     position: relative;
-   
-    font-weight: 500;
 }
 
 .nav-link-hover:after {
     content: '';
     position: absolute;
-    bottom: 0;
     left: 0;
-    width: 0;
+    bottom: 0;
     height: 2px;
+    width: 0;
     background: var(--accent-color);
-    transition: width 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .nav-link-hover:hover:after {
     width: 100%;
 }
 
+/* USER MENU */
+.user-menu-container {
+    display: flex;
+    align-items: center;
+    margin: 0;               /* ← chau -329px */
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* HAMBURGER */
 .hamburger {
     display: none;
     cursor: pointer;
     z-index: 1001;
 }
 
-.hamburger-line {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: var(--dark-color);
-    margin: 5px 0;
-    transition: var(--transition);
-}
+
 
 /* Hero Section */
 .hero {
@@ -1551,7 +1567,6 @@ section {
 /* Menú de usuario */
 .user-menu-container {
     position: relative;
-    margin-left:-170px;
     padding: 0px;
 }
 
