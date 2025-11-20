@@ -95,3 +95,63 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+//  ACTUALIZAR DATOS DEL USUARIO
+
+document.addEventListener("DOMContentLoaded", () => {
+    const name = localStorage.getItem("nombre_completo") || "Nombre Usuario";
+    const email = localStorage.getItem("correo_electronico") || "usuario@ejemplo.com";
+    const phone = localStorage.getItem("telefono") || "";
+
+    document.getElementById("profileName").textContent = name;
+    document.getElementById("profileFullName").value = name;
+    document.getElementById("profileEmailInput").value = email;
+    document.getElementById("profilePhone").value = phone;
+});
+
+async function actualizarPerfil() {
+    const perfil_id = localStorage.getItem("perfil_id");
+    if (!perfil_id) {
+        alert("Error: no hay sesión activa.");
+        return;
+    }
+
+    const nombre_completo = document.getElementById("profileFullName").value;
+    const correo_electronico = document.getElementById("profileEmailInput").value;
+    const telefono = document.getElementById("profilePhone").value;
+
+    try {
+        const response = await fetch("https://dermascan-backend.vercel.app/api/perfil/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                perfil_id,
+                nombre_completo,
+                correo_electronico,
+                telefono
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.error || "Error al actualizar perfil");
+            return;
+        }
+
+        // 🔥 Actualiza el localStorage
+        localStorage.setItem("nombre_completo", data.perfil.nombre_completo);
+        localStorage.setItem("correo_electronico", data.perfil.correo_electronico);
+        localStorage.setItem("telefono", data.perfil.telefono);
+
+        // 🔥 Actualiza el nombre del menú automáticamente
+        document.getElementById("menuUserName").textContent = data.perfil.nombre_completo;
+
+        alert("Datos actualizados correctamente.");
+
+    } catch (error) {
+        console.error("Error actualizando perfil:", error);
+        alert("Error en el servidor");
+    }
+}
