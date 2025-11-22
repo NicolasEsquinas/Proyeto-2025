@@ -98,6 +98,11 @@ def index():
     except Exception as e:
         return jsonify({'error': f'No se pudo encontrar index.html: {str(e)}'}), 404
 
+@app.route('/index.html')
+def index_html():
+    return send_from_directory(BASE_DIR, 'index.html')
+
+
 @app.route('/Css/<path:filename>')
 def css_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'Css'), filename)
