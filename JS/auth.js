@@ -81,53 +81,77 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+                // Guardar sesión
                 localStorage.setItem("perfil_id", data.perfil_id);
                 localStorage.setItem("nombre_completo", data.nombre_completo);
-                localStorage.setItem("correo_electronico", data.correo_electronico);
+
+                localStorage.setItem("correo_electronico", correo_electronico);
 
                 window.location.href = "/index.html";
+
             } catch (error) {
                 console.error("Error en login:", error);
             }
         });
     }
-
-
-    // ==========================
-    // REGISTRO
-    // ==========================
-    const registerForm = document.getElementById("registerForm");
-
-    if (registerForm) {
-        registerForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const nombre_completo = document.getElementById("registerName").value.trim();
-            const correo_electronico = document.getElementById("registerEmail").value.trim();
-            const contrasena = document.getElementById("registerPassword").value.trim();
-
-            try {
-                const response = await fetch("https://derma-scan-backend.vercel.app/api/registro", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nombre_completo, correo_electronico, contrasena }),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    console.error("Error en registro:", data.error);
-                    return;
-                }
-
-                localStorage.setItem("perfil_id", data.perfil_id);
-                localStorage.setItem("nombre_completo", nombre_completo);
-                localStorage.setItem("correo_electronico", correo_electronico);
-
-                window.location.href = "/auth/login.html";
-            } catch (error) {
-                console.error("Error en registro:", error);
-            }
-        });
-    }
 });
+
+
+//  ACTUALIZAR DATOS DEL USUARIO
+
+document.addEventListener("DOMContentLoaded", () => {
+    const name = localStorage.getItem("nombre_completo") || "Nombre Usuario";
+    const email = localStorage.getItem("correo_electronico") || "usuario@ejemplo.com";
+    const phone = localStorage.getItem("telefono") || "";
+
+    document.getElementById("profileName").textContent = name;
+    document.getElementById("profileFullName").value = name;
+    document.getElementById("profileEmailInput").value = email;
+    document.getElementById("profilePhone").value = phone;
+});
+
+async function actualizarPerfil() {
+    const perfil_id = localStorage.getItem("perfil_id");
+    if (!perfil_id) {
+        alert("Error: no hay sesión activa.");
+        return;
+    }
+
+    const nombre_completo = document.getElementById("profileFullName").value;
+    const correo_electronico = document.getElementById("profileEmailInput").value;
+    const telefono = document.getElementById("profilePhone").value;
+
+    try {
+        const response = await fetch("https://dermascan-backend.vercel.app/api/perfil/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                perfil_id,
+                nombre_completo,
+                correo_electronico,
+                telefono
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.error || "Error al actualizar perfil");
+            return;
+        }
+
+        // 🔥 Actualiza el localStorage
+        localStorage.setItem("nombre_completo", data.perfil.nombre_completo);
+        localStorage.setItem("correo_electronico", data.perfil.correo_electronico);
+        localStorage.setItem("telefono", data.perfil.telefono);
+
+        // 🔥 Actualiza el nombre del menú automáticamente
+        document.getElementById("menuUserName").textContent = data.perfil.nombre_completo;
+
+        alert("Datos actualizados correctamente.");
+
+    } catch (error) {
+        console.error("Error actualizando perfil:", error);
+        alert("Error en el servidor");
+    }
+}
