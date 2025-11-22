@@ -12,41 +12,85 @@ import requests
 from datetime import datetime
 
 
+# -----------------------------
+# CONFIG CLOUDINARY
+# -----------------------------
 cloudinary.config(
     cloud_name="dyfdso8kb",
-    api_key="377875972382137",
-    api_secret="veQJjh6odaFlNVHJfpPD8PWFW3g"
+    api_key="648813154733984",
+    api_secret="6IUPsPx4JPi48mSWgyYUBEIa-5M"
 )
 
-# Directorio base del proyecto
+# Directorio base
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
 
-# Carpeta para guardar imágenes procesadas
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Extensiones permitidas
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 
-# Cargar modelos YOLO
-try:
-    modelo_piel = YOLO('last.pt')      # Modelo para segmentar piel
-    modelo_lesiones = YOLO('lesions.pt')  # Modelo para detectar lesiones
-except Exception as e:
-    print(f"Error al cargar los modelos YOLO: {e}")
-    exit(1)
+# -----------------------------
+# CARGA DE MODELOS YOLO
+# -----------------------------
+modelo_maestro = YOLO(os.path.join(BASE_DIR, "IA/proyec.pt"))
+modelo_partes = YOLO(os.path.join(BASE_DIR, "IA/partescuerpo.pt"))
+
+modelos_lesiones = {
+    "edema": YOLO(os.path.join(BASE_DIR, "IA/edema.pt")),
+    "eritema": YOLO(os.path.join(BASE_DIR, "IA/eritema.pt")),
+    "excoriacion": YOLO(os.path.join(BASE_DIR, "IA/excoriacion.pt")),
+    "exudacion": YOLO(os.path.join(BASE_DIR, "IA/exudacion.pt")),
+    "liquenificacion": YOLO(os.path.join(BASE_DIR, "IA/liquenificacion.pt")),
+    "xerosis": YOLO(os.path.join(BASE_DIR, "IA/xerosis.pt")),
+}
+
 
 
 def allowed_file(filename):
-    """Verifica si la extensión del archivo está permitida"""
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# Ruta principal → sirve index.html desde la raíz
+# -----------------------------
+# MAPEO DE PARTES DEL CUERPO
+# -----------------------------
+def clasificar_region(nombre):
+
+    nombre = nombre.lower()
+
+    if nombre in ["head"]:
+        return "cabeza"
+
+    if nombre in ["left arm", "left hand"]:
+        return "brazo_izquierdo"
+
+    if nombre in ["right arm", "right hand"]:
+        return "brazo_derecho"
+
+    if nombre in ["left leg", "left foot"]:
+        return "pierna_izquierda"
+
+    if nombre in ["right leg", "right foot"]:
+        return "pierna_derecha"
+
+    if nombre in ["chest", "stomach", "hip"]:
+        return "torso"
+
+    return None
+
+
+divisores = {
+    "cabeza": 9,
+    "brazo_izquierdo": 9,
+    "brazo_derecho": 9,
+    "torso": 36,
+    "pierna_izquierda": 18,
+    "pierna_derecha": 18,
+}
+
 @app.route('/')
 def index():
     try:
@@ -73,78 +117,158 @@ def index_files(filename):
 @app.route('/JS/<path:filename>')
 def js_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'JS'), filename)
-@app.route('/procesar', methods=['POST'])
-def procesar_imagen():
-    if 'imagen' not in request.files:
-        return jsonify({'error': 'No se subió ninguna imagen'}), 400
 
-    file = request.files['imagen']
-    if file.filename == '':
-        return jsonify({'error': 'No se seleccionó ninguna imagen'}), 400
+@app.route("/procesar", methods=["POST"])
+def procesar():
 
-    if file and allowed_file(file.filename):
-        # Generar nombre único
-        timestamp = int(time.time())
-        filename = secure_filename(f"{timestamp}_{file.filename}")
-        img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(img_path)
+    # -----------------------------------
+    # VALIDACIÓN IMAGEN
+    # -----------------------------------
+    if "imagen" not in request.files:
+        return jsonify({"error": "No se subió ninguna imagen"}), 400
 
-        # Leer imagen
-        img = cv2.imread(img_path)
-        if img is None:
-            os.remove(img_path)
-            return jsonify({'error': 'No se pudo leer la imagen'}), 400
+    file = request.files["imagen"]
 
-        # Paso 1: Segmentar piel
-        resultados_piel = modelo_piel(img)[0]
-        mascara = np.zeros(img.shape[:2], dtype=np.uint8)
-        for box in resultados_piel.boxes:
-            x1, y1, x2, y2 = map(int, box.xyxy[0])
-            mascara[y1:y2, x1:x2] = 255
+    if file.filename == "":
+        return jsonify({"error": "No se seleccionó ninguna imagen"}), 400
 
-        solo_piel = cv2.bitwise_and(img, img, mask=mascara)
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Tipo de archivo no permitido"}), 400
 
-        # Guardar imagen recortada temporalmente
-        cropped_filename = f"cropped_{filename}"
-        cropped_path = os.path.join(app.config['UPLOAD_FOLDER'], cropped_filename)
-        cv2.imwrite(cropped_path, solo_piel)
+    # Crear nombre único
+    timestamp = int(time.time())
+    filename = secure_filename(f"{timestamp}_{file.filename}")
+    img_path = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(img_path)
 
-        # Paso 2: Detectar lesiones
-        resultados_lesiones = modelo_lesiones(solo_piel)[0]
-        lesiones = []
-        for box in resultados_lesiones.boxes:
-            lesion_name = resultados_lesiones.names[int(box.cls)]
-            lesiones.append(lesion_name)
+    img = cv2.imread(img_path)
 
-        lesiones_texto = ", ".join(lesiones) if lesiones else "No se detectaron lesiones específicas"
-
-        # Paso 3: Subir imagen a Cloudinary
-        upload_result = cloudinary.uploader.upload(cropped_path, folder="dermascan")
-        image_url = upload_result["secure_url"]
-
-        # Paso 4: Mandar a tu backend (historial)
-        try:
-            payload = {
-                "perfil_id": 1,  # ⚠️ cambiar cuando tengas ID real del usuario
-                "imagen": image_url,
-                "lesiones": lesiones_texto,
-                "fecha": datetime.now().isoformat(),
-            }
-            requests.post("https://derma-scan-backend.vercel.app/api/historial", json=payload)
-        except Exception as e:
-            print("Error al enviar al backend:", e)
-
-        # Limpiar archivos locales
+    if img is None:
         os.remove(img_path)
-        os.remove(cropped_path)
+        return jsonify({"error": "No se pudo leer la imagen"}), 400
 
-        # Respuesta al front
-        return jsonify({
-            'lesions': lesiones_texto,
-            'processed_image': image_url
-        })
+    h, w = img.shape[:2]
+    area_total_img = h * w
 
-    return jsonify({'error': 'Tipo de archivo no permitido'}), 400
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
-   
+    # -----------------------------------
+    # 1. DETECCIÓN DE PARTES DEL CUERPO
+    # -----------------------------------
+    partes_res = modelo_partes(img, conf=0.01)[0]
+
+    region_detectada = None
+
+    for box in partes_res.boxes:
+        cls = int(box.cls)
+        nombre = partes_res.names[cls]
+        region_detectada = clasificar_region(nombre)
+        if region_detectada:
+            break
+
+    if region_detectada is None:
+        region_detectada = "torso"  # fallback seguro
+
+    divisor = divisores[region_detectada]
+
+    # -----------------------------------
+    # 2. DETECCIÓN GLOBAL DE LESIONES (proyec.pt)
+    # -----------------------------------
+    maestro = modelo_maestro(img, conf=0.01)[0]
+
+    lesiones_detectadas = {}
+
+    for box in maestro.boxes:
+        cls = int(box.cls)
+        nombre = maestro.names[cls]
+
+        x1, y1, x2, y2 = map(int, box.xyxy[0])
+        recorte = img[y1:y2, x1:x2]
+
+        if recorte.size == 0:
+            continue
+
+        if nombre not in modelos_lesiones:
+            continue
+
+        modelo_ind = modelos_lesiones[nombre]
+        sub_res = modelo_ind(recorte, conf=0.01)[0]
+
+        mejor_severidad = 0
+
+        for sbox in sub_res.boxes:
+            sub_cls = int(sbox.cls)
+            # nombre clase = por ejemplo "xerosis 3"
+            clase_txt = sub_res.names[sub_cls]
+
+            try:
+                numero = int(clase_txt.split()[-1])
+            except:
+                continue
+
+            if numero > mejor_severidad:
+                mejor_severidad = numero
+
+        if mejor_severidad > 0:
+            lesiones_detectadas[nombre] = mejor_severidad
+
+    # -----------------------------------
+    # 3. CALCULO DE SEVERIDAD GLOBAL
+    # (la más grave detectada entre todos los modelos)
+    # -----------------------------------
+    if len(lesiones_detectadas) == 0:
+        severidad_global = 1
+    else:
+        severidad_global = max(lesiones_detectadas.values())
+
+    # -----------------------------------
+    # 4. CALCULO DEL PORCENTAJE DEL ÁREA DETECTADA
+    # -----------------------------------
+    area_lesiones = 0
+
+    for box in maestro.boxes:
+        x1, y1, x2, y2 = map(int, box.xyxy[0])
+        area_lesiones += (x2 - x1) * (y2 - y1)
+
+    porcentaje_area = (area_lesiones / area_total_img) * 100
+    area_relativa = porcentaje_area / divisor
+
+    # -----------------------------------
+    # 5. FORMULA FINAL
+    # -----------------------------------
+    resultado_area_mod = area_relativa / 5
+    resultado_severidad_mod = (severidad_global * 7) / 2
+
+    resultado_total = resultado_severidad_mod + resultado_area_mod
+
+    # -----------------------------------
+    # 6. SEVERIDAD FINAL SEGÚN RESULTADO_TOTAL
+    # -----------------------------------
+    if resultado_total < 25:
+        severidad_texto = "leve"
+    elif 25 <= resultado_total < 50:
+        severidad_texto = "moderada"
+    else:
+        severidad_texto = "grave"
+
+    # -----------------------------------
+    # 7. SUBIR IMAGEN A CLOUDINARY
+    # -----------------------------------
+    upload_result = cloudinary.uploader.upload(img_path, folder="dermascan")
+    image_url = upload_result["secure_url"]
+
+    # -----------------------------------
+    # 8. ELIMINAR LOCAL
+    # -----------------------------------
+    os.remove(img_path)
+
+    # -----------------------------------
+    # 9. RESPUESTA FINAL
+    # -----------------------------------
+    return jsonify({
+        "severidad": severidad_texto,
+        "score": resultado_total,
+        "processed_image": image_url
+    })
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)

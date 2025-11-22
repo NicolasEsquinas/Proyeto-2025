@@ -271,8 +271,8 @@ if (newsletterForm) {
 
 });
 // CONFIGURACIÓN DE CLOUDINARY
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tu_cloud_name/image/upload';
-const CLOUDINARY_PRESET = 'preset_de_cloudinary';
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dyfdso8kb/image/upload';
+const CLOUDINARY_PRESET = 'dermascan_preset';
 
 // ELEMENTOS
 const uploadArea = document.getElementById('uploadArea');
@@ -335,6 +335,7 @@ function handleFile(file) {
 
     uploadToCloudinary(file);
 }
+console.log("Respuesta completa de Cloudinary:", data);
 
 async function uploadToCloudinary(file) {
     setStep(2);  // Paso 2 - Análisis IA (visual)
@@ -348,7 +349,7 @@ async function uploadToCloudinary(file) {
             body: formData
         });
         const data = await res.json();
-        console.log('Imagen subida a Cloudinary:', data.secure_url);
+        console.log('Imagen subida a Cloudinary:', data.url);
         previewImage.dataset.imageUrl = data.secure_url;  // Guardar URL para análisis IA
     } catch (error) {
         alert('Error al subir la imagen.');
@@ -418,6 +419,8 @@ async function analyzeWithIA(imageUrl) {
 
 
 function renderResults(data) {
+    console.log("DATA RECIBIDA:", data);
+
     setStep(3);
 
     analysisProgress.style.display = 'none';
@@ -426,10 +429,14 @@ function renderResults(data) {
     analysisResults.innerHTML = `
         <div class="result-card primary">
             <h4>Resultado del análisis</h4>
-            <p>${data.lesions}</p>
+
+            <p><strong>Severidad:</strong> ${data.severidad}</p>
+
+            <img src="${data.processed_image}" class="result-image" alt="Imagen procesada">
         </div>
     `;
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const userName = document.getElementById("userName");
