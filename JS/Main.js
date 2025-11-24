@@ -299,8 +299,28 @@ function setStep(step) {
 }
 
 // EVENTO DE DRAG & DROP
-uploadArea.addEventListener('click', () => fileInput.click());
-uploadArea.addEventListener('dragover', e => {
+if (uploadArea && fileInput) {
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', e => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+    });
+
+    uploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        handleFile(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', e => {
+        handleFile(e.target.files[0]);
+    });
+}uploadArea.addEventListener('dragover', e => {
     e.preventDefault();
     uploadArea.classList.add('drag-over');
 });
@@ -335,7 +355,6 @@ function handleFile(file) {
 
     uploadToCloudinary(file);
 }
-console.log("Respuesta completa de Cloudinary:", data);
 
 async function uploadToCloudinary(file) {
     setStep(2);  // Paso 2 - Análisis IA (visual)
