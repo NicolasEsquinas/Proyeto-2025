@@ -242,6 +242,7 @@ def procesar():
     resultado_severidad_mod = (severidad_global * 7) / 2
 
     resultado_total = resultado_severidad_mod + resultado_area_mod
+    print(resultado_total)
 
     # -----------------------------------
     # 6. SEVERIDAD FINAL SEGÚN RESULTADO_TOTAL
@@ -252,7 +253,6 @@ def procesar():
         severidad_texto = "moderada"
     else:
         severidad_texto = "grave"
-
     # -----------------------------------
     # 7. SUBIR IMAGEN A CLOUDINARY
     # -----------------------------------

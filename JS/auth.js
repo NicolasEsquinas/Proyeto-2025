@@ -98,17 +98,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //  ACTUALIZAR DATOS DEL USUARIO
+const elName = document.getElementById("profileName");
+const elFullName = document.getElementById("profileFullName");
+const elEmailInput = document.getElementById("profileEmailInput");
+const elPhoneInput = document.getElementById("profilePhone");
 
-document.addEventListener("DOMContentLoaded", () => {
-    const name = localStorage.getItem("nombre_completo") || "Nombre Usuario";
-    const email = localStorage.getItem("correo_electronico") || "usuario@ejemplo.com";
-    const phone = localStorage.getItem("telefono") || "";
+if (elName) elName.textContent = name;
+if (elFullName) elFullName.value = name;
+if (elEmailInput) elEmailInput.value = email;
+if (elPhoneInput) elPhoneInput.value = phone;
 
-    document.getElementById("profileName").textContent = name;
-    document.getElementById("profileFullName").value = name;
-    document.getElementById("profileEmailInput").value = email;
-    document.getElementById("profilePhone").value = phone;
-});
 
 async function actualizarPerfil() {
     const perfil_id = localStorage.getItem("perfil_id");
