@@ -275,7 +275,6 @@ const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dyfdso8kb/image/upload';
 const CLOUDINARY_PRESET = 'dermascan_preset';
 const API_URL_NODE = 'https://derma-scan-backend.vercel.app';
 
-
 // ELEMENTOS
 const uploadArea = document.getElementById('uploadArea');
 const fileInput = document.getElementById('fileInput');
@@ -300,7 +299,7 @@ function setStep(step) {
     });
 }
 
-// EVENTO DE DRAG & DROP
+// EVENTOS DE DRAG & DROP / BOTONES – SOLO SI EXISTEN (para que no rompa en otras páginas)
 if (uploadArea && fileInput) {
     uploadArea.addEventListener('click', () => fileInput.click());
 
@@ -322,36 +321,35 @@ if (uploadArea && fileInput) {
     fileInput.addEventListener('change', e => {
         handleFile(e.target.files[0]);
     });
-}uploadArea.addEventListener('dragover', e => {
-    e.preventDefault();
-    uploadArea.classList.add('drag-over');
-});
-uploadArea.addEventListener('dragleave', () => {
-    uploadArea.classList.remove('drag-over');
-});
-uploadArea.addEventListener('drop', e => {
-    e.preventDefault();
-    uploadArea.classList.remove('drag-over');
-    handleFile(e.dataTransfer.files[0]);
-});
+}
 
-fileInput.addEventListener('change', e => {
-    handleFile(e.target.files[0]);
-});
+if (fileInput && !uploadArea) {
+    // Por si en algún futuro usás solo fileInput sin zona de drag
+    fileInput.addEventListener('change', e => {
+        handleFile(e.target.files[0]);
+    });
+}
 
-retakeBtn.addEventListener('click', resetUpload);
+if (retakeBtn) {
+    retakeBtn.addEventListener('click', resetUpload);
+}
 
-analyzeBtn.addEventListener('click', startAnalysis);
+if (analyzeBtn) {
+    analyzeBtn.addEventListener('click', startAnalysis);
+}
 
-document.getElementById('newAnalysisBtn').addEventListener('click', resetUpload);
+const newAnalysisBtn = document.getElementById('newAnalysisBtn');
+if (newAnalysisBtn) {
+    newAnalysisBtn.addEventListener('click', resetUpload);
+}
 
 function handleFile(file) {
     if (!file || !file.type.startsWith('image/')) return;
     const reader = new FileReader();
     reader.onload = e => {
         previewImage.src = e.target.result;
-        imagePreview.style.display = 'block';
-        uploadArea.style.display = 'none';
+        if (imagePreview) imagePreview.style.display = 'block';
+        if (uploadArea) uploadArea.style.display = 'none';
     };
     reader.readAsDataURL(file);
 
@@ -371,25 +369,27 @@ async function uploadToCloudinary(file) {
         });
         const data = await res.json();
         console.log('Imagen subida a Cloudinary:', data.url);
-        previewImage.dataset.imageUrl = data.secure_url;  // Guardar URL para análisis IA
+        if (previewImage) {
+            previewImage.dataset.imageUrl = data.secure_url;  // Guardar URL para análisis IA
+        }
     } catch (error) {
         alert('Error al subir la imagen.');
     }
 }
 
 function resetUpload() {
-    imagePreview.style.display = 'none';
-    analysisProgress.style.display = 'none';
-    analysisResults.style.display = 'none';
-    uploadArea.style.display = 'flex';
+    if (imagePreview) imagePreview.style.display = 'none';
+    if (analysisProgress) analysisProgress.style.display = 'none';
+    if (analysisResults) analysisResults.style.display = 'none';
+    if (uploadArea) uploadArea.style.display = 'flex';
     setStep(1);
 }
 
 // Simulación del análisis
 async function startAnalysis() {
     setStep(2);
-    analysisProgress.style.display = 'flex';
-    imagePreview.style.display = 'none';
+    if (analysisProgress) analysisProgress.style.display = 'flex';
+    if (imagePreview) imagePreview.style.display = 'none';
 
     await animateProgress();
 
@@ -401,6 +401,11 @@ function animateProgress() {
     return new Promise(resolve => {
         const circle = document.querySelector('.progress-ring-circle');
         const percentText = document.querySelector('.progress-percent');
+        if (!circle || !percentText) {
+            resolve();
+            return;
+        }
+
         let progress = 0;
         circle.style.stroke = '#00c4ff';
         circle.style.strokeDasharray = '327';  // 2 * π * r
@@ -448,11 +453,11 @@ async function guardarHistorialEnBackend(data) {
     }
 
     // URL de la imagen (la que subimos a Cloudinary)
-    const imagen = previewImage.dataset.imageUrl || data.processed_image;
+    const imagen = (previewImage && previewImage.dataset.imageUrl) || data.processed_image;
 
-    // score viene de la IA (en tu consola se ve "score: 7.52...")
+    // score viene de la IA
     const lesiones = Math.round(data.score ?? 0); // número entero
-    const zona = 'Zona no especificada';          // si después tenés zona real, la ponés acá
+    const zona = 'Zona no especificada';
     const fecha = new Date().toISOString();
 
     console.log('Enviando historial al backend Node...', {
@@ -487,31 +492,27 @@ async function guardarHistorialEnBackend(data) {
     }
 }
 
-
-
 function renderResults(data) {
     console.log("DATA RECIBIDA:", data);
 
-    // 👇 NUEVO: guardar en la base de datos
+    // Guardar en la base de datos
     guardarHistorialEnBackend(data);
 
     setStep(3);
 
-    analysisProgress.style.display = 'none';
-    analysisResults.style.display = 'block';
+    if (analysisProgress) analysisProgress.style.display = 'none';
+    if (analysisResults) analysisResults.style.display = 'block';
 
-    analysisResults.innerHTML = `
-        <div class="result-card primary">
-            <h4>Resultado del análisis</h4>
-
-            <p><strong>Severidad:</strong> ${data.severidad}</p>
-
-            <img src="${data.processed_image}" class="result-image" alt="Imagen procesada">
-        </div>
-    `;
+    if (analysisResults) {
+        analysisResults.innerHTML = `
+            <div class="result-card primary">
+                <h4>Resultado del análisis</h4>
+                <p><strong>Severidad:</strong> ${data.severidad}</p>
+                <img src="${data.processed_image}" class="result-image" alt="Imagen procesada">
+            </div>
+        `;
+    }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const userName = document.getElementById("userName");
@@ -522,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nombre = localStorage.getItem("nombre_completo");
     const correo = localStorage.getItem("correo_electronico");
 
-    if (perfil_id && nombre && correo) {
+    if (perfil_id && nombre && correo && userName && userEmail && authActionBtn) {
         // Usuario logueado
         userName.textContent = nombre;
         userEmail.textContent = correo;

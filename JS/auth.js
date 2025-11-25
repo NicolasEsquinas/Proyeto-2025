@@ -34,11 +34,129 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileName = document.getElementById("profileName");
     const profileFullName = document.getElementById("profileFullName");
     const profileEmailInput = document.getElementById("profileEmailInput");
+    const profilePhoneInput = document.getElementById("profilePhone");
 
     if (logged) {
         if (profileName) profileName.textContent = nombre_completo;
         if (profileFullName) profileFullName.value = nombre_completo;
         if (profileEmailInput) profileEmailInput.value = correo_electronico;
+
+        const telefono = localStorage.getItem("telefono");
+        if (profilePhoneInput && telefono) profilePhoneInput.value = telefono;
+    }
+
+    // ==========================
+    // LOGIN
+    // ==========================
+    const loginForm = document.getElementById("loginForm");
+
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const correo_electronico = document.getElementById("loginEmail").value.trim();
+            const contrasena = document.getElementById("loginPassword").value.trim();
+
+            if (!correo_electronico || !contrasena) {
+                alert("Completá correo y contraseña.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL_NODE}/api/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ correo_electronico, contrasena }),
+                });
+
+                const data = await response.json();
+                console.log("Respuesta /api/login:", response.status, data);
+
+                if (!response.ok) {
+                    alert(data.error || "Credenciales inválidas");
+                    console.error("Error en login:", data.error);
+                    return;
+                }
+
+                // Guardar sesión
+                localStorage.setItem("perfil_id", data.perfil_id);
+                localStorage.setItem("nombre_completo", data.nombre_completo);
+                localStorage.setItem("correo_electronico", data.correo_electronico);
+                if (data.telefono) {
+                    localStorage.setItem("telefono", data.telefono);
+                }
+
+                window.location.href = "/index.html";
+
+            } catch (error) {
+                console.error("Error en login:", error);
+                alert("Error de conexión al iniciar sesión");
+            }
+        });
+    }
+
+    // ==========================
+    // REGISTRO
+    // ==========================
+    // ⚠️ IMPORTANTE: este código espera:
+    // <form id="registerForm">
+    //   <input id="registerName">
+    //   <input id="registerEmail">
+    //   <input id="registerPassword">
+    //   <input id="registerPhone"> (opcional)
+    // </form>
+    const registerForm = document.getElementById("registerForm");
+
+    if (registerForm) {
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const nombre_completo = document.getElementById("registerName").value.trim();
+            const correo_electronico = document.getElementById("registerEmail").value.trim();
+            const contrasena = document.getElementById("registerPassword").value.trim();
+            const telefono = document.getElementById("registerPhone")
+                ? document.getElementById("registerPhone").value.trim()
+                : null;
+
+            if (!nombre_completo || !correo_electronico || !contrasena) {
+                alert("Completá nombre, correo y contraseña.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL_NODE}/api/registro`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nombre_completo,
+                        correo_electronico,
+                        contrasena,
+                        telefono
+                    }),
+                });
+
+                const data = await response.json();
+                console.log("Respuesta /api/registro:", response.status, data);
+
+                if (!response.ok) {
+                    alert(data.error || "Error al registrarse");
+                    return;
+                }
+
+                // Guardamos datos mínimos en localStorage
+                localStorage.setItem("perfil_id", data.perfil_id);
+                localStorage.setItem("nombre_completo", nombre_completo);
+                localStorage.setItem("correo_electronico", correo_electronico);
+                if (telefono) localStorage.setItem("telefono", telefono);
+
+                alert("Registro exitoso. Sesión iniciada.");
+                window.location.href = "/index.html";
+
+            } catch (error) {
+                console.error("Error en registro:", error);
+                alert("Error de conexión al registrarse");
+            }
+        });
     }
 });
 
@@ -50,65 +168,14 @@ function logout() {
     localStorage.removeItem("perfil_id");
     localStorage.removeItem("nombre_completo");
     localStorage.removeItem("correo_electronico");
+    localStorage.removeItem("telefono");
     window.location.href = "/auth/login.html";
 }
 
 
 // ==========================
-// LOGIN
+// ACTUALIZAR DATOS DEL USUARIO
 // ==========================
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("loginForm");
-
-    if (loginForm) {
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const correo_electronico = document.getElementById("loginEmail").value.trim();
-            const contrasena = document.getElementById("loginPassword").value.trim();
-
-            try {
-                const response = await fetch("https://derma-scan-backend.vercel.app/api/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ correo_electronico, contrasena }),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    console.error("Error en login:", data.error);
-                    return;
-                }
-
-                // Guardar sesión
-                localStorage.setItem("perfil_id", data.perfil_id);
-                localStorage.setItem("nombre_completo", data.nombre_completo);
-
-                localStorage.setItem("correo_electronico", correo_electronico);
-
-                window.location.href = "/index.html";
-
-            } catch (error) {
-                console.error("Error en login:", error);
-            }
-        });
-    }
-});
-
-
-//  ACTUALIZAR DATOS DEL USUARIO
-const elName = document.getElementById("profileName");
-const elFullName = document.getElementById("profileFullName");
-const elEmailInput = document.getElementById("profileEmailInput");
-const elPhoneInput = document.getElementById("profilePhone");
-
-if (elName) elName.textContent = name;
-if (elFullName) elFullName.value = name;
-if (elEmailInput) elEmailInput.value = email;
-if (elPhoneInput) elPhoneInput.value = phone;
-
-
 async function actualizarPerfil() {
     const perfil_id = localStorage.getItem("perfil_id");
     if (!perfil_id) {
@@ -121,7 +188,7 @@ async function actualizarPerfil() {
     const telefono = document.getElementById("profilePhone").value;
 
     try {
-        const response = await fetch("https://dermascan-backend.vercel.app/api/perfil/update", {
+        const response = await fetch(`${API_URL_NODE}/api/perfil/update`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -133,19 +200,25 @@ async function actualizarPerfil() {
         });
 
         const data = await response.json();
+        console.log("Respuesta /api/perfil/update:", response.status, data);
 
         if (!response.ok) {
             alert(data.error || "Error al actualizar perfil");
             return;
         }
 
-        // 🔥 Actualiza el localStorage
+        // Actualiza el localStorage
         localStorage.setItem("nombre_completo", data.perfil.nombre_completo);
         localStorage.setItem("correo_electronico", data.perfil.correo_electronico);
-        localStorage.setItem("telefono", data.perfil.telefono);
+        if (data.perfil.telefono) {
+            localStorage.setItem("telefono", data.perfil.telefono);
+        }
 
-        // 🔥 Actualiza el nombre del menú automáticamente
-        document.getElementById("menuUserName").textContent = data.perfil.nombre_completo;
+        // Actualiza el nombre en el menú si existe
+        const menuUserName = document.getElementById("menuUserName");
+        if (menuUserName) {
+            menuUserName.textContent = data.perfil.nombre_completo;
+        }
 
         alert("Datos actualizados correctamente.");
 
