@@ -200,7 +200,6 @@ def procesar():
 
         for sbox in sub_res.boxes:
             sub_cls = int(sbox.cls)
-            # nombre clase = por ejemplo "xerosis 3"
             clase_txt = sub_res.names[sub_cls]
 
             try:
@@ -211,8 +210,12 @@ def procesar():
             if numero > mejor_severidad:
                 mejor_severidad = numero
 
-        if mejor_severidad > 0:
-            lesiones_detectadas[nombre] = mejor_severidad
+        # 🔥 SI EL MODELO MAESTRO DETECTÓ LA LESIÓN PERO EL MODELO ESPECÍFICO NO, ASIGNAR SEVERIDAD 1
+        if mejor_severidad == 0:
+            mejor_severidad = 1
+
+        lesiones_detectadas[nombre] = mejor_severidad
+
 
     # -----------------------------------
     # 3. CALCULO DE SEVERIDAD GLOBAL
@@ -242,17 +245,17 @@ def procesar():
     resultado_severidad_mod = (severidad_global * 7) / 2
 
     resultado_total = resultado_severidad_mod + resultado_area_mod
-    print(resultado_total)
 
     # -----------------------------------
     # 6. SEVERIDAD FINAL SEGÚN RESULTADO_TOTAL
     # -----------------------------------
-    if resultado_total < 25:
+    if resultado_total < 4:
         severidad_texto = "leve"
-    elif 25 <= resultado_total < 50:
+    elif 4 <= resultado_total < 8:
         severidad_texto = "moderada"
     else:
         severidad_texto = "grave"
+    print(resultado_total)
     # -----------------------------------
     # 7. SUBIR IMAGEN A CLOUDINARY
     # -----------------------------------
