@@ -273,6 +273,8 @@ if (newsletterForm) {
 // CONFIGURACIÓN DE CLOUDINARY
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dyfdso8kb/image/upload';
 const CLOUDINARY_PRESET = 'dermascan_preset';
+const API_URL_NODE = 'https://derma-scan-backend.vercel.app';
+
 
 // ELEMENTOS
 const uploadArea = document.getElementById('uploadArea');
@@ -436,9 +438,62 @@ async function analyzeWithIA(imageUrl) {
     }
 }
 
+// 👉 GUARDA EL RESULTADO EN EL BACKEND NODE
+async function guardarHistorialEnBackend(data) {
+    const perfil_id = localStorage.getItem('perfil_id');
+
+    if (!perfil_id) {
+        console.warn('No hay perfil_id en localStorage. No se guarda historial.');
+        return;
+    }
+
+    // URL de la imagen (la que subimos a Cloudinary)
+    const imagen = previewImage.dataset.imageUrl || data.processed_image;
+
+    // score viene de la IA (en tu consola se ve "score: 7.52...")
+    const lesiones = Math.round(data.score ?? 0); // número entero
+    const zona = 'Zona no especificada';          // si después tenés zona real, la ponés acá
+    const fecha = new Date().toISOString();
+
+    console.log('Enviando historial al backend Node...', {
+        perfil_id,
+        imagen,
+        lesiones,
+        zona,
+        fecha
+    });
+
+    try {
+        const res = await fetch(`${API_URL_NODE}/api/historial`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                perfil_id,
+                imagen,
+                lesiones,
+                zona,
+                fecha
+            })
+        });
+
+        const body = await res.json();
+        console.log('Respuesta de /api/historial:', res.status, body);
+
+        if (!res.ok) {
+            console.error('Error guardando historial:', body);
+        }
+    } catch (error) {
+        console.error('Error llamando a /api/historial:', error);
+    }
+}
+
+
 
 function renderResults(data) {
     console.log("DATA RECIBIDA:", data);
+
+    // 👇 NUEVO: guardar en la base de datos
+    guardarHistorialEnBackend(data);
 
     setStep(3);
 
@@ -455,6 +510,7 @@ function renderResults(data) {
         </div>
     `;
 }
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
