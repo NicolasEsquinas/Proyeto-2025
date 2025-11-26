@@ -1050,7 +1050,6 @@ h1, h2, h3, h4, h5, h6 {
         }
     </style>
 </head>
-<script src="/JS/auth.js"></script>
 
 <body>
 
@@ -1199,346 +1198,372 @@ h1, h2, h3, h4, h5, h6 {
             </div>
         </section>
     </main>
+    
+<script src="/JS/auth.js"></script>
+</body>
+</html>
 
     <script>
-        // Función para mostrar el modal de bienvenida premium
-        function showWelcomePremiumModal() {
-            const welcomeModal = document.getElementById('welcomePremiumModal');
-            if (welcomeModal) {
-                // Mostrar el modal con una pequeña animación después de un breve retraso
-                setTimeout(() => {
-                    welcomeModal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden'; // Deshabilitar scroll
-                }, 1000);
+
+    function showWelcomePremiumModal() {
+        const welcomeModal = document.getElementById('welcomePremiumModal');
+        if (welcomeModal) {
+            setTimeout(() => {
+                welcomeModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }, 1000);
+        }
+    }
+
+    function closeWelcomePremiumModal() {
+        const welcomeModal = document.getElementById('welcomePremiumModal');
+        if (welcomeModal) {
+            welcomeModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    // ARRAY GLOBAL DEL HISTORIAL (SE VA A LLENAR CON LA DB) ===
+    let scanHistory = [];
+
+    // MAPPER: FILA DE LA DB -> OBJETO PARA LA UI ===
+    function mapHistorialRow(row) {
+        // Fecha en formato lindo
+        let dateStr = 'Fecha no disponible';
+        if (row.fecha) {
+            const d = new Date(row.fecha);
+            if (!isNaN(d)) {
+                dateStr = d.toLocaleDateString('es-AR', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            } else {
+                dateStr = row.fecha; // por si viene ya formateada
             }
         }
 
-        // Cerrar el modal de bienvenida
-        function closeWelcomePremiumModal() {
-            const welcomeModal = document.getElementById('welcomePremiumModal');
-            if (welcomeModal) {
-                welcomeModal.style.display = 'none';
-                document.body.style.overflow = ''; // Habilitar scroll
-            }
+        // Probabilidad / lesiones
+        let prob = 0;
+        if (typeof row.probabilidad === 'number') {
+            prob = Math.round(row.probabilidad);
+        } else if (typeof row.lesiones === 'number') {
+            prob = Math.round(row.lesiones);
         }
 
-        // Datos de ejemplo para el historial de escaneos
-        const scanHistory = [
-            {
-                id: 1,
-                date: "15 Nov 2024",
-                image: "/images/dermatitis1.jpg",
-                bodyPart: "Cara",
-                probability: 96,
-                severity: "moderate",
-                status: "Mejorando",
-                recommendations: 4,
-                notes: "La dermatitis muestra signos de mejora en comparación con el último escaneo. Se recomienda continuar con la hidratación diaria y aplicar la crema recetada dos veces al día. Evitar rascarse la zona afectada para prevenir infecciones."
-            },
-            {
-                id: 2,
-                date: "8 Mar 2024",
-                image: "/images/dermatitis.jpg",
-                bodyPart: "Cuello",
-                probability: 92,
-                severity: "high",
-                status: "Estable",
-                recommendations: 4,
-                notes: "La zona afectada muestra signos de inflamación moderada. Se recomienda aplicar la crema con corticosteroides según indicaciones y mantener la piel bien hidratada. Evitar el contacto con tejidos ásperos."
-            },
-            {
-                id: 3,
-                date: "1 Nov 2023",
-                image: "/images/dermatitis1.jpg",
-                bodyPart: "Brazo izquierdo",
-                probability: 78,
-                severity: "moderate",
-                status: "Mejorando",
-                recommendations: 3,
-                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
-            },
-            {
-                id: 4,
-                date: "1 Nov 2023",
-                image: "/images/dermatitis1.jpg",
-                bodyPart: "Brazo izquierdo",
-                probability: 78,
-                severity: "moderate",
-                status: "Mejorando",
-                recommendations: 3,
-                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
-            },
-            {
-                id: 5,
-                date: "1 Nov 2023",
-                image: "/images/dermatitis1.jpg",
-                bodyPart: "Brazo izquierdo",
-                probability: 78,
-                severity: "moderate",
-                status: "Mejorando",
-                recommendations: 3,
-                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
-            },
-            {
-                id: 6,
-                date: "1 Nov 2023",
-                image: "/images/dermatitis1.jpg",
-                bodyPart: "Brazo izquierdo",
-                probability: 78,
-                severity: "moderate",
-                status: "Mejorando",
-                recommendations: 3,
-                notes: "Mejora notable en la zona afectada. Continuar con el tratamiento actual y mantener una buena hidratación de la piel. Revisar en 7 días."
-            },
-            
+        // Severidad -> low / moderate / high
+        let severityKey = null;
+        if (row.severidad) {
+            const s = row.severidad.toLowerCase();
+            if (s.includes('leve')) severityKey = 'low';
+            else if (s.includes('moder')) severityKey = 'moderate';
+            else if (s.includes('sever')) severityKey = 'high';
+        }
+        if (!severityKey) {
+            if (prob >= 70) severityKey = 'high';
+            else if (prob >= 40) severityKey = 'moderate';
+            else severityKey = 'low';
+        }
 
-          
-        ];
+        return {
+            id: row.id,
+            date: dateStr,
+            image: row.imagen,
+            bodyPart: row.zona || 'Zona no especificada',
+            probability: prob,
+            severity: severityKey,
+            status: 'Sin seguimiento',
+            recommendations: 0,
+            notes: 'Este resultado es orientativo y no reemplaza la consulta con un profesional de la salud.'
+        };
+    }
 
-        // Función para generar tarjetas de escaneo
-        function generateScanCards(scans) {
-            const grid = document.getElementById('scanHistoryGrid');
-            grid.innerHTML = '';
-            
-            if (scans.length === 0) {
-                grid.innerHTML = `
-                    <div class="no-scans">
-                        <i class="fas fa-folder-open"></i>
-                        <h3>No hay escaneos registrados</h3>
-                        <p>Aún no has realizado ningún escaneo. Comienza ahora para llevar un registro de tu piel.</p>
+    // === 5) DIBUJAR TARJETAS EN EL GRID ===
+    function generateScanCards(scans) {
+        const grid = document.getElementById('scanHistoryGrid');
+        grid.innerHTML = '';
+
+        if (!scans || scans.length === 0) {
+            grid.innerHTML = `
+                <div class="no-scans">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>No hay escaneos registrados</h3>
+                    <p>Aún no has realizado ningún escaneo. Comienza ahora para llevar un registro de tu piel.</p>
+                    <a href="/index.html">
                         <button class="btn btn-primary" style="margin-top: 20px;">
                             <i class="fas fa-camera"></i> Realizar primer escaneo
                         </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            scans.forEach((scan, index) => {
-                // Determinar clase de severidad
-                let severityClass = '';
-                let severityText = '';
-                switch(scan.severity) {
-                    case 'low':
-                        severityClass = 'severity-low';
-                        severityText = 'Leve';
-                        break;
-                    case 'moderate':
-                        severityClass = 'severity-moderate';
-                        severityText = 'Moderada';
-                        break;
-                    case 'high':
-                        severityClass = 'severity-high';
-                        severityText = 'Severa';
-                        break;
-                }
-                
-                // Crear elemento de tarjeta
-                const card = document.createElement('div');
-               
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.innerHTML = `
-                    <div class="scan-card-header">
-                        <span class="scan-date">${scan.date}</span>
-                        <span class="scan-severity ${severityClass}">${severityText}</span>
-                    </div>
-                    <div class="scan-image-container">
-                        <img src="${scan.image}" alt="Escaneo de dermatitis" class="scan-image">
-                        <div class="scan-overlay">${scan.bodyPart}</div>
-                    </div>
-                    <div class="scan-card-body">
-                        <h4 class="scan-result-title">Resultado del análisis</h4>
-                        <div class="scan-probability">
-                            <div class="probability-bar">
-                                <div class="probability-fill" style="width: ${scan.probability}%; background-color: ${scan.severity === 'low' ? '#4CAF50' : scan.severity === 'moderate' ? '#FF9800' : '#F44336'};"></div>
-                            </div>
-                            <span class="probability-text">${scan.probability}%</span>
-                        </div>
-                        <div class="scan-actions">
-                            <button class="action-btn action-details view-detail" data-id="${scan.id}">
-                                <i class="fas fa-info-circle"></i> Detalles
-                            </button>
-                            <button class="action-btn action-share">
-                                <i class="fas fa-share-alt"></i> Compartir
-                            </button>
-                        </div>
-                    </div>
-                    ${index > 2 ? `
-                  
-                    ` : ''}
-                `;
-                
-                grid.appendChild(card);
-            });
-            
-            // Añadir event listeners para ver detalles
-            document.querySelectorAll('.view-detail').forEach(button => {
-                button.addEventListener('click', function() {
-                    const scanId = parseInt(this.getAttribute('data-id'));
-                    showScanDetail(scanId);
-                });
-            });
+                    </a>
+                </div>
+            `;
+            return;
         }
 
-        // Función para mostrar detalles del escaneo
-        function showScanDetail(scanId) {
-            const scan = scanHistory.find(s => s.id === scanId);
-            if (!scan) return;
-            
-            // Determinar texto de severidad
+        scans.forEach((scan, index) => {
+            let severityClass = '';
             let severityText = '';
-            switch(scan.severity) {
+            switch (scan.severity) {
                 case 'low':
+                    severityClass = 'severity-low';
                     severityText = 'Leve';
                     break;
                 case 'moderate':
+                    severityClass = 'severity-moderate';
                     severityText = 'Moderada';
                     break;
                 case 'high':
+                    severityClass = 'severity-high';
                     severityText = 'Severa';
                     break;
             }
-            
-            // Actualizar contenido del modal
-            document.getElementById('detailScanImage').src = scan.image;
-            document.getElementById('detailDate').textContent = scan.date;
-            document.getElementById('detailBodyPart').textContent = scan.bodyPart;
-            document.getElementById('detailProbability').textContent = scan.probability + '%';
-            document.getElementById('detailSeverity').textContent = severityText;
-            document.getElementById('detailStatus').textContent = scan.status;
-            document.getElementById('detailRecommendations').textContent = scan.recommendations;
-            document.getElementById('detailNotes').textContent = scan.notes;
-            
-            // Mostrar modal
-            document.getElementById('scanDetailModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
 
-        // Document ready
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // Configurar cierre del modal
-            const closeButton = document.getElementById('closeWelcomeModal');
-            const welcomeModal = document.getElementById('welcomePremiumModal');
-            
-            if (closeButton) {
-                closeButton.addEventListener('click', closeWelcomePremiumModal);
-            }
-            
-            if (welcomeModal) {
-                welcomeModal.addEventListener('click', function(e) {
-                    // Cerrar si se hace clic fuera del contenido
-                    if (e.target === welcomeModal) {
-                        closeWelcomePremiumModal();
-                    }
-                });
-            }
-                   
-            // Configurar cierre del modal de detalles
-            document.getElementById('closeDetailModal').addEventListener('click', function() {
-                document.getElementById('scanDetailModal').style.display = 'none';
-                document.body.style.overflow = '';
-            });
-            
-            document.getElementById('scanDetailModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
-            });
-            
-            // Elementos del menú de usuario
-            const userMenuTrigger = document.getElementById('userMenuTrigger');
-            const userMenuDropdown = document.getElementById('userMenuDropdown');
-            const authActionBtn = document.getElementById('authActionBtn');
-            const profileOption = document.getElementById('profileOption');
-            const premiumFeatures = document.querySelectorAll('.premium-feature');
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            
-            // Alternar menú desplegable
-            if (userMenuTrigger) {
-                userMenuTrigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    userMenuDropdown.classList.toggle('show');
-                });
-            }
-            
-            // Cerrar menú al hacer clic fuera
-            document.addEventListener('click', function(e) {
-                if (userMenuTrigger && userMenuDropdown) {
-                    if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
-                        userMenuDropdown.classList.remove('show');
-                    }
-                }
-            });
-            
-            // Manejar clic en "Mi perfil"
+            const card = document.createElement('div');
+            card.classList.add('scan-card');
+            card.style.animationDelay = `${index * 0.1}s`;
 
-            
-            // Botón de autenticación
-            if (authActionBtn) {
-                authActionBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('Cerrando sesión...');
-                });
-            }
-            
-            // Menú hamburguesa
-            if (hamburger) {
-                hamburger.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                });
-            }
-            
-            // Scroll para header
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('.header');
-                if (header) {
-                    if (window.scrollY > 50) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
-                    }
-                }
-            });
-            
-            // Generar tarjetas de escaneos
-            generateScanCards(scanHistory);
-            
-            // Botón para nuevo escaneo
-         
-            
-            // Filtros
-            document.getElementById('sortSelect').addEventListener('change', function() {
-                let sortedScans = [...scanHistory];
-                
-                switch(this.value) {
-                    case 'recent':
-                        sortedScans.sort((a, b) => new Date(b.date) - new Date(a.date));
-                        break;
-                    case 'oldest':
-                        sortedScans.sort((a, b) => new Date(a.date) - new Date(b.date));
-                        break;
-                    case 'severity':
-                        const severityOrder = {high: 3, moderate: 2, low: 1};
-                        sortedScans.sort((a, b) => severityOrder[b.severity] - severityOrder[a.severity]);
-                        break;
-                }
-                
-                generateScanCards(sortedScans);
-            });
-            
-            document.getElementById('filterSelect').addEventListener('change', function() {
-                if (this.value === 'all') {
-                    generateScanCards(scanHistory);
-                } else {
-                    const filteredScans = scanHistory.filter(scan => scan.severity === this.value);
-                    generateScanCards(filteredScans);
-                }
+            card.innerHTML = `
+                <div class="scan-card-header">
+                    <span class="scan-date">${scan.date}</span>
+                    <span class="scan-severity ${severityClass}">${severityText}</span>
+                </div>
+                <div class="scan-image-container">
+                    <img src="${scan.image}" alt="Escaneo de dermatitis" class="scan-image">
+                    <div class="scan-overlay">${scan.bodyPart}</div>
+                </div>
+                <div class="scan-card-body">
+                    <h4 class="scan-result-title">Resultado del análisis</h4>
+                    <div class="scan-probability">
+                        <div class="probability-bar">
+                            <div class="probability-fill"
+                                style="width: ${scan.probability}%; background-color: ${
+                                    scan.severity === 'low'
+                                        ? '#4CAF50'
+                                        : scan.severity === 'moderate'
+                                        ? '#FF9800'
+                                        : '#F44336'
+                                };">
+                            </div>
+                        </div>
+                        <span class="probability-text">${scan.probability}%</span>
+                    </div>
+                    <div class="scan-actions">
+                        <button class="action-btn action-details view-detail" data-id="${scan.id}">
+                            <i class="fas fa-info-circle"></i> Detalles
+                        </button>
+                        <button class="action-btn action-share">
+                            <i class="fas fa-share-alt"></i> Compartir
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            grid.appendChild(card);
+        });
+
+        // botones "Detalles"
+        document.querySelectorAll('.view-detail').forEach(button => {
+            button.addEventListener('click', function() {
+                const scanId = parseInt(this.getAttribute('data-id'));
+                showScanDetail(scanId);
             });
         });
-    </script>
-</body>
-</html>
+    }
+
+    // === 6) MOSTRAR DETALLE EN EL MODAL ===
+    function showScanDetail(scanId) {
+        const scan = scanHistory.find(s => s.id === scanId);
+        if (!scan) return;
+
+        let severityText = '';
+        switch (scan.severity) {
+            case 'low':
+                severityText = 'Leve';
+                break;
+            case 'moderate':
+                severityText = 'Moderada';
+                break;
+            case 'high':
+                severityText = 'Severa';
+                break;
+        }
+
+        document.getElementById('detailScanImage').src = scan.image;
+        document.getElementById('detailDate').textContent = scan.date;
+        document.getElementById('detailBodyPart').textContent = scan.bodyPart;
+        document.getElementById('detailProbability').textContent = scan.probability + '%';
+        document.getElementById('detailSeverity').textContent = severityText;
+        document.getElementById('detailStatus').textContent = scan.status;
+        document.getElementById('detailRecommendations').textContent = scan.recommendations;
+        document.getElementById('detailNotes').textContent = scan.notes;
+
+        document.getElementById('scanDetailModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    // === 7) CARGAR HISTORIAL DESDE TU BACKEND ===
+    async function cargarHistorialDesdeBackend() {
+        const perfil_id = localStorage.getItem('perfil_id');
+        const grid = document.getElementById('scanHistoryGrid');
+
+        if (!perfil_id) {
+            grid.innerHTML = `
+                <div class="no-scans">
+                    <i class="fas fa-user-lock"></i>
+                    <h3>Inicia sesión para ver tu historial</h3>
+                    <p>Para acceder a tus escaneos anteriores, primero debes iniciar sesión.</p>
+                    <a href="/auth/login.html">
+                        <button class="btn btn-primary" style="margin-top: 20px;">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                        </button>
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_URL_NODE}/api/historial/${perfil_id}`);
+            if (!res.ok) {
+                throw new Error('HTTP ' + res.status);
+            }
+
+            const data = await res.json(); // array de filas de la DB
+            console.log('Historial recibido:', data);
+
+            if (!Array.isArray(data) || data.length === 0) {
+                scanHistory = [];
+                generateScanCards(scanHistory);
+                return;
+            }
+
+            scanHistory = data.map(mapHistorialRow);
+            generateScanCards(scanHistory);
+        } catch (err) {
+            console.error('Error al cargar historial:', err);
+            grid.innerHTML = `
+                <div class="no-scans">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <h3>Error al cargar el historial</h3>
+                    <p>Intenta recargar la página o vuelve a intentarlo más tarde.</p>
+                </div>
+            `;
+        }
+    }
+
+    // === 8) INICIALIZAR TODO CUANDO CARGA LA PÁGINA ===
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cierre del modal premium (si existe)
+        const closeButton = document.getElementById('closeWelcomeModal');
+        const welcomeModal = document.getElementById('welcomePremiumModal');
+
+        if (closeButton) {
+            closeButton.addEventListener('click', closeWelcomePremiumModal);
+        }
+
+        if (welcomeModal) {
+            welcomeModal.addEventListener('click', function(e) {
+                if (e.target === welcomeModal) {
+                    closeWelcomePremiumModal();
+                }
+            });
+        }
+
+        // Modal de detalles
+        document.getElementById('closeDetailModal').addEventListener('click', function() {
+            document.getElementById('scanDetailModal').style.display = 'none';
+            document.body.style.overflow = '';
+        });
+
+        document.getElementById('scanDetailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Menú de usuario
+        const userMenuTrigger = document.getElementById('userMenuTrigger');
+        const userMenuDropdown = document.getElementById('userMenuDropdown');
+        const authActionBtn = document.getElementById('authActionBtn') || document.getElementById('authActionBt');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (userMenuTrigger) {
+            userMenuTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userMenuDropdown.classList.toggle('show');
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (userMenuTrigger && userMenuDropdown) {
+                if (!userMenuTrigger.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                    userMenuDropdown.classList.remove('show');
+                }
+            }
+        });
+
+        if (authActionBtn) {
+            authActionBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // el logout real lo hace auth.js, acá no tocamos nada
+                // solo por si acaso:
+                // localStorage.clear();
+                // window.location.href = '/auth/login.html';
+            });
+        }
+
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (header) {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+        });
+
+        // 🚀 ACÁ SE CARGA EL HISTORIAL REAL DESDE LA DB
+        cargarHistorialDesdeBackend();
+
+        // Filtros
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            let sortedScans = [...scanHistory];
+
+            switch (this.value) {
+                case 'recent':
+                    // No hace falta ordenar si ya viene ordenado del backend,
+                    // pero lo dejamos por si acaso
+                    sortedScans.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'oldest':
+                    sortedScans.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                case 'severity':
+                    const severityOrder = { high: 3, moderate: 2, low: 1 };
+                    sortedScans.sort((a, b) => severityOrder[b.severity] - severityOrder[a.severity]);
+                    break;
+            }
+
+            generateScanCards(sortedScans);
+        });
+
+        document.getElementById('filterSelect').addEventListener('change', function() {
+            if (this.value === 'all') {
+                generateScanCards(scanHistory);
+            } else {
+                const filteredScans = scanHistory.filter(scan => scan.severity === this.value);
+                generateScanCards(filteredScans);
+            }
+        });
+    });
+</script>
+
