@@ -1,6 +1,5 @@
-// ==========================
 // Restaurar sesión al cargar página
-// ==========================
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const perfil_id = localStorage.getItem("perfil_id");
@@ -28,9 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (userEmail) userEmail.textContent = "No has iniciado sesión";
     }
 
-    // ==========================
     // Cargar datos en el perfil
-    // ==========================
+
     const profileName = document.getElementById("profileName");
     const profileFullName = document.getElementById("profileFullName");
     const profileEmailInput = document.getElementById("profileEmailInput");
@@ -45,9 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (profilePhoneInput && telefono) profilePhoneInput.value = telefono;
     }
 
-    // ==========================
     // LOGIN
-    // ==========================
+
     const loginForm = document.getElementById("loginForm");
 
     if (loginForm) {
@@ -95,16 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ==========================
-    // REGISTRO
-    // ==========================
-    // ⚠️ IMPORTANTE: este código espera:
-    // <form id="registerForm">
-    //   <input id="registerName">
-    //   <input id="registerEmail">
-    //   <input id="registerPassword">
-    //   <input id="registerPhone"> (opcional)
-    // </form>
     const registerForm = document.getElementById("registerForm");
 
     if (registerForm) {
@@ -161,9 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ==========================
+
 // Cerrar sesión
-// ==========================
+
 function logout() {
     localStorage.removeItem("perfil_id");
     localStorage.removeItem("nombre_completo");
@@ -173,9 +160,8 @@ function logout() {
 }
 
 
-// ==========================
 // ACTUALIZAR DATOS DEL USUARIO
-// ==========================
+
 async function actualizarPerfil() {
     const perfil_id = localStorage.getItem("perfil_id");
     if (!perfil_id) {
