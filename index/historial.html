@@ -1224,10 +1224,10 @@ h1, h2, h3, h4, h5, h6 {
         }
     }
 
-    // ARRAY GLOBAL DEL HISTORIAL (SE VA A LLENAR CON LA DB) ===
+    // ARRAY GLOBAL DEL HISTORIAL (SE VA A LLENAR CON LA DB)
     let scanHistory = [];
 
-    // MAPPER: FILA DE LA DB -> OBJETO PARA LA UI ===
+    
     function mapHistorialRow(row) {
         // Fecha en formato lindo
         let dateStr = 'Fecha no disponible';
@@ -1252,7 +1252,7 @@ h1, h2, h3, h4, h5, h6 {
             prob = Math.round(row.lesiones);
         }
 
-        // Severidad -> low / moderate / high
+        // Severidad
         let severityKey = null;
         if (row.severidad) {
             const s = row.severidad.toLowerCase();
@@ -1279,7 +1279,7 @@ h1, h2, h3, h4, h5, h6 {
         };
     }
 
-    // === 5) DIBUJAR TARJETAS EN EL GRID ===
+    // TARJETAS EN EL GRID 
     function generateScanCards(scans) {
         const grid = document.getElementById('scanHistoryGrid');
         grid.innerHTML = '';
@@ -1370,7 +1370,7 @@ h1, h2, h3, h4, h5, h6 {
         });
     }
 
-    // === 6) MOSTRAR DETALLE EN EL MODAL ===
+    //  MOSTRAR DETALLE EN EL MODAL 
     function showScanDetail(scanId) {
         const scan = scanHistory.find(s => s.id === scanId);
         if (!scan) return;
@@ -1401,7 +1401,7 @@ h1, h2, h3, h4, h5, h6 {
         document.body.style.overflow = 'hidden';
     }
 
-    // === 7) CARGAR HISTORIAL DESDE TU BACKEND ===
+    // CARGAR HISTORIAL DESDE EL BACKEND (función) (/api/historial/:perfil_id)
     async function cargarHistorialDesdeBackend() {
         const perfil_id = localStorage.getItem('perfil_id');
         const grid = document.getElementById('scanHistoryGrid');
@@ -1452,9 +1452,9 @@ h1, h2, h3, h4, h5, h6 {
         }
     }
 
-    // === 8) INICIALIZAR TODO CUANDO CARGA LA PÁGINA ===
+    //  INICIALIZAR TODO CUANDO CARGA LA PÁGINA 
     document.addEventListener('DOMContentLoaded', function() {
-        // Cierre del modal premium (si existe)
+        
         const closeButton = document.getElementById('closeWelcomeModal');
         const welcomeModal = document.getElementById('welcomePremiumModal');
 
@@ -1508,10 +1508,7 @@ h1, h2, h3, h4, h5, h6 {
         if (authActionBtn) {
             authActionBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                // el logout real lo hace auth.js, acá no tocamos nada
-                // solo por si acaso:
-                // localStorage.clear();
-                // window.location.href = '/auth/login.html';
+                
             });
         }
 
@@ -1534,7 +1531,7 @@ h1, h2, h3, h4, h5, h6 {
         });
         
 
-        // 🚀 ACÁ SE CARGA EL HISTORIAL REAL DESDE LA DB
+        // CARGO HISTORIAL DESDE LA DB
         cargarHistorialDesdeBackend();
 
         // Filtros

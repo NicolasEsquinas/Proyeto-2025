@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const logged = perfil_id && nombre_completo && correo_electronico;
 
-    // ACEPTA TODOS LOS POSIBLES IDS DE TUS PÁGINAS
+    // ACEPTA TODOS LOS POSIBLES IDS DE TUS PÁGINAS (importante)
     const userName = document.getElementById("userName");
     const userEmail = document.getElementById("userEmail") || document.getElementById("userEmailElements");
     const authActionBtn = document.getElementById("authActionBtn") || document.getElementById("authActionBt");
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (profilePhoneInput && telefono) profilePhoneInput.value = telefono;
     }
 
-    // LOGIN
+    // LOGIN CONEXIÓN (función) (api/login)
 
     const loginForm = document.getElementById("loginForm");
 
@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // REGISTRO CONEXIÓN (función) (api/registro)
     const registerForm = document.getElementById("registerForm");
 
     if (registerForm) {
@@ -160,7 +161,7 @@ function logout() {
 }
 
 
-// ACTUALIZAR DATOS DEL USUARIO
+// ACTUALIZAR DATOS DEL USUARIO CONEXIÓN (función) (api/perfil/update)
 
 async function actualizarPerfil() {
     const perfil_id = localStorage.getItem("perfil_id");

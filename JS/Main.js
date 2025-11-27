@@ -273,6 +273,8 @@ if (newsletterForm) {
 // CONFIGURACIÓN DE CLOUDINARY
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dyfdso8kb/image/upload';
 const CLOUDINARY_PRESET = 'dermascan_preset';
+
+// DECLARÓ LA URL (importantisimo)
 const API_URL_NODE = 'https://derma-scan-backend.vercel.app';
 
 // ELEMENTOS
@@ -362,6 +364,7 @@ async function uploadToCloudinary(file) {
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_PRESET);
 
+// Cargar imagen a la DB (función) (image/upload)
     try {
         const res = await fetch(CLOUDINARY_URL, {
             method: 'POST',
@@ -443,7 +446,7 @@ async function analyzeWithIA(imageUrl) {
     }
 }
 
-// 👉 GUARDA EL RESULTADO EN EL BACKEND NODE
+//  GUARDA EL RESULTADO EN EL BACKEND NODE
 async function guardarHistorialEnBackend(data) {
     const perfil_id = localStorage.getItem('perfil_id');
 
@@ -468,6 +471,7 @@ async function guardarHistorialEnBackend(data) {
         fecha
     });
 
+  // Guardar el historial en la DB (función) (api/historial)
     try {
         const res = await fetch(`${API_URL_NODE}/api/historial`, {
             method: 'POST',
