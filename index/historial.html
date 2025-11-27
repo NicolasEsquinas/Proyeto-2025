@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
        /* Variables y estilos base */
-:root {
+
+       :root {
     --primary-color: #6a5acd;
     --primary-dark: #483d8b;
     --secondary-color: #ff7e5f;
@@ -1404,6 +1405,7 @@ h1, h2, h3, h4, h5, h6 {
     async function cargarHistorialDesdeBackend() {
         const perfil_id = localStorage.getItem('perfil_id');
         const grid = document.getElementById('scanHistoryGrid');
+        const API_URL_NODE = "https://derma-scan-backend.vercel.app";
 
         if (!perfil_id) {
             grid.innerHTML = `
@@ -1530,6 +1532,7 @@ h1, h2, h3, h4, h5, h6 {
                 }
             }
         });
+        
 
         // 🚀 ACÁ SE CARGA EL HISTORIAL REAL DESDE LA DB
         cargarHistorialDesdeBackend();
