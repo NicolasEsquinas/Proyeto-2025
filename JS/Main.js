@@ -274,7 +274,7 @@ if (newsletterForm) {
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dyfdso8kb/image/upload';
 const CLOUDINARY_PRESET = 'dermascan_preset';
 
-// DECLARÓ LA URL (importantisimo)
+// DECLARÓ LA URL (importantísimo)
 const API_URL_NODE = 'https://derma-scan-backend.vercel.app';
 
 // ELEMENTOS
