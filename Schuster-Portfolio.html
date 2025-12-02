@@ -415,6 +415,38 @@
             border: 1px solid rgba(0, 85, 255, 0.2);
             position: relative;
         }
+        /* FOTO DEL HEADER – MISMO ESTILO QUE EN FIGMA */
+header {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 🔥 Para separar texto e imagen */
+    padding: 0 5%;
+}
+
+/* Contenedor con bordes redondeados */
+.header-photo {
+    width: 440px;
+    height: 560px;
+    background: #1a2d4f; /* tono azul oscuro similar al BG */
+    border-radius: 35px;
+    display: flex;
+    margin-right: 180px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;          /* 🔥 Para que la foto siga el borde redondeado */
+    position: relative;
+    z-index: 3;                /* 🔥 por encima del fondo */
+}
+
+/* Foto */
+.header-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* 🔥 MISMO RECORTE QUE EN EL UI */
+}
+
 
         .timeline-content::before {
             content: '';
@@ -542,13 +574,18 @@
 <!-- HEADER -->
 <header>
     <div class="header-bg"></div>
+
     <div class="header-content">
         <h1 class="header-title">Thomas<br>Schusterman</h1>
-        <p class="header-subtitle">Alumno de ORT (TIC), Developer especializado en bases de datos complejas.</p>
+
+        <p class="header-subtitle">
+            Backend Developer especializado en bases de datos complejas
+        </p>
+
         <div class="stats">
             <div class="stat">
                 <span class="stat-number">5+</span>
-                <span class="stat-labe">Años ORT</span>
+                <span class="stat-label">Años ORT</span>
             </div>
             <div class="stat">
                 <span class="stat-number">3</span>
@@ -556,7 +593,13 @@
             </div>
         </div>
     </div>
+
+    <!-- 🔥 CONTENEDOR DE FOTO EXACTO COMO EN EL FIGMA -->
+    <div class="header-photo">
+       <img src="images/Imagen de WhatsApp 2025-12-02 a las 09.55.41_6cfef6eb 1.png" alt="">>
+    </div>
 </header>
+
 
 <!-- SOBRE MI -->
 <section id="about" class="about-section">
