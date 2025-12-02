@@ -127,6 +127,82 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        /* --- SOBRE MI --- */
+.about-section {
+    padding: 120px 4%;
+    color: var(--text-light);
+}
+
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 80px;
+    font-weight: 600;
+
+    background: linear-gradient(90deg, #3388ff, #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Dos columnas reales */
+.about-wrapper {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+}
+
+/* Texto alineado a la izquierda */
+.about-left {
+    width: 55%;
+}
+
+.about-left p {
+    text-align: left;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* Imagen estilo FIGMA */
+.about-right {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+}
+
+.about-right img {
+    width: 380px;
+    filter: drop-shadow(0 0 5px rgba(80, 150, 255, 0.3));
+}
+
+/* Fondo blanco detrás de la imagen */
+.about-right {
+    position: relative;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uca-bg {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    background: rgb(227, 227, 227);
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.about-right img {
+    width: 380px;
+    opacity: 0.15;
+    filter: drop-shadow(0 0 5px rgba(80, 150, 255, 0.3));
+    z-index: 2;
+}
+
 
         /* NAV */
         .nav.nav-container {
@@ -490,18 +566,44 @@
 </header>
 
 <!-- SOBRE MI -->
-<section class="case-studies" id="about">
-    <div class="section-header">
-        <h2 class="section-title">Sobre mí</h2>
-        <p class="section-subtitle">
-                        Vivo en Belgrano y actualmente estudio en ORT (TIC). 
-                        Me encanta el deporte, actualmente hago rugby en el BAC (Belgrano Athletic Club), esa es mi forma de ver que soy muy bueno trabajando en equipo.
-                        Me encanta crear soluciones reales con tecnología.
-            Mis objetivos a futuro incluyen seguir creciendo como Backend Developer, trabajar en proyectos desafiantes  
-            y aportar innovación en el mundo de la IA y los datos.
-        </p>
+<section id="about" class="about-section">
+    <h2 class="section-title">Sobre mí ...</h2>
+
+    <div class="about-wrapper">
+
+        <div class="about-left">
+            <p>
+                Vivo en Belgrano y actualmente estudio en ORT (TIC). Me encanta el deporte, 
+                actualmente juego rugby en el BAC (Belgrano Athletic Club), y eso me demuestra 
+                lo bien que trabajo en equipo.
+            </p>
+
+            <p>
+                Me apasiona crear soluciones reales con tecnología y transformarlas en productos 
+                que impacten. Disfruto especialmente del backend y la arquitectura de datos.
+            </p>
+
+            <p>
+                Mis objetivos a futuro incluyen seguir creciendo como Backend Developer, trabajar 
+                en proyectos desafiantes y aportar innovación en el mundo de la IA y los datos.
+            </p>
+
+            <p>
+                Académicamente planeo estudiar Negocios Digitales en la UCA y terminar mis estudios 
+                con experiencia laboral concreta en tecnología.
+            </p>
+        </div>
+
+        <div class="about-right">
+    <div class="uca-bg"></div> <!-- Fondo blanco estilo Figma -->
+    <img src="images/Group 11.png" alt="Logo UCA">
+</div>
+
+
     </div>
 </section>
+
+
 
 <!-- FORMACION + HABILIDADES -->
 <section class="case-studies" id="skills">
